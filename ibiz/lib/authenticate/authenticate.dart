@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/authenticate/greet.dart';
+import 'package:ibiz/authenticate/signup.dart';
 
 class Authenticate extends StatelessWidget {
   @override
@@ -12,7 +14,10 @@ class Authenticate extends StatelessWidget {
                 top: 200, left: 100, right: 100, bottom: 100),
             child: Text(
               "App Name",
-              style: TextStyle(fontSize: 36, fontStyle: FontStyle.normal, color: Color.fromRGBO(21, 21, 21, 50)),
+              style: TextStyle(
+                  fontSize: 36,
+                  fontStyle: FontStyle.normal,
+                  color: Color.fromRGBO(21, 21, 21, 50)),
             ),
           ),
           Padding(
@@ -20,29 +25,56 @@ class Authenticate extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: RaisedButton(
-                    onPressed: () {
-                      print("Login Pressed");
-                    },
-                    child: Text("Log in"),
-                    color: Color.fromRGBO(21, 21, 21, 50),
-                    textColor: Colors.white,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      height: 40,
+                      width: 300,
+                      child: RaisedButton(
+                        onPressed: () async {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Greet(state: 1)));
+                        },
+                        color: Color.fromARGB(255, 21, 21, 21),
+                        child: Text(
+                          'Log In',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
                   ),
-                )),
+                ),
+                SizedBox(width: 20),
                 Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: RaisedButton(
-                    onPressed: () {
-                      print("SignUp Pressed");
-                    },
-                    child: Text("Sign Up"),
-                    textColor: Colors.white,
-                    color: Color.fromRGBO(21, 21, 21, 50),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      height: 40,
+                      width: 300,
+                      child: RaisedButton(
+                        onPressed: () async {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Greet(state: 2)));
+                        },
+                        color: Color.fromARGB(255, 21, 21, 21),
+                        child: Text(
+                          'Sign UP',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
                   ),
-                ))
+                )
               ],
             ),
           )

@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 class View extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child:Text("Welcome User"),
+    return Scaffold(
+      appBar: AppBar(title: Text("IBIZ TODO"),),
+      body: Container(
+        child: Text("TODO"),
+      ),
     );
   }
 }
