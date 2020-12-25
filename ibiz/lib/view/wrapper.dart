@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ibiz/authenticate/authenticate.dart';
@@ -14,8 +13,8 @@ class Wrapper extends StatelessWidget {
       print('Null User');
       return Authenticate();
     } else {
-      print("UID: "+user.uid);
-      return View(user: user,);
+      print("UID: " + user.uid);
+      return View(user: user);
     }
   }
 }

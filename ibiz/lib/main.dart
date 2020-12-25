@@ -3,7 +3,6 @@ import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/view/wrapper.dart';
 import 'package:provider/provider.dart';
 
-import 'authenticate/signup.dart';
 import 'models/user.dart';
 
 void main() => runApp(MyApp());

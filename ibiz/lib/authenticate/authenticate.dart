@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/authenticate/getStarted.dart';
-import 'package:ibiz/authenticate/signup.dart';
 import 'package:ibiz/authenticate/welcome.dart';
 
 class Authenticate extends StatelessWidget {
@@ -8,7 +7,7 @@ class Authenticate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Column(
+          child: ListView(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(

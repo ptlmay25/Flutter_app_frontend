@@ -14,7 +14,7 @@ class _WelcomeState extends State<Welcome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 50, bottom: 35),

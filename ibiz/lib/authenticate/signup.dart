@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ibiz/authenticate/otpscreen.dart';
+import 'package:ibiz/authenticate/authenticate.dart';
 import 'package:ibiz/service/auth.dart';
-import 'package:ibiz/view/view.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -163,10 +162,14 @@ class _SignUpState extends State<SignUp> {
                 Padding(
                   padding: const EdgeInsets.all(30),
                   child: IconButton(
-                    icon: Icon(Icons.logout),
-                    onPressed: () async {
-                      await AuthService().signOut();
-                    }),
+                      icon: Icon(Icons.logout),
+                      onPressed: () async {
+                        await AuthService().signOut();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Authenticate()));
+                      }),
                 ),
               ],
             ),

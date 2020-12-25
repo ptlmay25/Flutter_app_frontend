@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ibiz/authenticate/authenticate.dart';
 import 'package:ibiz/authenticate/signup.dart';
+import 'package:ibiz/models/user.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/view/view.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -18,6 +19,7 @@ class _OTPState extends State<OTP> {
   String verificationId, smsCode;
   bool codeSent = false;
   final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -30,7 +32,7 @@ class _OTPState extends State<OTP> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Column(
+          child: ListView(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 50),
@@ -113,17 +115,17 @@ class _OTPState extends State<OTP> {
                             width: 300,
                             child: RaisedButton(
                               onPressed: () async {
-                                if (_otpFormKey.currentState.validate()) {
-                                  await AuthService()
-                                      .signInWithOtp(smsCode, verificationId);
-                                  var _phoneAuthCredential =
-                                      PhoneAuthProvider.getCredential(
-                                          verificationId: verificationId,
-                                          smsCode: smsCode);
-                                  print(_phoneAuthCredential.toString());
-                                  //login(_phoneAuthCredential);
+                                try {
+                                  if (_otpFormKey.currentState.validate()) {
+                                    await _auth.signInWithOtp(
+                                        smsCode, verificationId);
+                                  }
+                                  print("OTP_Submit PRESSED");
+                                  print("verId: " + this.verificationId);
+                                  print("smsCode: " + this.smsCode);
+                                } catch (error) {
+                                  print("_errorMESSAGEIS" + error.message);
                                 }
-                                print("OTP_Submit PRESSED");
                               },
                               color: Color.fromARGB(255, 66, 71, 112),
                               child: Text(
@@ -169,7 +171,7 @@ class _OTPState extends State<OTP> {
   //sent otp on given PhoneNumber
   verifyPhone(String phoneNumber) async {
     final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-      AuthService().signIn(authResult);
+      _auth.signIn(authResult);
     };
 
     final PhoneVerificationFailed verificationFailed =
