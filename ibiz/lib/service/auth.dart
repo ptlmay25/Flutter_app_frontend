@@ -4,25 +4,36 @@ import 'package:ibiz/models/user.dart';
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  Stream<User> get user {
+    return _firebaseAuth.onAuthStateChanged
+        //.map((FirebaseUser user) => _userFromFirebaseUser(user));
+        .map(_userFromFirebaseUser);
+  }
+
   User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+    return user != null ? User(uid: user.uid,contact: user.phoneNumber) : null;
   }
 
   //Sign out
-  signOut() {
+  Future signOut() async {
     _firebaseAuth.signOut();
   }
 
   //check credencial for otp
-  Future<bool> signIn(AuthCredential authCredential) async {
-    dynamic res = await _firebaseAuth.signInWithCredential(authCredential);
-    return res;
+  Future signIn(AuthCredential authCredential) async {
+    await _firebaseAuth.signInWithCredential(authCredential);
   }
 
   //signInWithOtp
-  signInWithOtp(smsCode, verid) {
-    AuthCredential authCredential = PhoneAuthProvider.getCredential(
-        verificationId: verid, smsCode: smsCode);
-    signIn(authCredential);
+  Future signInWithOtp(smsCode, verid) async {
+    try {
+      AuthCredential authCredential = PhoneAuthProvider.getCredential(
+          verificationId: verid, smsCode: smsCode);
+      AuthResult result = await signIn(authCredential);
+      FirebaseUser user = result.user;
+      return _userFromFirebaseUser(user);
+    } catch (eroor) {
+      return null;
+    }
   }
 }

@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ibiz/authenticate/authenticate.dart';
 import 'package:ibiz/authenticate/signup.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/view/view.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class OTP extends StatefulWidget {
   final String contact;
   final int state;
-  OTP({Key key,this.state, this.contact}) : super(key: key);
+  OTP({Key key, this.state, this.contact}) : super(key: key);
   @override
   _OTPState createState() => _OTPState();
 }
@@ -21,6 +23,7 @@ class _OTPState extends State<OTP> {
     super.initState();
     print(widget.contact);
     verifyPhone(widget.contact);
+    //_listenOtp();
   }
 
   @override
@@ -69,15 +72,24 @@ class _OTPState extends State<OTP> {
                 key: _otpFormKey,
                 child: Column(
                   children: [
+                    // Padding(
+                    //   padding: const EdgeInsets.all(20),
+                    //   child: TextFormField(
+                    //     keyboardType: TextInputType.number,
+                    //     onChanged: (input) {
+                    //       setState(() => smsCode = input.trim());
+                    //     },
+                    //     decoration: InputDecoration(hintText: "OTP"),
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(20),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        onChanged: (input) {
-                          setState(() => smsCode = input.trim());
-                        },
-                        decoration: InputDecoration(hintText: "OTP"),
-                      ),
+                      child: PinFieldAutoFill(
+                          codeLength: 6,
+                          onCodeChanged: (val) {
+                            this.smsCode=val;
+                            print(val);
+                          }),
                     ),
                     Padding(
                         padding: const EdgeInsets.all(8),
@@ -89,12 +101,14 @@ class _OTPState extends State<OTP> {
                             child: RaisedButton(
                               onPressed: () async {
                                 if (_otpFormKey.currentState.validate()) {
-                                  if(widget.state==1){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>View()));
-                                  }
-                                  else if(widget.state==2){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
-                                  }
+                                  await AuthService()
+                                      .signInWithOtp(smsCode, verificationId);
+                                  var _phoneAuthCredential =
+                                      PhoneAuthProvider.getCredential(
+                                          verificationId: verificationId,
+                                          smsCode: smsCode);
+                                  print(_phoneAuthCredential.toString());
+                                  //login(_phoneAuthCredential);
                                 }
                                 print("OTP_Submit PRESSED");
                               },
@@ -109,6 +123,28 @@ class _OTPState extends State<OTP> {
                             ),
                           ),
                         )),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: SizedBox(
+                        width: 100,
+                        child: InkWell(
+                          onTap: () {
+                            verifyPhone(widget.contact);
+                            print("Resend OTp pressed");
+                          },
+                          child: Text(
+                            "Resend code",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xff151515),
+                              fontSize: 15,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 )),
           )
@@ -117,20 +153,15 @@ class _OTPState extends State<OTP> {
     );
   }
 
-  Future<bool> signIn(context) async {
-    var result = await AuthService().signInWithOtp(smsCode, verificationId);
-    return result;
-  }
-
   //sent otp on given PhoneNumber
-  Future<void> verifyPhone(String phoneNumber) async {
+  verifyPhone(String phoneNumber) async {
     final PhoneVerificationCompleted verified = (AuthCredential authResult) {
       AuthService().signIn(authResult);
     };
 
     final PhoneVerificationFailed verificationFailed =
         (AuthException authException) {
-      print('${authException.message}');
+      print('PhoneVerificationFailed ${authException.message}');
     };
 
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
@@ -145,10 +176,26 @@ class _OTPState extends State<OTP> {
     };
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
-        timeout: const Duration(seconds: 30),
+        timeout: const Duration(seconds: 60),
         verificationCompleted: verified,
         verificationFailed: verificationFailed,
         codeSent: smsOTPSent,
         codeAutoRetrievalTimeout: autoTimeOut);
   }
+
+  void _listenOtp()async{
+    await SmsAutoFill().listenForCode;
+  }
+
+  // Future<void> login(_phoneAuthCredential) async {
+  //   /// This method is used to login the user
+  //   /// `AuthCredential`(`_phoneAuthCredential`) is needed for the signIn method
+  //   /// After the signIn method from `AuthResult` we can get `FirebaserUser`(`_firebaseUser`)
+
+  //   await FirebaseAuth.instance
+  //       .signInWithCredential(_phoneAuthCredential)
+  //       .then((AuthResult authRes) {
+  //     print(authRes.user.toString());
+  //   });
+  // }
 }

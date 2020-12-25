@@ -9,16 +9,13 @@ import 'package:ibiz/models/user.dart';
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseAuth.instance.onAuthStateChanged,
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.hasData) {
-          return View();
-        } else {
-          return Authenticate();
-        }
-      },
-    );
-    //return Authenticate();
+    final user = Provider.of<User>(context);
+
+    if (user == null) {
+      print('Null User');
+      return Authenticate();
+    } else {
+      return View(user: user,);
+    }
   }
 }

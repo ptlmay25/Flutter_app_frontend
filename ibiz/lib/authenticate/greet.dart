@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:ibiz/authenticate/otpscreen.dart';
 import 'package:ibiz/service/auth.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class Greet extends StatefulWidget {
   final int state;
@@ -57,6 +58,8 @@ class _GreetState extends State<Greet> {
                                 onPressed: () async {
                                   try {
                                     if (_loginFormKey.currentState.validate()) {
+                                      final signCode = await SmsAutoFill().getAppSignature;
+                                      print(signCode); 
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
