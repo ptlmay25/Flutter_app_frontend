@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ibiz/authenticate/otpscreen.dart';
+import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/view/view.dart';
 
 class SignUp extends StatefulWidget {
@@ -11,8 +12,28 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
   int flag = 1;
-  String fname, lname,gender;
+  String fname, lname, gender;
   DateTime birthday;
+  int b = 0;
+
+  void f1(int a) {
+    setState(() {
+      b = a;
+    });
+  }
+
+  void f2() {
+    if (b == 1) {
+      gender = "Male";
+    }
+    if (b == 2) {
+      gender = "Female";
+    }
+    if (b == 3) {
+      gender = "Other";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (flag == 1) {
@@ -138,7 +159,15 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ],
                       )),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: IconButton(
+                    icon: Icon(Icons.logout),
+                    onPressed: () async {
+                      await AuthService().signOut();
+                    }),
+                ),
               ],
             ),
           )
@@ -196,7 +225,8 @@ class _SignUpState extends State<SignUp> {
               height: 200,
               child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
-                  initialDateTime: DateTime.now(),
+                  initialDateTime: DateTime.parse("1985-01-01"),
+                  maximumDate: DateTime.now(),
                   onDateTimeChanged: (datetime) {
                     setState(() {
                       this.birthday = datetime;
@@ -205,7 +235,7 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 60,left: 85,right: 90),
+            padding: const EdgeInsets.only(top: 60, left: 85, right: 90),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: Container(
@@ -254,7 +284,145 @@ class _SignUpState extends State<SignUp> {
                   }),
             ),
           ),
-          Text("Gender"),
+          Padding(
+            padding: const EdgeInsets.only(top: 90, left: 68, right: 67),
+            child: Center(
+              child: SizedBox(
+                width: 240,
+                height: 45,
+                child: Text(
+                  "What's your gender?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xff151515),
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Radio(
+                      value: 1,
+                      groupValue: b,
+                      onChanged: (v) {
+                        f1(v);
+                      },
+                      activeColor: Colors.black,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      "Male",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  )
+                ],
+              )),
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Radio(
+                    value: 2,
+                    groupValue: b,
+                    onChanged: (v) {
+                      f1(v);
+                    },
+                    activeColor: Colors.black,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: SizedBox(
+                    width: 120,
+                    height: 18,
+                    child: Text(
+                      "Female",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Radio(
+                    value: 3,
+                    groupValue: b,
+                    onChanged: (v) {
+                      f1(v);
+                    },
+                    activeColor: Colors.black,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: SizedBox(
+                    width: 120,
+                    height: 18,
+                    child: Text(
+                      "Other",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 63, left: 85, right: 90),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Container(
+                height: 45,
+                width: 200,
+                child: RaisedButton(
+                  onPressed: () {
+                    f2();
+                    print(gender);
+                    //TODO Database Entry
+                  },
+                  color: Color.fromARGB(255, 66, 71, 112),
+                  child: Text(
+                    'Next',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

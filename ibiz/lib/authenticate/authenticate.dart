@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ibiz/authenticate/greet.dart';
+import 'package:ibiz/authenticate/getStarted.dart';
 import 'package:ibiz/authenticate/signup.dart';
+import 'package:ibiz/authenticate/welcome.dart';
 
 class Authenticate extends StatelessWidget {
   @override
@@ -13,7 +14,7 @@ class Authenticate extends StatelessWidget {
             padding: const EdgeInsets.only(
                 top: 200, left: 100, right: 100, bottom: 100),
             child: Text(
-              "App Name",
+              "FIREFLY",
               style: TextStyle(
                   fontSize: 36,
                   fontStyle: FontStyle.normal,
@@ -35,7 +36,7 @@ class Authenticate extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Greet(state: 1)));
+                                  builder: (context) => Welcome()));
                         },
                         color: Color.fromARGB(255, 21, 21, 21),
                         child: Text(
@@ -61,11 +62,11 @@ class Authenticate extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Greet(state: 2)));
+                                  builder: (context) => GetStarted()));
                         },
                         color: Color.fromARGB(255, 21, 21, 21),
                         child: Text(
-                          'Sign UP',
+                          'Sign Up',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

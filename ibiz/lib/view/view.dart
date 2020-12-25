@@ -4,6 +4,8 @@ import 'package:ibiz/authenticate/signup.dart';
 import 'package:ibiz/models/user.dart';
 import 'package:ibiz/service/auth.dart';
 
+import 'home.dart';
+
 class View extends StatefulWidget {
   final User user;
   View({this.user});
@@ -12,16 +14,22 @@ class View extends StatefulWidget {
 }
 
 class _ViewState extends State<View> {
-  
   @override
   Widget build(BuildContext context) {
-    print(widget.user.contact);
-    if(widget.user.contact!='+919427643688'){
-      return SignUp();
-    }else{
-      return Container(child: Text(widget.user.contact),);
+    print("Phone: " + widget.user.contact);
+    String initRoute = "";
+    if (widget.user.contact != '+919429016756') {
+      initRoute = "signup";
+    } else {
+      initRoute = "home";
     }
-    
-    //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+    print('Init: '+initRoute);
+    return MaterialApp(
+      initialRoute: initRoute,
+      routes: {
+        'home': (context) => Home(),
+        'signup': (context) => SignUp(),
+      },
+    );
   }
 }

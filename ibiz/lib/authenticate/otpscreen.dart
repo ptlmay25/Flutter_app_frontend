@@ -8,8 +8,8 @@ import 'package:sms_autofill/sms_autofill.dart';
 
 class OTP extends StatefulWidget {
   final String contact;
-  final int state;
-  OTP({Key key, this.state, this.contact}) : super(key: key);
+
+  OTP({Key key, this.contact}) : super(key: key);
   @override
   _OTPState createState() => _OTPState();
 }
@@ -23,7 +23,7 @@ class _OTPState extends State<OTP> {
     super.initState();
     print(widget.contact);
     verifyPhone(widget.contact);
-    //_listenOtp();
+    _listenOtp();
   }
 
   @override
@@ -32,8 +32,19 @@ class _OTPState extends State<OTP> {
       body: SafeArea(
           child: Column(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 50),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                  icon: Icon(Icons.keyboard_arrow_left),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+          ),
           SizedBox(
-            height: 30,
+            height: 28,
           ),
           Padding(
             padding: const EdgeInsets.all(20),
@@ -83,16 +94,18 @@ class _OTPState extends State<OTP> {
                     //   ),
                     // ),
                     Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding:
+                          const EdgeInsets.only(left: 47, right: 48, top: 95),
                       child: PinFieldAutoFill(
                           codeLength: 6,
                           onCodeChanged: (val) {
-                            this.smsCode=val;
+                            this.smsCode = val;
                             print(val);
                           }),
                     ),
                     Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.only(
+                            top: 95, bottom: 20, left: 87, right: 88),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: Container(
@@ -114,7 +127,7 @@ class _OTPState extends State<OTP> {
                               },
                               color: Color.fromARGB(255, 66, 71, 112),
                               child: Text(
-                                'Submit',
+                                'Verify',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -183,7 +196,7 @@ class _OTPState extends State<OTP> {
         codeAutoRetrievalTimeout: autoTimeOut);
   }
 
-  void _listenOtp()async{
+  void _listenOtp() async {
     await SmsAutoFill().listenForCode;
   }
 
