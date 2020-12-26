@@ -11,7 +11,6 @@ class AuthService {
   }
 
   Stream<User> get user {
-    print("Stream Changed:"+_firebaseAuth.currentUser().toString());
     return _firebaseAuth.onAuthStateChanged
         //.map((FirebaseUser user) => _userFromFirebaseUser(user));
         .map(_userFromFirebaseUser);
@@ -25,8 +24,8 @@ class AuthService {
   //check credencial for otp
   Future signIn(AuthCredential authCredential) async {
     try {
-      await _firebaseAuth.signInWithCredential(authCredential);
-      AuthResult result = await signIn(authCredential);
+      AuthResult result =
+          await _firebaseAuth.signInWithCredential(authCredential);
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
     } catch (error) {
@@ -39,17 +38,16 @@ class AuthService {
     try {
       AuthCredential authCredential = PhoneAuthProvider.getCredential(
           verificationId: this.verificationId, smsCode: smsCode);
-      AuthResult result = await signIn(authCredential);
-      FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
+      await signIn(authCredential);
     } catch (error) {
       return error;
     }
   }
 
   Future verifyPhone(String phoneNumber) async {
-    final PhoneVerificationCompleted verified = (AuthCredential authResult) async {
-      await signIn(authResult);
+    final PhoneVerificationCompleted verified =
+        (AuthCredential authCredential) async {
+      await signIn(authCredential);
     };
 
     final PhoneVerificationFailed verificationFailed =
@@ -59,7 +57,7 @@ class AuthService {
 
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
-      this.codeSent=true;
+      this.codeSent = true;
     };
 
     final PhoneCodeAutoRetrievalTimeout autoTimeOut = (String verId) {

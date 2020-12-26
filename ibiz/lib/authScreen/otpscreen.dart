@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
-import 'package:ibiz/view/view.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class OTP extends StatefulWidget {
@@ -20,7 +18,6 @@ class _OTPState extends State<OTP> {
   final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   initState() {
-    // TODO: implement initState
     super.initState();
     print(widget.contact);
     _auth.verifyPhone(widget.contact);
@@ -116,11 +113,13 @@ class _OTPState extends State<OTP> {
                               onPressed: () async {
                                 try {
                                   if (_otpFormKey.currentState.validate()) {
-                                    await _auth.signInWithOtp(smsCode);
+                                    dynamic res=await _auth.signInWithOtp(smsCode);
+                                    print(res);
+                                    //main();
                                     // print(result.toString());
-                                    // Navigator.of(context).push(
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) => MyApp()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => MyApp()));
                                   }
                                   print("OTP_Submit PRESSED");
                                   //print("verId: " + this.verificationId);

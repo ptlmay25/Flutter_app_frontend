@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ibiz/authScreen/firefly.dart';
-import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 
 class SignUp extends StatefulWidget {

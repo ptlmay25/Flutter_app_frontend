@@ -11,31 +11,34 @@ class View extends StatefulWidget {
 }
 
 class _ViewState extends State<View> {
-  @override
-  Widget build(BuildContext context) {
-    // return Container(
-    //   child: Text("View"),
-    // );
-    if (widget.user.contact == "+918780546954") {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Home()));
-      return Container(
-        child: Text("View"),
-      );
-    } else {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => SignUp()));
-      return Container(
-        child: Text("View"),
-      );
-    }
-  }
+
   // @override
   // Widget build(BuildContext context) {
+  //   print("Inside View: "+ widget.user.contact);    
   //   if (widget.user.contact == "+918780546954") {
-  //     return SignUp();
+  //     Navigator.of(context)
+  //         .push(MaterialPageRoute(builder: (context) => Home()));
+  //     return Container(
+  //       child: Text("View"),
+  //     );
   //   } else {
-  //     return Home();
+  //     Navigator.of(context)
+  //         .push(MaterialPageRoute(builder: (context) => SignUp()));
+  //     return Container(
+  //       child: Text("View"),
+  //     );
   //   }
   // }
+  @override
+  Widget build(BuildContext context) {
+    print("Inside View: "+ widget.user.contact);
+    if(widget.user==null){
+      print("View Received Null");
+    }
+    if (widget.user.contact != "+918780546954" || widget.user.contact != "+917600257008") {
+      return SignUp();
+    } else {
+      return Home();
+    }
+  }
 }
