@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/authScreen/otpscreen.dart';
+import 'package:ibiz/size_config.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class Welcome extends StatefulWidget {
@@ -17,7 +18,10 @@ class _WelcomeState extends State<Welcome> {
         child: ListView(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 20, top: 50, bottom: 35),
+              padding: EdgeInsets.only(
+                  left: 5.1 * SizeConfig.widthMultiplier,
+                  top: 6 * SizeConfig.heightMultiplier,
+                  bottom: 4.19 * SizeConfig.heightMultiplier),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(
@@ -26,33 +30,37 @@ class _WelcomeState extends State<Welcome> {
                       Navigator.pop(context);
                     }),
               ),
-            ),
+            ), //backButton
             Padding(
-              padding: const EdgeInsets.only(right: 181, left: 27),
+              padding: EdgeInsets.only(
+                  right: 46.4 * SizeConfig.widthMultiplier,
+                  left: 6.9 * SizeConfig.widthMultiplier),
               child: SizedBox(
-                width: 160,
-                height: 100,
+                width: 41 * SizeConfig.widthMultiplier,
+                height: 12 * SizeConfig.heightMultiplier,
                 child: Text(
                   "Welcome Back",
                   style: TextStyle(
                     color: Color(0xff151515),
-                    fontSize: 34,
+                    fontSize: 4.0 * SizeConfig.heightMultiplier,
                     fontFamily: "Roboto",
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-            ),
+            ), //WelcomebackText
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(0),
+                padding: EdgeInsets.all(0),
                 child: Form(
                     key: _loginFormKey,
                     child: Column(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, right: 30, top: 60),
+                          padding: EdgeInsets.only(
+                              left: 7.6 * SizeConfig.widthMultiplier,
+                              right: 7.6 * SizeConfig.widthMultiplier,
+                              top: 7.2 * SizeConfig.heightMultiplier),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
                             validator: (input) {
@@ -67,15 +75,17 @@ class _WelcomeState extends State<Welcome> {
                             decoration:
                                 InputDecoration(hintText: "Enter Phone Number"),
                           ),
-                        ),
+                        ), //PhoneInput
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 57, right: 58, top: 60),
+                          padding: EdgeInsets.only(
+                              left: 14.6 * SizeConfig.widthMultiplier,
+                              right: 14.8 * SizeConfig.widthMultiplier,
+                              top: 7.2 * SizeConfig.heightMultiplier),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
                             child: Container(
-                              height: 40,
-                              width: 200,
+                              height: 4.8 * SizeConfig.heightMultiplier,
+                              width: 51.2 * SizeConfig.widthMultiplier,
                               child: RaisedButton(
                                 onPressed: () async {
                                   try {
@@ -100,12 +110,13 @@ class _WelcomeState extends State<Welcome> {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20),
+                                      fontSize:
+                                          2.4 * SizeConfig.heightMultiplier),
                                 ),
                               ),
                             ),
                           ),
-                        ),
+                        ),//LoginButton
                       ],
                     )),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
+import 'package:ibiz/size_config.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class OTP extends StatefulWidget {
@@ -31,7 +32,9 @@ class _OTPState extends State<OTP> {
           child: ListView(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 20, top: 50),
+            padding: EdgeInsets.only(
+                left: 5.1 * SizeConfig.widthMultiplier,
+                top: 6.0 * SizeConfig.heightMultiplier),
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
@@ -40,20 +43,24 @@ class _OTPState extends State<OTP> {
                     Navigator.pop(context);
                   }),
             ),
-          ),
+          ), //BackButton
           SizedBox(
-            height: 28,
+            height: 3.3 * SizeConfig.heightMultiplier,
           ),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.only(
+                left: 5.1 * SizeConfig.widthMultiplier,
+                right: 5.1 * SizeConfig.widthMultiplier,
+                top: 2.4 * SizeConfig.heightMultiplier,
+                bottom: 2.4 * SizeConfig.heightMultiplier),
             child: SizedBox(
-              width: 260,
+              width: 66.6 * SizeConfig.widthMultiplier,
               child: Text(
                 "Verify Phone Number",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xff151515),
-                  fontSize: 18,
+                  fontSize: 2.1 * SizeConfig.heightMultiplier,
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.w500,
                 ),
@@ -61,28 +68,36 @@ class _OTPState extends State<OTP> {
             ),
           ),
           Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.only(
+                  left: 5.1 * SizeConfig.widthMultiplier,
+                  right: 5.1 * SizeConfig.widthMultiplier,
+                  top: 2.4 * SizeConfig.heightMultiplier,
+                  bottom: 2.4 * SizeConfig.heightMultiplier),
               child: SizedBox(
-                width: 300,
+                width: 76.9 * SizeConfig.widthMultiplier,
                 child: Text(
                   "Enter 6 digit verification code sent to \n${widget.contact}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff151515),
-                    fontSize: 13,
+                    fontSize: 1.5 * SizeConfig.heightMultiplier,
                     fontFamily: "Roboto",
                     fontWeight: FontWeight.w300,
                   ),
                 ),
               )),
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.only(
+                left: 2 * SizeConfig.widthMultiplier,
+                right: 2 * SizeConfig.widthMultiplier,
+                top: 1 * SizeConfig.heightMultiplier,
+                bottom: 1 * SizeConfig.heightMultiplier),
             child: Form(
                 key: _otpFormKey,
                 child: Column(
                   children: [
                     // Padding(
-                    //   padding: const EdgeInsets.all(20),
+                    //   padding:  EdgeInsets.all(20),
                     //   child: TextFormField(
                     //     keyboardType: TextInputType.number,
                     //     onChanged: (input) {
@@ -92,8 +107,10 @@ class _OTPState extends State<OTP> {
                     //   ),
                     // ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 47, right: 48, top: 95),
+                      padding: EdgeInsets.only(
+                          left: 12 * SizeConfig.widthMultiplier,
+                          right: 12 * SizeConfig.widthMultiplier,
+                          top: 11.4 * SizeConfig.heightMultiplier),
                       child: PinFieldAutoFill(
                           codeLength: 6,
                           onCodeChanged: (val) {
@@ -102,8 +119,11 @@ class _OTPState extends State<OTP> {
                           }),
                     ),
                     Padding(
-                        padding: const EdgeInsets.only(
-                            top: 95, bottom: 20, left: 87, right: 88),
+                        padding: EdgeInsets.only(
+                            top: 11.4 * SizeConfig.heightMultiplier,
+                            bottom: 2.4 * SizeConfig.heightMultiplier,
+                            left: 22.3 * SizeConfig.widthMultiplier,
+                            right: 22.3 * SizeConfig.widthMultiplier),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: Container(
@@ -113,7 +133,8 @@ class _OTPState extends State<OTP> {
                               onPressed: () async {
                                 try {
                                   if (_otpFormKey.currentState.validate()) {
-                                    dynamic res=await _auth.signInWithOtp(smsCode);
+                                    dynamic res =
+                                        await _auth.signInWithOtp(smsCode);
                                     print(res);
                                     //main();
                                     // print(result.toString());
@@ -140,7 +161,7 @@ class _OTPState extends State<OTP> {
                           ),
                         )),
                     Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: EdgeInsets.all(8),
                       child: SizedBox(
                         width: 100,
                         child: InkWell(
@@ -192,7 +213,7 @@ class _OTPState extends State<OTP> {
   //   };
   //   await FirebaseAuth.instance.verifyPhoneNumber(
   //       phoneNumber: phoneNumber,
-  //       timeout: const Duration(seconds: 60),
+  //       timeout:  Duration(seconds: 60),
   //       verificationCompleted: verified,
   //       verificationFailed: verificationFailed,
   //       codeSent: smsOTPSent,

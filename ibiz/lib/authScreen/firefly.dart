@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/authScreen/getStarted.dart';
 import 'package:ibiz/authScreen/welcome.dart';
+import 'package:ibiz/size_config.dart';
 
 class Firefly extends StatelessWidget {
   @override
@@ -10,26 +11,31 @@ class Firefly extends StatelessWidget {
           child: ListView(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(
-                top: 200, left: 100, right: 100, bottom: 100),
+            padding: EdgeInsets.only(
+                top: 18.3 * SizeConfig.heightMultiplier,
+                left: 30.6 * SizeConfig.widthMultiplier,
+                right: 30.6 * SizeConfig.widthMultiplier,
+                bottom: 60.6 * SizeConfig.heightMultiplier),
             child: Text(
               "FIREFLY",
               style: TextStyle(
-                  fontSize: 36,
+                  fontSize: 4.3 * SizeConfig.heightMultiplier,
                   fontStyle: FontStyle.normal,
                   color: Color.fromRGBO(21, 21, 21, 50)),
             ),
-          ),
+          ), //FireflyText
           Padding(
-            padding: const EdgeInsets.only(top: 300, left: 30, right: 30),
+            padding: EdgeInsets.only(
+                left: 7.6 * SizeConfig.widthMultiplier,
+                right: 7.6 * SizeConfig.widthMultiplier),
             child: Row(
               children: <Widget>[
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Container(
-                      height: 40,
-                      width: 300,
+                      height: 4.7 * SizeConfig.heightMultiplier,
+                      width: 76.53 * SizeConfig.widthMultiplier,
                       child: RaisedButton(
                         onPressed: () async {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -41,19 +47,19 @@ class Firefly extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20),
+                              fontSize: 2.3 * SizeConfig.heightMultiplier),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(width: 20),
+                ), //LogInButton
+                SizedBox(width: 5.1 * SizeConfig.widthMultiplier),
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Container(
-                      height: 40,
-                      width: 300,
+                      height: 4.7 * SizeConfig.heightMultiplier,
+                      width: 76.53 * SizeConfig.widthMultiplier,
                       child: RaisedButton(
                         onPressed: () async {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -65,12 +71,12 @@ class Firefly extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20),
+                              fontSize: 2.3 * SizeConfig.heightMultiplier),
                         ),
                       ),
                     ),
                   ),
-                )
+                ) //SignUpButton
               ],
             ),
           )
