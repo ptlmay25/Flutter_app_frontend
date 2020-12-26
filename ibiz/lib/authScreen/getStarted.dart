@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ibiz/authenticate/otpscreen.dart';
+import 'package:ibiz/authScreen/otpscreen.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class GetStarted extends StatefulWidget {
@@ -94,13 +94,10 @@ class _GetStartedState extends State<GetStarted> {
                                   final signCode =
                                       await SmsAutoFill().getAppSignature;
                                   print(signCode);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => OTP(
-                                                contact:
-                                                    '+91' + this.phone_number,
-                                              )));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => OTP(
+                                            contact: '+91' + this.phone_number,
+                                          )));
                                 }
                               } catch (exception) {
                                 print("_errorMESSAGEIS" + exception.message);

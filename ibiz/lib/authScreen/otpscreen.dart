@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ibiz/authenticate/authenticate.dart';
-import 'package:ibiz/authenticate/signup.dart';
-import 'package:ibiz/models/user.dart';
+import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/view/view.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -16,15 +14,16 @@ class OTP extends StatefulWidget {
 }
 
 class _OTPState extends State<OTP> {
-  String verificationId, smsCode;
+  String smsCode;
+  //String verificatioId;
   bool codeSent = false;
   final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
-  void initState() {
+  initState() {
     // TODO: implement initState
     super.initState();
     print(widget.contact);
-    verifyPhone(widget.contact);
+    _auth.verifyPhone(widget.contact);
     _listenOtp();
   }
 
@@ -117,11 +116,14 @@ class _OTPState extends State<OTP> {
                               onPressed: () async {
                                 try {
                                   if (_otpFormKey.currentState.validate()) {
-                                    await _auth.signInWithOtp(
-                                        smsCode, verificationId);
+                                    await _auth.signInWithOtp(smsCode);
+                                    // print(result.toString());
+                                    // Navigator.of(context).push(
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => MyApp()));
                                   }
                                   print("OTP_Submit PRESSED");
-                                  print("verId: " + this.verificationId);
+                                  //print("verId: " + this.verificationId);
                                   print("smsCode: " + this.smsCode);
                                 } catch (error) {
                                   print("_errorMESSAGEIS" + error.message);
@@ -144,7 +146,7 @@ class _OTPState extends State<OTP> {
                         width: 100,
                         child: InkWell(
                           onTap: () {
-                            verifyPhone(widget.contact);
+                            _auth.verifyPhone(widget.contact);
                             print("Resend OTp pressed");
                           },
                           child: Text(
@@ -169,34 +171,34 @@ class _OTPState extends State<OTP> {
   }
 
   //sent otp on given PhoneNumber
-  verifyPhone(String phoneNumber) async {
-    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-      _auth.signIn(authResult);
-    };
+  // Future verifyPhone(String phoneNumber) async {
+  //   final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+  //     _auth.signIn(authResult);
+  //   };
 
-    final PhoneVerificationFailed verificationFailed =
-        (AuthException authException) {
-      print('PhoneVerificationFailed ${authException.message}');
-    };
+  //   final PhoneVerificationFailed verificationFailed =
+  //       (AuthException authException) {
+  //     print('PhoneVerificationFailed ${authException.message}');
+  //   };
 
-    final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
-      this.verificationId = verId;
-      setState(() {
-        this.codeSent = true;
-      });
-    };
+  //   final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
+  //     this.verificationId = verId;
+  //     setState(() {
+  //       this.codeSent = true;
+  //     });
+  //   };
 
-    final PhoneCodeAutoRetrievalTimeout autoTimeOut = (String verId) {
-      this.verificationId = verId;
-    };
-    await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        timeout: const Duration(seconds: 60),
-        verificationCompleted: verified,
-        verificationFailed: verificationFailed,
-        codeSent: smsOTPSent,
-        codeAutoRetrievalTimeout: autoTimeOut);
-  }
+  //   final PhoneCodeAutoRetrievalTimeout autoTimeOut = (String verId) {
+  //     this.verificationId = verId;
+  //   };
+  //   await FirebaseAuth.instance.verifyPhoneNumber(
+  //       phoneNumber: phoneNumber,
+  //       timeout: const Duration(seconds: 60),
+  //       verificationCompleted: verified,
+  //       verificationFailed: verificationFailed,
+  //       codeSent: smsOTPSent,
+  //       codeAutoRetrievalTimeout: autoTimeOut);
+  // }
 
   void _listenOtp() async {
     await SmsAutoFill().listenForCode;

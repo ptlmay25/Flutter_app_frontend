@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ibiz/authenticate/getStarted.dart';
-import 'package:ibiz/authenticate/welcome.dart';
+import 'package:ibiz/authScreen/getStarted.dart';
+import 'package:ibiz/authScreen/welcome.dart';
 
-class Authenticate extends StatelessWidget {
+class Firefly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +32,8 @@ class Authenticate extends StatelessWidget {
                       width: 300,
                       child: RaisedButton(
                         onPressed: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Welcome()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Welcome()));
                         },
                         color: Color.fromARGB(255, 21, 21, 21),
                         child: Text(
@@ -58,10 +56,8 @@ class Authenticate extends StatelessWidget {
                       width: 300,
                       child: RaisedButton(
                         onPressed: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => GetStarted()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => GetStarted()));
                         },
                         color: Color.fromARGB(255, 21, 21, 21),
                         child: Text(

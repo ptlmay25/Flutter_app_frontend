@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ibiz/authenticate/authenticate.dart';
+import 'package:ibiz/authScreen/firefly.dart';
+import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 
 class SignUp extends StatefulWidget {
@@ -165,10 +166,8 @@ class _SignUpState extends State<SignUp> {
                       icon: Icon(Icons.logout),
                       onPressed: () async {
                         await AuthService().signOut();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Authenticate()));
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Firefly()));
                       }),
                 ),
               ],

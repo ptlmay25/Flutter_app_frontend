@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ibiz/models/user.dart';
-import 'package:ibiz/view/view.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  String verificationId;
+  bool codeSent = false;
 
   User _userFromFirebaseUser(FirebaseUser user) {
     return user != null ? User(uid: user.uid, contact: user.phoneNumber) : null;
   }
 
   Stream<User> get user {
+    print("Stream Changed:"+_firebaseAuth.currentUser().toString());
     return _firebaseAuth.onAuthStateChanged
         //.map((FirebaseUser user) => _userFromFirebaseUser(user));
         .map(_userFromFirebaseUser);
@@ -35,15 +35,42 @@ class AuthService {
   }
 
   //signInWithOtp
-  Future signInWithOtp(smsCode, verid) async {
+  Future signInWithOtp(smsCode) async {
     try {
       AuthCredential authCredential = PhoneAuthProvider.getCredential(
-          verificationId: verid, smsCode: smsCode);
+          verificationId: this.verificationId, smsCode: smsCode);
       AuthResult result = await signIn(authCredential);
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
     } catch (error) {
       return error;
     }
+  }
+
+  Future verifyPhone(String phoneNumber) async {
+    final PhoneVerificationCompleted verified = (AuthCredential authResult) async {
+      await signIn(authResult);
+    };
+
+    final PhoneVerificationFailed verificationFailed =
+        (AuthException authException) {
+      print('PhoneVerificationFailed ${authException.message}');
+    };
+
+    final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
+      this.verificationId = verId;
+      this.codeSent=true;
+    };
+
+    final PhoneCodeAutoRetrievalTimeout autoTimeOut = (String verId) {
+      this.verificationId = verId;
+    };
+    await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        timeout: const Duration(seconds: 60),
+        verificationCompleted: verified,
+        verificationFailed: verificationFailed,
+        codeSent: smsOTPSent,
+        codeAutoRetrievalTimeout: autoTimeOut);
   }
 }
