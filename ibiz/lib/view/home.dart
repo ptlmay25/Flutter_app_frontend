@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 
 class Home extends StatefulWidget {
@@ -29,6 +30,8 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.keyboard_arrow_right),
               onPressed: () async {
                 await AuthService().signOut();
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => MyApp()));
               })
         ],
       ),
