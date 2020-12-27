@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           IconButton(
-              icon: Icon(Icons.logout),
+              icon: Icon(Icons.keyboard_arrow_right),
               onPressed: () async {
                 await AuthService().signOut();
               })

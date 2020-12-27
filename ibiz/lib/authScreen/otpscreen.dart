@@ -60,7 +60,7 @@ class _OTPState extends State<OTP> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xff151515),
-                  fontSize: 2.1 * SizeConfig.heightMultiplier,
+                  fontSize: (18 / 8.3) * SizeConfig.heightMultiplier,
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.w500,
                 ),
@@ -80,7 +80,7 @@ class _OTPState extends State<OTP> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff151515),
-                    fontSize: 1.5 * SizeConfig.heightMultiplier,
+                    fontSize: (13 / 8.34) * SizeConfig.heightMultiplier,
                     fontFamily: "Roboto",
                     fontWeight: FontWeight.w300,
                   ),
@@ -127,8 +127,8 @@ class _OTPState extends State<OTP> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: Container(
-                            height: 40,
-                            width: 300,
+                            height: (40 / 8.3) * SizeConfig.heightMultiplier,
+                            width: (300 / 3.9) * SizeConfig.widthMultiplier,
                             child: RaisedButton(
                               onPressed: () async {
                                 try {
@@ -155,15 +155,20 @@ class _OTPState extends State<OTP> {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20),
+                                    fontSize: (20 / 8.3) *
+                                        SizeConfig.heightMultiplier),
                               ),
                             ),
                           ),
                         )),
                     Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.only(
+                          top: 1 * SizeConfig.heightMultiplier,
+                          bottom: 1 * SizeConfig.heightMultiplier,
+                          left: 2 * SizeConfig.widthMultiplier,
+                          right: 2 * SizeConfig.widthMultiplier),
                       child: SizedBox(
-                        width: 100,
+                        width: (100 / 3.9) * SizeConfig.widthMultiplier,
                         child: InkWell(
                           onTap: () {
                             _auth.verifyPhone(widget.contact);
@@ -174,7 +179,8 @@ class _OTPState extends State<OTP> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Color(0xff151515),
-                              fontSize: 15,
+                              fontSize:
+                                  (15 / 8.3) * SizeConfig.heightMultiplier,
                               fontFamily: "Roboto",
                               fontWeight: FontWeight.w300,
                             ),
