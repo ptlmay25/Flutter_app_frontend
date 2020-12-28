@@ -33,11 +33,17 @@ class SizeConfig {
     _blockWidth = _screenWidth / 100;
     _blockHeight = _screenHeight / 100;
 
-    textMultiplier = _blockHeight;
-    imageSizeMultiplier = _blockWidth;
-    heightMultiplier = _blockHeight;
-    widthMultiplier = _blockWidth;
+    //Jenil
+    // textMultiplier = _blockHeight;
+    // imageSizeMultiplier = _blockWidth;
+    // heightMultiplier = _blockHeight;
+    // widthMultiplier = _blockWidth;
 
+    //Jiten
+    textMultiplier = _blockHeight/8.3;
+    imageSizeMultiplier = _blockWidth/3.9;
+    heightMultiplier = _blockHeight/8.3;
+    widthMultiplier = _blockWidth/3.9;
     print("Block Width" + _blockWidth.toString());
     print("Block Height" + _blockHeight.toString());
   }

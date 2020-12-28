@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/authScreen/earn.dart';
 import 'package:ibiz/authScreen/firefly.dart';
 import 'package:provider/provider.dart';
 import 'package:ibiz/view/view.dart';
@@ -11,7 +12,7 @@ class Wrapper extends StatelessWidget {
 
     if (user == null) {
       print('Null User');
-      return Firefly();
+      return Earn();
     } else {
       print("UID: " + user.uid);
       return View(user: user);

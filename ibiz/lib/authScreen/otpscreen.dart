@@ -33,34 +33,18 @@ class _OTPState extends State<OTP> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                left: 5.1 * SizeConfig.widthMultiplier,
-                top: 6.0 * SizeConfig.heightMultiplier),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                  icon: Icon(Icons.keyboard_arrow_left),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-            ),
-          ), //BackButton
-          SizedBox(
-            height: 3.3 * SizeConfig.heightMultiplier,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                left: 5.1 * SizeConfig.widthMultiplier,
-                right: 5.1 * SizeConfig.widthMultiplier,
-                top: 2.4 * SizeConfig.heightMultiplier,
-                bottom: 2.4 * SizeConfig.heightMultiplier),
+                left: 57 * SizeConfig.widthMultiplier,
+                right: 57 * SizeConfig.widthMultiplier,
+                top: 98 * SizeConfig.heightMultiplier,
+                bottom: 30 * SizeConfig.heightMultiplier),
             child: SizedBox(
-              width: 66.6 * SizeConfig.widthMultiplier,
+              width: 260 * SizeConfig.widthMultiplier,
               child: Text(
-                "Verify Phone Number",
+                "Verify Your Phone Number",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xff151515),
-                  fontSize: (18 / 8.3) * SizeConfig.heightMultiplier,
+                  fontSize: (18) * SizeConfig.heightMultiplier,
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.w500,
                 ),
@@ -69,10 +53,9 @@ class _OTPState extends State<OTP> {
           ),
           Padding(
               padding: EdgeInsets.only(
-                  left: 5.1 * SizeConfig.widthMultiplier,
-                  right: 5.1 * SizeConfig.widthMultiplier,
-                  top: 2.4 * SizeConfig.heightMultiplier,
-                  bottom: 2.4 * SizeConfig.heightMultiplier),
+                left: 67 * SizeConfig.widthMultiplier,
+                right: 68 * SizeConfig.widthMultiplier,
+              ),
               child: SizedBox(
                 width: 76.9 * SizeConfig.widthMultiplier,
                 child: Text(
@@ -80,37 +63,25 @@ class _OTPState extends State<OTP> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff151515),
-                    fontSize: (13 / 8.34) * SizeConfig.heightMultiplier,
+                    fontSize: (13) * SizeConfig.heightMultiplier,
                     fontFamily: "Roboto",
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-              )),
+              )), //Veryfy Text
           Padding(
             padding: EdgeInsets.only(
-                left: 2 * SizeConfig.widthMultiplier,
-                right: 2 * SizeConfig.widthMultiplier,
-                top: 1 * SizeConfig.heightMultiplier,
-                bottom: 1 * SizeConfig.heightMultiplier),
+              left: 48 * SizeConfig.widthMultiplier,
+              right: 48 * SizeConfig.widthMultiplier,
+              top: 106 * SizeConfig.heightMultiplier,
+            ),
             child: Form(
                 key: _otpFormKey,
                 child: Column(
                   children: [
-                    // Padding(
-                    //   padding:  EdgeInsets.all(20),
-                    //   child: TextFormField(
-                    //     keyboardType: TextInputType.number,
-                    //     onChanged: (input) {
-                    //       setState(() => smsCode = input.trim());
-                    //     },
-                    //     decoration: InputDecoration(hintText: "OTP"),
-                    //   ),
-                    // ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: 12 * SizeConfig.widthMultiplier,
-                          right: 12 * SizeConfig.widthMultiplier,
-                          top: 11.4 * SizeConfig.heightMultiplier),
+                          bottom: 80 * SizeConfig.heightMultiplier),
                       child: PinFieldAutoFill(
                           codeLength: 6,
                           onCodeChanged: (val) {
@@ -120,15 +91,13 @@ class _OTPState extends State<OTP> {
                     ),
                     Padding(
                         padding: EdgeInsets.only(
-                            top: 11.4 * SizeConfig.heightMultiplier,
-                            bottom: 2.4 * SizeConfig.heightMultiplier,
-                            left: 22.3 * SizeConfig.widthMultiplier,
-                            right: 22.3 * SizeConfig.widthMultiplier),
+                            left: 40 * SizeConfig.widthMultiplier,
+                            right: 40 * SizeConfig.widthMultiplier),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: Container(
-                            height: (40 / 8.3) * SizeConfig.heightMultiplier,
-                            width: (300 / 3.9) * SizeConfig.widthMultiplier,
+                            height: (40) * SizeConfig.heightMultiplier,
+                            width: (300) * SizeConfig.widthMultiplier,
                             child: RaisedButton(
                               onPressed: () async {
                                 try {
@@ -153,22 +122,20 @@ class _OTPState extends State<OTP> {
                               child: Text(
                                 'Verify',
                                 style: TextStyle(
+                                    fontFamily: "Roboto",
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: (20 / 8.3) *
-                                        SizeConfig.heightMultiplier),
+                                    fontSize: 20 * SizeConfig.heightMultiplier),
                               ),
                             ),
                           ),
                         )),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 1 * SizeConfig.heightMultiplier,
-                          bottom: 1 * SizeConfig.heightMultiplier,
-                          left: 2 * SizeConfig.widthMultiplier,
-                          right: 2 * SizeConfig.widthMultiplier),
+                        top: 20 * SizeConfig.heightMultiplier,
+                      ),
                       child: SizedBox(
-                        width: (100 / 3.9) * SizeConfig.widthMultiplier,
+                        width: 100 * SizeConfig.widthMultiplier,
                         child: InkWell(
                           onTap: () {
                             _auth.verifyPhone(widget.contact);
@@ -179,8 +146,7 @@ class _OTPState extends State<OTP> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Color(0xff151515),
-                              fontSize:
-                                  (15 / 8.3) * SizeConfig.heightMultiplier,
+                              fontSize: 15 * SizeConfig.heightMultiplier,
                               fontFamily: "Roboto",
                               fontWeight: FontWeight.w300,
                             ),

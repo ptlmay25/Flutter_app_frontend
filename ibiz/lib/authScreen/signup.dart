@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ibiz/authScreen/firefly.dart';
+import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/home.dart';
@@ -54,7 +54,7 @@ class _SignUpState extends State<SignUp> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                left: 0, top: (20 / 8.3) * SizeConfig.heightMultiplier),
+                left: 0, top: 20  * SizeConfig.heightMultiplier),
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
@@ -65,14 +65,14 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
           SizedBox(
-            width: (180 / 3.9) * SizeConfig.widthMultiplier,
-            height: (45 / 8.3) * SizeConfig.heightMultiplier,
+            width: 180  * SizeConfig.widthMultiplier,
+            height: 45  * SizeConfig.heightMultiplier,
             child: Text(
               "What's your name?",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xff151515),
-                fontSize: (18 / 8.3) * SizeConfig.heightMultiplier,
+                fontSize: (18 ) * SizeConfig.heightMultiplier,
               ),
             ),
           ),
@@ -81,16 +81,16 @@ class _SignUpState extends State<SignUp> {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Color(0xff151515),
-              fontSize: (15 / 8.3) * SizeConfig.heightMultiplier,
+              fontSize: (15 ) * SizeConfig.heightMultiplier,
               fontFamily: "Roboto",
               fontWeight: FontWeight.w300,
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-                top: (96 / 8.3) * SizeConfig.heightMultiplier,
-                left: (40 / 3.9) * SizeConfig.widthMultiplier,
-                right: (20 / 3.9) * SizeConfig.widthMultiplier),
+                top: (96 ) * SizeConfig.heightMultiplier,
+                left: (40 ) * SizeConfig.widthMultiplier,
+                right: (20 ) * SizeConfig.widthMultiplier),
             child: Column(
               children: [
                 Padding(
@@ -143,14 +143,14 @@ class _SignUpState extends State<SignUp> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                top: (70 / 8.3) * SizeConfig.heightMultiplier),
+                                top: (70 ) * SizeConfig.heightMultiplier),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
-                                  (5 / 8.3) * SizeConfig.heightMultiplier),
+                                  (5 ) * SizeConfig.heightMultiplier),
                               child: Container(
                                 height:
-                                    (45 / 8.3) * SizeConfig.heightMultiplier,
-                                width: (200 / 3.9) * SizeConfig.widthMultiplier,
+                                    (45 ) * SizeConfig.heightMultiplier,
+                                width: (200 ) * SizeConfig.widthMultiplier,
                                 child: RaisedButton(
                                   onPressed: () {
                                     if (_signUpFormKey.currentState
@@ -168,7 +168,7 @@ class _SignUpState extends State<SignUp> {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: (20 / 8.3) *
+                                        fontSize: (20 ) *
                                             SizeConfig.heightMultiplier),
                                   ),
                                 ),
@@ -180,16 +180,16 @@ class _SignUpState extends State<SignUp> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: (30 / 8.3) * SizeConfig.heightMultiplier,
-                      bottom: (30 / 8.3) * SizeConfig.heightMultiplier,
-                      left: (30 / 3.9) * SizeConfig.widthMultiplier,
-                      right: (30 / 3.9) * SizeConfig.widthMultiplier),
+                      top: (30 ) * SizeConfig.heightMultiplier,
+                      bottom: (30 ) * SizeConfig.heightMultiplier,
+                      left: (30 ) * SizeConfig.widthMultiplier,
+                      right: (30 ) * SizeConfig.widthMultiplier),
                   child: IconButton(
                       icon: Icon(Icons.keyboard_arrow_right),
                       onPressed: () async {
                         await AuthService().signOut();
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Firefly()));
+                            MaterialPageRoute(builder: (context) => MyApp()));
                       }),
                 ),
               ],
@@ -206,10 +206,10 @@ class _SignUpState extends State<SignUp> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                top: (20 / 8.3) * SizeConfig.heightMultiplier,
-                bottom: (20 / 8.3) * SizeConfig.heightMultiplier,
-                left: (20 / 3.9) * SizeConfig.widthMultiplier,
-                right: (20 / 3.9) * SizeConfig.widthMultiplier),
+                top: (20 ) * SizeConfig.heightMultiplier,
+                bottom: (20 ) * SizeConfig.heightMultiplier,
+                left: (20 ) * SizeConfig.widthMultiplier,
+                right: (20 ) * SizeConfig.widthMultiplier),
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
@@ -222,26 +222,26 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
           SizedBox(
-            width: (240 / 3.9) * SizeConfig.widthMultiplier,
-            height: (45 / 8.3) * SizeConfig.heightMultiplier,
+            width: (240 ) * SizeConfig.widthMultiplier,
+            height: (45 ) * SizeConfig.heightMultiplier,
             child: Text(
               "What's your date of birth?",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xff151515),
-                fontSize: (18 / 8.3) * SizeConfig.heightMultiplier,
+                fontSize: (18 ) * SizeConfig.heightMultiplier,
               ),
             ),
           ),
           SizedBox(
-            width: (240 / 3.9) * SizeConfig.widthMultiplier,
-            height: (20 / 8.3) * SizeConfig.heightMultiplier,
+            width: (240 ) * SizeConfig.widthMultiplier,
+            height: (20 ) * SizeConfig.heightMultiplier,
             child: Text(
               "Choose your date of birth.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xff151515),
-                fontSize: (15 / 8.3) * SizeConfig.heightMultiplier,
+                fontSize: (15 ) * SizeConfig.heightMultiplier,
                 fontFamily: "Roboto",
                 fontWeight: FontWeight.w300,
               ),
@@ -249,9 +249,9 @@ class _SignUpState extends State<SignUp> {
           ),
           Padding(
             padding:
-                EdgeInsets.only(top: (60 / 8.3) * SizeConfig.heightMultiplier),
+                EdgeInsets.only(top: (60 ) * SizeConfig.heightMultiplier),
             child: SizedBox(
-              height: (200 / 8.3) * SizeConfig.heightMultiplier,
+              height: (200 ) * SizeConfig.heightMultiplier,
               child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
                   initialDateTime: DateTime.parse("1985-01-01"),
@@ -265,15 +265,15 @@ class _SignUpState extends State<SignUp> {
           ),
           Padding(
             padding: EdgeInsets.only(
-                top: (60 / 8.3) * SizeConfig.heightMultiplier,
-                left: (85 / 3.9) * SizeConfig.widthMultiplier,
-                right: (90 / 3.9) * SizeConfig.widthMultiplier),
+                top: (60 ) * SizeConfig.heightMultiplier,
+                left: (85 ) * SizeConfig.widthMultiplier,
+                right: (90 ) * SizeConfig.widthMultiplier),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(
-                  (5 / 8.3) * SizeConfig.heightMultiplier),
+                  (5 ) * SizeConfig.heightMultiplier),
               child: Container(
-                width: (40 / 3.9) * SizeConfig.widthMultiplier,
-                height: (45 / 8.3) * SizeConfig.heightMultiplier,
+                width: (40 ) * SizeConfig.widthMultiplier,
+                height: (45 ) * SizeConfig.heightMultiplier,
                 child: RaisedButton(
                   onPressed: () {
                     if (birthday != null) {
@@ -293,7 +293,7 @@ class _SignUpState extends State<SignUp> {
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: (20 / 8.3) * SizeConfig.heightMultiplier),
+                        fontSize: (20 ) * SizeConfig.heightMultiplier),
                   ),
                 ),
               ),
@@ -310,10 +310,10 @@ class _SignUpState extends State<SignUp> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                top: (20 / 8.3) * SizeConfig.heightMultiplier,
-                bottom: (20 / 8.3) * SizeConfig.heightMultiplier,
-                left: (20 / 3.9) * SizeConfig.widthMultiplier,
-                right: (20 / 3.9) * SizeConfig.widthMultiplier),
+                top: (20 ) * SizeConfig.heightMultiplier,
+                bottom: (20 ) * SizeConfig.heightMultiplier,
+                left: (20 ) * SizeConfig.widthMultiplier,
+                right: (20 ) * SizeConfig.widthMultiplier),
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
@@ -327,19 +327,19 @@ class _SignUpState extends State<SignUp> {
           ),
           Padding(
             padding: EdgeInsets.only(
-                top: (90 / 8.3) * SizeConfig.heightMultiplier,
-                left: (68 / 3.9) * SizeConfig.widthMultiplier,
-                right: (67 / 3.9) * SizeConfig.widthMultiplier),
+                top: (90 ) * SizeConfig.heightMultiplier,
+                left: (68 ) * SizeConfig.widthMultiplier,
+                right: (67 ) * SizeConfig.widthMultiplier),
             child: Center(
               child: SizedBox(
-                width: (240 / 3.9) * SizeConfig.widthMultiplier,
-                height: (45 / 8.3) * SizeConfig.heightMultiplier,
+                width: (240 ) * SizeConfig.widthMultiplier,
+                height: (45 ) * SizeConfig.heightMultiplier,
                 child: Text(
                   "What's your gender?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff151515),
-                    fontSize: (18 / 8.3) * SizeConfig.heightMultiplier,
+                    fontSize: (18 ) * SizeConfig.heightMultiplier,
                   ),
                 ),
               ),
@@ -347,12 +347,12 @@ class _SignUpState extends State<SignUp> {
           ),
           Padding(
               padding: EdgeInsets.only(
-                  top: (30 / 8.3) * SizeConfig.heightMultiplier),
+                  top: (30 ) * SizeConfig.heightMultiplier),
               child: Row(
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.only(
-                        left: (30 / 3.9) * SizeConfig.widthMultiplier),
+                        left: (30 ) * SizeConfig.widthMultiplier),
                     child: Radio(
                       value: 1,
                       groupValue: b,
@@ -364,12 +364,12 @@ class _SignUpState extends State<SignUp> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: (10 / 3.9) * SizeConfig.widthMultiplier),
+                        left: (10 ) * SizeConfig.widthMultiplier),
                     child: Text(
                       "Male",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: (16 / 8.3) * SizeConfig.heightMultiplier,
+                        fontSize: (16 ) * SizeConfig.heightMultiplier,
                         fontFamily: "Roboto",
                         fontWeight: FontWeight.w300,
                       ),
@@ -379,12 +379,12 @@ class _SignUpState extends State<SignUp> {
               )),
           Padding(
             padding:
-                EdgeInsets.only(top: (2 / 8.3) * SizeConfig.heightMultiplier),
+                EdgeInsets.only(top: (2 ) * SizeConfig.heightMultiplier),
             child: Row(
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      left: (30 / 3.9) * SizeConfig.widthMultiplier),
+                      left: (30 ) * SizeConfig.widthMultiplier),
                   child: Radio(
                     value: 2,
                     groupValue: b,
@@ -396,15 +396,15 @@ class _SignUpState extends State<SignUp> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      left: (10 / 3.9) * SizeConfig.widthMultiplier),
+                      left: (10 ) * SizeConfig.widthMultiplier),
                   child: SizedBox(
-                    width: (120 / 3.9) * SizeConfig.widthMultiplier,
-                    height: (18 / 8.3) * SizeConfig.heightMultiplier,
+                    width: (120 ) * SizeConfig.widthMultiplier,
+                    height: (18 ) * SizeConfig.heightMultiplier,
                     child: Text(
                       "Female",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: (16 / 8.3) * SizeConfig.heightMultiplier,
+                        fontSize: (16 ) * SizeConfig.heightMultiplier,
                         fontFamily: "Roboto",
                         fontWeight: FontWeight.w300,
                       ),
@@ -416,12 +416,12 @@ class _SignUpState extends State<SignUp> {
           ),
           Padding(
             padding:
-                EdgeInsets.only(top: (2 / 8.3) * SizeConfig.heightMultiplier),
+                EdgeInsets.only(top: (2 ) * SizeConfig.heightMultiplier),
             child: Row(
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      left: (30 / 3.9) * SizeConfig.widthMultiplier),
+                      left: (30 ) * SizeConfig.widthMultiplier),
                   child: Radio(
                     value: 3,
                     groupValue: b,
@@ -433,15 +433,15 @@ class _SignUpState extends State<SignUp> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      left: (10 / 3.9) * SizeConfig.widthMultiplier),
+                      left: (10 ) * SizeConfig.widthMultiplier),
                   child: SizedBox(
-                    width: (120 / 3.9) * SizeConfig.widthMultiplier,
-                    height: (18 / 8.3) * SizeConfig.heightMultiplier,
+                    width: (120 ) * SizeConfig.widthMultiplier,
+                    height: (18 ) * SizeConfig.heightMultiplier,
                     child: Text(
                       "Other",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: (16 / 8.3) * SizeConfig.heightMultiplier,
+                        fontSize: (16 ) * SizeConfig.heightMultiplier,
                         fontFamily: "Roboto",
                         fontWeight: FontWeight.w300,
                       ),
@@ -453,14 +453,14 @@ class _SignUpState extends State<SignUp> {
           ),
           Padding(
             padding: EdgeInsets.only(
-                top: (63 / 8.3) * SizeConfig.heightMultiplier,
-                left: (85 / 3.9) * SizeConfig.widthMultiplier,
-                right: (90 / 3.9) * SizeConfig.widthMultiplier),
+                top: (63 ) * SizeConfig.heightMultiplier,
+                left: (85 ) * SizeConfig.widthMultiplier,
+                right: (90 ) * SizeConfig.widthMultiplier),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: Container(
-                width: (200 / 3.9) * SizeConfig.widthMultiplier,
-                height: (45 / 8.3) * SizeConfig.heightMultiplier,
+                width: (200 ) * SizeConfig.widthMultiplier,
+                height: (45 ) * SizeConfig.heightMultiplier,
                 child: RaisedButton(
                   onPressed: () {
                     f2();
@@ -475,7 +475,7 @@ class _SignUpState extends State<SignUp> {
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: (20 / 8.3) * SizeConfig.heightMultiplier),
+                        fontSize: (20 ) * SizeConfig.heightMultiplier),
                   ),
                 ),
               ),

@@ -20,9 +20,9 @@ class _GetStartedState extends State<GetStarted> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                left: 5.12 * SizeConfig.widthMultiplier,
-                top: 6 * SizeConfig.heightMultiplier,
-                bottom: 2.4 * SizeConfig.heightMultiplier),
+                left: 30 * SizeConfig.widthMultiplier,
+                top: 50 * SizeConfig.heightMultiplier,
+                bottom: 20 * SizeConfig.heightMultiplier),
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
@@ -34,16 +34,16 @@ class _GetStartedState extends State<GetStarted> {
           ), //backButton
           Padding(
             padding: EdgeInsets.only(
-                left: 8.4 * SizeConfig.widthMultiplier,
-                right: 46.6 * SizeConfig.widthMultiplier),
+                left: 33 * SizeConfig.widthMultiplier,
+                right: 182 * SizeConfig.widthMultiplier),
             child: SizedBox(
-              width: 41 * SizeConfig.widthMultiplier,
-              height: 12 * SizeConfig.heightMultiplier,
+              width: 160 * SizeConfig.widthMultiplier,
+              height: 100 * SizeConfig.heightMultiplier,
               child: Text(
                 "Get \nStarted",
                 style: TextStyle(
                   color: Color(0xff151515),
-                  fontSize: 4 * SizeConfig.heightMultiplier,
+                  fontSize: 34 * SizeConfig.heightMultiplier,
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.w500,
                 ),
@@ -52,9 +52,9 @@ class _GetStartedState extends State<GetStarted> {
           ), //GetStarted_Text
           Padding(
             padding: EdgeInsets.only(
-                top: 7.8 * SizeConfig.heightMultiplier,
-                left: 10.2 * SizeConfig.widthMultiplier,
-                right: 5.1 * SizeConfig.widthMultiplier),
+                top: 65 * SizeConfig.heightMultiplier,
+                left: 40 * SizeConfig.widthMultiplier,
+                right: 20 * SizeConfig.widthMultiplier),
             child: Form(
                 key: _formkey,
                 child: Column(
@@ -77,28 +77,14 @@ class _GetStartedState extends State<GetStarted> {
                     ), //PhoneInput
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 5.4 * SizeConfig.heightMultiplier),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            hintText:
-                                "Invitation Code                                 Optional"),
-                        onChanged: (value) {
-                          setState(() {
-                            this.invitation_code = value;
-                          });
-                        },
-                      ),
-                    ),//InviteInput
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 9.6 * SizeConfig.heightMultiplier,
-                          left: 21.7 * SizeConfig.widthMultiplier,
-                          right: 23 * SizeConfig.widthMultiplier),
+                          top: 88 * SizeConfig.heightMultiplier,
+                          left: 88 * SizeConfig.widthMultiplier,
+                          right: 88 * SizeConfig.widthMultiplier),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: Container(
-                          height: 5.4*SizeConfig.heightMultiplier,
-                          width: 51.2*SizeConfig.widthMultiplier,
+                          height: 45 * SizeConfig.heightMultiplier,
+                          width: 200 * SizeConfig.widthMultiplier,
                           child: RaisedButton(
                             onPressed: () async {
                               try {
@@ -126,7 +112,7 @@ class _GetStartedState extends State<GetStarted> {
                           ),
                         ),
                       ),
-                    ),//NextButton
+                    ), //NextButton
                   ],
                 )),
           )
