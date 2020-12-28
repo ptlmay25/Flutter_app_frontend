@@ -135,7 +135,6 @@ class _OTPState extends State<OTP> {
                         top: 20 * SizeConfig.heightMultiplier,
                       ),
                       child: SizedBox(
-                        width: 100 * SizeConfig.widthMultiplier,
                         child: InkWell(
                           onTap: () {
                             _auth.verifyPhone(widget.contact);

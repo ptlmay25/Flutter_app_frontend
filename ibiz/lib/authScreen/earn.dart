@@ -28,13 +28,9 @@ class Earn extends StatelessWidget {
                 top: 80 * SizeConfig.heightMultiplier,
                 left: 17 * SizeConfig.widthMultiplier,
                 right: 17 * SizeConfig.widthMultiplier),
-            child: SizedBox(
-              height: 260 * SizeConfig.heightMultiplier,
-              width: 340 * SizeConfig.widthMultiplier,
-              child: Image.asset(
-                'assets/images/Group.jpg',
-                fit: BoxFit.fill,
-              ),
+            child: Image.asset(
+              'assets/images/Group.jpg',
+              fit: BoxFit.fill,
             ),
           ), //image
           Padding(
