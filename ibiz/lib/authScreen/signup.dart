@@ -460,7 +460,7 @@ class _SignUpState extends State<SignUp> {
                     //Todo Database Entry
                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Home()));
                   },
-                  color: Color.fromARGB(255, 119, 70, 193),
+                  color: Color.fromARGB(255, 66,71,112),
                   child: Text(
                     'Next',
                     style: TextStyle(
