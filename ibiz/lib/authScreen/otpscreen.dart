@@ -127,7 +127,7 @@ class _OTPState extends State<OTP> {
                                   print("_errorMESSAGEIS" + error.message);
                                 }
                               },
-                              color: Color.fromARGB(255, 119, 70, 193),
+                              color: Color.fromARGB(255, 66,71,112),
                               child: Text(
                                 'Verify',
                                 style: TextStyle(
