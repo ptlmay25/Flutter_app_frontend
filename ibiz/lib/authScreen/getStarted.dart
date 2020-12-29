@@ -20,7 +20,7 @@ class _GetStartedState extends State<GetStarted> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                left: 30 * SizeConfig.widthMultiplier,
+                left: 20 * SizeConfig.widthMultiplier,
                 top: 50 * SizeConfig.heightMultiplier,
                 bottom: 20 * SizeConfig.heightMultiplier),
             child: Align(
@@ -102,13 +102,13 @@ class _GetStartedState extends State<GetStarted> {
                                 print("_errorMESSAGEIS" + exception.message);
                               }
                             },
-                            color: Color.fromARGB(255, 66, 71, 112),
+                            color: Color.fromARGB(255, 119, 70, 193),
                             child: Text(
                               'Next',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16),
                             ),
                           ),
                         ),

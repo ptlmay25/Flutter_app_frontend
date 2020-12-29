@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/authScreen/getStarted.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Earn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
         children: <Widget>[
           Padding(
@@ -28,7 +30,7 @@ class Earn extends StatelessWidget {
                 top: 80 * SizeConfig.heightMultiplier,
                 left: 17 * SizeConfig.widthMultiplier,
                 right: 17 * SizeConfig.widthMultiplier),
-            child: Image.asset(
+            child: SvgPicture.asset(
               'assets/images/Group.svg',
               fit: BoxFit.fill,
             ),
@@ -48,12 +50,12 @@ class Earn extends StatelessWidget {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => GetStarted()));
                   },
-                  color: Color.fromARGB(255, 21, 21, 21),
+                  color: Color.fromARGB(255, 119, 70, 193),
                   child: Text(
                     'Get Stared',
                     style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.normal,
                         fontSize: 16 * SizeConfig.heightMultiplier),
                   ),
                 ),

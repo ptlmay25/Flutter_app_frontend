@@ -49,6 +49,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget showNameWidget() {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
         scrollDirection: Axis.vertical,
         children: <Widget>[
@@ -158,14 +159,14 @@ class _SignUpState extends State<SignUp> {
                                     print('First Name: ' + this.fname);
                                     print('Last Name: ' + this.lname);
                                   },
-                                  color: Color.fromARGB(255, 66, 71, 112),
+                                  color: Color.fromARGB(255, 119, 70, 193),
                                   child: Text(
                                     'Next',
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.normal,
                                         fontSize:
-                                            (20) * SizeConfig.heightMultiplier),
+                                            (16) * SizeConfig.heightMultiplier),
                                   ),
                                 ),
                               ),
@@ -282,13 +283,13 @@ class _SignUpState extends State<SignUp> {
                     }
                     print('Birthday: ' + birthday.toString());
                   },
-                  color: Color.fromARGB(255, 66, 71, 112),
+                  color: Color.fromARGB(255, 119, 70, 193),
                   child: Text(
                     'Next',
                     style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: (20) * SizeConfig.heightMultiplier),
+                        fontWeight: FontWeight.normal,
+                        fontSize: (16) * SizeConfig.heightMultiplier),
                   ),
                 ),
               ),
@@ -301,6 +302,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget showGenderWidget() {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
         children: <Widget>[
           Padding(
@@ -455,17 +457,16 @@ class _SignUpState extends State<SignUp> {
                   onPressed: () {
                     f2();
                     print(gender);
-                    setState(() {
-                      flag = 3;
-                    });
+                    //Todo Database Entry
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Home()));
                   },
-                  color: Color.fromARGB(255, 66, 71, 112),
+                  color: Color.fromARGB(255, 119, 70, 193),
                   child: Text(
                     'Next',
                     style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: (20) * SizeConfig.heightMultiplier),
+                        fontWeight: FontWeight.normal,
+                        fontSize: (16) * SizeConfig.heightMultiplier),
                   ),
                 ),
               ),

@@ -29,6 +29,7 @@ class _OTPState extends State<OTP> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
           child: ListView(
         children: <Widget>[
@@ -72,8 +73,8 @@ class _OTPState extends State<OTP> {
               )), //Veryfy Text
           Padding(
             padding: EdgeInsets.only(
-              left: 48 * SizeConfig.widthMultiplier,
-              right: 48 * SizeConfig.widthMultiplier,
+              // left: 48 * SizeConfig.widthMultiplier,
+              // right: 48 * SizeConfig.widthMultiplier,
               top: 106 * SizeConfig.heightMultiplier,
             ),
             child: Form(
@@ -82,7 +83,10 @@ class _OTPState extends State<OTP> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          bottom: 80 * SizeConfig.heightMultiplier),
+                          bottom: 80 * SizeConfig.heightMultiplier,
+                          left: 10*SizeConfig.widthMultiplier,
+                          right: 10*SizeConfig.widthMultiplier
+                          ),
                       child: TextFieldPin(
                           codeLength: 6,
                           // onCodeChanged: (val) {
@@ -96,8 +100,8 @@ class _OTPState extends State<OTP> {
                     ),
                     Padding(
                         padding: EdgeInsets.only(
-                            left: 40 * SizeConfig.widthMultiplier,
-                            right: 40 * SizeConfig.widthMultiplier),
+                            left: 88 * SizeConfig.widthMultiplier,
+                            right: 88 * SizeConfig.widthMultiplier),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: Container(
@@ -123,14 +127,14 @@ class _OTPState extends State<OTP> {
                                   print("_errorMESSAGEIS" + error.message);
                                 }
                               },
-                              color: Color.fromARGB(255, 66, 71, 112),
+                              color: Color.fromARGB(255, 119, 70, 193),
                               child: Text(
                                 'Verify',
                                 style: TextStyle(
                                     fontFamily: "Roboto",
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20 * SizeConfig.heightMultiplier),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 16 * SizeConfig.heightMultiplier),
                               ),
                             ),
                           ),
