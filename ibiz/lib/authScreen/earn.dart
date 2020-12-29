@@ -30,8 +30,8 @@ class Earn extends StatelessWidget {
                 top: 80 * SizeConfig.heightMultiplier,
                 left: 17 * SizeConfig.widthMultiplier,
                 right: 17 * SizeConfig.widthMultiplier),
-            child: SvgPicture.asset(
-              'assets/images/Group.svg',
+            child: Image.asset(
+              'assets/images/Group.jpg',
               fit: BoxFit.fill,
             ),
           ), //image
