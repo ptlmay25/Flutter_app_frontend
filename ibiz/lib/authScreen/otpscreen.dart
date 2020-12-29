@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:sms_autofill/sms_autofill.dart';
+// import 'package:sms_autofill/sms_autofill.dart';
+import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 
 class OTP extends StatefulWidget {
   final String contact;
@@ -82,12 +83,16 @@ class _OTPState extends State<OTP> {
                     Padding(
                       padding: EdgeInsets.only(
                           bottom: 80 * SizeConfig.heightMultiplier),
-                      child: PinFieldAutoFill(
+                      child: TextFieldPin(
                           codeLength: 6,
-                          onCodeChanged: (val) {
-                            this.smsCode = val;
-                            print(val);
-                          }),
+                          // onCodeChanged: (val) {
+                          //   this.smsCode = val;
+                          //   print(val);
+                          // }
+                          onOtpCallback: (code,isAutofill){
+                            this.smsCode=code;
+                          },
+                          ),
                     ),
                     Padding(
                         padding: EdgeInsets.only(
@@ -192,7 +197,8 @@ class _OTPState extends State<OTP> {
   // }
 
   void _listenOtp() async {
-    await SmsAutoFill().listenForCode;
+    // await SmsAutoFill().listenForCode;
+    print("Listining");
   }
 
   // Future<void> login(_phoneAuthCredential) async {

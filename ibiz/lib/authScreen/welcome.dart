@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/authScreen/otpscreen.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:sms_autofill/sms_autofill.dart';
+//import 'package:sms_autofill/sms_autofill.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -90,9 +90,9 @@ class _WelcomeState extends State<Welcome> {
                                 onPressed: () async {
                                   try {
                                     if (_loginFormKey.currentState.validate()) {
-                                      final signCode =
-                                          await SmsAutoFill().getAppSignature;
-                                      print(signCode);
+                                      // final signCode =
+                                      //     await SmsAutoFill().getAppSignature;
+                                      // print(signCode);
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
                                               builder: (context) => OTP(
