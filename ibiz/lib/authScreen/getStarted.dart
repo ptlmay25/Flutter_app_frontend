@@ -102,7 +102,7 @@ class _GetStartedState extends State<GetStarted> {
                                 print("_errorMESSAGEIS" + exception.message);
                               }
                             },
-                            color: Color.fromARGB(255, 119, 70, 193),
+                            color: Color.fromARGB(255, 66,71,112),
                             child: Text(
                               'Next',
                               style: TextStyle(
