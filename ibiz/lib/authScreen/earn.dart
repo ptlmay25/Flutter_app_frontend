@@ -50,7 +50,7 @@ class Earn extends StatelessWidget {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => GetStarted()));
                   },
-                  color: Color.fromARGB(255, 119, 70, 193),
+                  color: Color.fromARGB(255, 66,71,112),
                   child: Text(
                     'Get Stared',
                     style: TextStyle(
