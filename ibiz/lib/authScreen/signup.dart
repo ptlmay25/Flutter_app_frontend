@@ -72,7 +72,7 @@ class _SignUpState extends State<SignUp> {
               "What's your name?",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xff151515),
+                color: Color(0xff515151),
                 fontSize: (18) * SizeConfig.heightMultiplier,
               ),
             ),
@@ -81,7 +81,7 @@ class _SignUpState extends State<SignUp> {
             "Enter the name you use in real life.",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color(0xff151515),
+              color: Color(0xff515151),
               fontSize: (15) * SizeConfig.heightMultiplier,
               fontFamily: "Roboto",
               fontWeight: FontWeight.w300,
@@ -225,7 +225,7 @@ class _SignUpState extends State<SignUp> {
               "What's your date of birth?",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xff151515),
+                color: Color(0xff515151),
                 fontSize: (18) * SizeConfig.heightMultiplier,
               ),
             ),
@@ -237,7 +237,7 @@ class _SignUpState extends State<SignUp> {
               "Choose your date of birth.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xff151515),
+                color: Color(0xff515151),
                 fontSize: (15) * SizeConfig.heightMultiplier,
                 fontFamily: "Roboto",
                 fontWeight: FontWeight.w300,
@@ -333,7 +333,7 @@ class _SignUpState extends State<SignUp> {
                   "What's your gender?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xff151515),
+                    color: Color(0xff515151),
                     fontSize: (18) * SizeConfig.heightMultiplier,
                   ),
                 ),
