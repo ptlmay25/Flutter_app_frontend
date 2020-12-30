@@ -72,7 +72,7 @@ class _SignUpState extends State<SignUp> {
               "What's your name?",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xff515151),
+                color: Color(0xff151515),
                 fontSize: (18) * SizeConfig.heightMultiplier,
               ),
             ),
@@ -81,7 +81,7 @@ class _SignUpState extends State<SignUp> {
             "Enter the name you use in real life.",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color(0xff515151),
+              color: Color(0xff151515),
               fontSize: (15) * SizeConfig.heightMultiplier,
               fontFamily: "Roboto",
               fontWeight: FontWeight.w300,
@@ -159,7 +159,7 @@ class _SignUpState extends State<SignUp> {
                                     print('First Name: ' + this.fname);
                                     print('Last Name: ' + this.lname);
                                   },
-                                  color: Color.fromARGB(255, 119, 70, 193),
+                                  color: Color.fromARGB(255, 66, 71, 112),
                                   child: Text(
                                     'Next',
                                     style: TextStyle(
@@ -225,7 +225,7 @@ class _SignUpState extends State<SignUp> {
               "What's your date of birth?",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xff515151),
+                color: Color(0xff151515),
                 fontSize: (18) * SizeConfig.heightMultiplier,
               ),
             ),
@@ -237,7 +237,7 @@ class _SignUpState extends State<SignUp> {
               "Choose your date of birth.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xff515151),
+                color: Color(0xff151515),
                 fontSize: (15) * SizeConfig.heightMultiplier,
                 fontFamily: "Roboto",
                 fontWeight: FontWeight.w300,
@@ -283,7 +283,7 @@ class _SignUpState extends State<SignUp> {
                     }
                     print('Birthday: ' + birthday.toString());
                   },
-                  color: Color.fromARGB(255, 119, 70, 193),
+                  color: Color.fromARGB(255, 66, 71, 112),
                   child: Text(
                     'Next',
                     style: TextStyle(
@@ -333,7 +333,7 @@ class _SignUpState extends State<SignUp> {
                   "What's your gender?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xff515151),
+                    color: Color(0xff151515),
                     fontSize: (18) * SizeConfig.heightMultiplier,
                   ),
                 ),
