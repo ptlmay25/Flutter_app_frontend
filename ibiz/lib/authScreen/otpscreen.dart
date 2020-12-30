@@ -45,7 +45,7 @@ class _OTPState extends State<OTP> {
                 "Verify Your Phone Number",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color(0xff515151),
+                  color: Color(0xff151515),
                   fontSize: (18) * SizeConfig.heightMultiplier,
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.w500,
@@ -64,7 +64,7 @@ class _OTPState extends State<OTP> {
                   "Enter 6 digit verification code sent to \n${widget.contact}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xff515151),
+                    color: Color(0xff151515),
                     fontSize: (13) * SizeConfig.heightMultiplier,
                     fontFamily: "Roboto",
                     fontWeight: FontWeight.w300,
@@ -153,7 +153,7 @@ class _OTPState extends State<OTP> {
                             "Resend code",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Color(0xff515151),
+                              color: Color(0xff151515),
                               fontSize: 15 * SizeConfig.heightMultiplier,
                               fontFamily: "Roboto",
                               fontWeight: FontWeight.w300,
