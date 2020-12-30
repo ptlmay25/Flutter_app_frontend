@@ -42,7 +42,7 @@ class _GetStartedState extends State<GetStarted> {
               child: Text(
                 "Get \nStarted",
                 style: TextStyle(
-                  color: Color(0xff515151),
+                  color: Color(0xff151515),
                   fontSize: 34 * SizeConfig.heightMultiplier,
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.w500,
