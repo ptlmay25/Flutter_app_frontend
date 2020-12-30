@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_auth: ^0.14.0+5
+  # firebase_auth: ^0.18.4+1
   provider: ^3.1.0
   # sms_autofill: ^1.2.4
   firebase_core_web: ^0.2.0
@@ -53,6 +54,19 @@ flutter:
   assets:
     - assets/images/Group.jpg
     - assets/images/Group.svg
+    - assets/icons/name.png
+    - assets/icons/Notification.png
+    - assets/icons/Sandwich bar.png
+    - assets/icons/user (1) 1.png
+    - assets/icons/user 1.png
+    - assets/icons/support 1.png
+    - assets/icons/bank-building 1.png
+    - assets/icons/clipboards 1.png
+    - assets/icons/home.png
+    - assets/icons/search 1.png
+    - assets/icons/profile pic.png
+    - assets/icons/Invite friends.png
+    - assets/icons/Focus 2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -62,6 +62,7 @@ class _GetStartedState extends State<GetStarted> {
                     Padding(
                       padding: EdgeInsets.all(0.0),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(hintText: "Phone Number*"),
                         onChanged: (value) {
                           setState(() {

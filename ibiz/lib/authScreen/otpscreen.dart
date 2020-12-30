@@ -88,6 +88,7 @@ class _OTPState extends State<OTP> {
                           right: 10*SizeConfig.widthMultiplier
                           ),
                       child: TextFieldPin(
+                          
                           codeLength: 6,
                           // onCodeChanged: (val) {
                           //   this.smsCode = val;
