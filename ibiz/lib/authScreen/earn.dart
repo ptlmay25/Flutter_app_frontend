@@ -19,7 +19,7 @@ class Earn extends StatelessWidget {
                 "Earn Amazing \nRewards Every day",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color(0xff1d224d),
+                  color: Color(0xff515151),
                   fontSize: 28 * SizeConfig.heightMultiplier,
                 ),
               ),
