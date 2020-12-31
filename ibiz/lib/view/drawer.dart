@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/main.dart';
+import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/size_config.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -117,7 +119,10 @@ class HomeDrawer extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              onTap: null,
+              onTap: () async {
+                AuthService().signOut();
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyApp()));
+              },
             ),
           )
         ],

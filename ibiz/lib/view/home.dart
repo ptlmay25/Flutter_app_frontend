@@ -31,6 +31,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: Builder(builder: (context) {
+            return IconButton(
+              icon: SizedBox(
+                height: 25 * SizeConfig.heightMultiplier,
+                width: 25 * SizeConfig.widthMultiplier,
+                child: new Image.asset("assets/icons/menu_bar.png"),
+              ),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            );
+          }),
           backgroundColor: Color.fromARGB(255, 66, 71, 112),
           title: Padding(
             padding: EdgeInsets.only(
@@ -59,117 +69,35 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           color: Colors.white,
           child: new TabBar(controller: controller, tabs: <Tab>[
             new Tab(
-              icon: Column(
-                children: [
-                  SizedBox(
-                      height: 25 * SizeConfig.heightMultiplier,
-                      width: 25 * SizeConfig.widthMultiplier,
-                      child: new Image.asset("assets/icons/home.png")),
-                  SizedBox(
-                    width: 70,
-                    height: 20,
-                    child: Text(
-                      "Home",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff151515),
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                icon: SizedBox(
+                    height: 45 * SizeConfig.heightMultiplier,
+                    width: 70 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/home.png",
+                        fit: BoxFit.fitHeight))),
             new Tab(
-              icon: Column(
-                children: [
-                  SizedBox(
-                      height: 25 * SizeConfig.heightMultiplier,
-                      width: 25 * SizeConfig.widthMultiplier,
-                      child: new Image.asset("assets/icons/search_icon.png")),
-                  SizedBox(
-                    width: 70,
-                    height: 20,
-                    child: Text(
-                      "Search",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff151515),
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                icon: SizedBox(
+                    height: 45 * SizeConfig.heightMultiplier,
+                    width: 70 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/search.png",
+                        fit: BoxFit.fitHeight))),
             new Tab(
-              icon: Column(
-                children: [
-                  SizedBox(
-                      height: 25 * SizeConfig.heightMultiplier,
-                      width: 25 * SizeConfig.widthMultiplier,
-                      child: new Image.asset("assets/icons/scan_code.png")),
-                  SizedBox(
-                    width: 70,
-                    height: 20,
-                    child: Text(
-                      "Scan Code",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff151515),
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                icon: SizedBox(
+                    height: 40 * SizeConfig.heightMultiplier,
+                    width: 70 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/scan_code.png",
+                        fit: BoxFit.fitHeight))),
             new Tab(
-              icon: Column(
-                children: [
-                  SizedBox(
-                    height: 25 * SizeConfig.heightMultiplier,
-                    width: 25 * SizeConfig.widthMultiplier,
-                    child: new Image.asset("assets/icons/profile_pic.png"),
-                  ),
-                  SizedBox(
-                    width: 70,
-                    height: 20,
-                    child: Text(
-                      "Account",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff151515),
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                icon: SizedBox(
+                    height: 45 * SizeConfig.heightMultiplier,
+                    width: 70 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/account.png",
+                        fit: BoxFit.fitHeight))),
             new Tab(
-              icon: Column(
-                children: [
-                  SizedBox(
-                      height: 25 * SizeConfig.heightMultiplier,
-                      width: 25 * SizeConfig.widthMultiplier,
-                      child: new Image.asset("assets/icons/invite_friends.png")),
-                SizedBox(
-                    width: 70,
-                    height: 20,
-                    child: Text(
-                      "Share",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff151515),
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-                  
-            ),
+                icon: SizedBox(
+                    height: 45 * SizeConfig.heightMultiplier,
+                    width: 70 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/search.png",
+                        fit: BoxFit.fitHeight))),
           ]),
         ),
         body: new TabBarView(
