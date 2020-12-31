@@ -109,7 +109,7 @@ class HomeDrawer extends StatelessWidget {
               leading: SizedBox(
                   height: 20 * SizeConfig.heightMultiplier,
                   width: 20 * SizeConfig.widthMultiplier,
-                  child: Image.asset("assets/icons/user 1.png")),
+                  child: Image.asset("assets/icons/Logout.png")),
               title: Text(
                 "Logout",
                 style: TextStyle(
