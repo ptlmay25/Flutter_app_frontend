@@ -49,7 +49,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 right: 5 * SizeConfig.widthMultiplier,
               ),
               child: IconButton(
-                  icon: Image.asset("assets/icons/Notification.png"),
+                  icon: Image.asset("assets/icons/notification.png"),
                   onPressed: null),
             ),
           ],
@@ -73,7 +73,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xff151515),
-                        fontSize: 9,
+                        fontSize: 11,
                       ),
                     ),
                   ),
@@ -86,7 +86,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   SizedBox(
                       height: 25 * SizeConfig.heightMultiplier,
                       width: 25 * SizeConfig.widthMultiplier,
-                      child: new Image.asset("assets/icons/search 1.png")),
+                      child: new Image.asset("assets/icons/search_icon.png")),
                   SizedBox(
                     width: 70,
                     height: 20,
@@ -95,7 +95,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xff151515),
-                        fontSize: 9,
+                        fontSize: 11,
                       ),
                     ),
                   ),
@@ -108,7 +108,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   SizedBox(
                       height: 25 * SizeConfig.heightMultiplier,
                       width: 25 * SizeConfig.widthMultiplier,
-                      child: new Image.asset("assets/icons/Focus 2.png")),
+                      child: new Image.asset("assets/icons/scan_code.png")),
                   SizedBox(
                     width: 70,
                     height: 20,
@@ -117,7 +117,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xff151515),
-                        fontSize: 9,
+                        fontSize: 11,
                       ),
                     ),
                   ),
@@ -130,7 +130,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   SizedBox(
                     height: 25 * SizeConfig.heightMultiplier,
                     width: 25 * SizeConfig.widthMultiplier,
-                    child: new Image.asset("assets/icons/profile pic.png"),
+                    child: new Image.asset("assets/icons/profile_pic.png"),
                   ),
                   SizedBox(
                     width: 70,
@@ -140,7 +140,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xff151515),
-                        fontSize: 9,
+                        fontSize: 11,
                       ),
                     ),
                   ),
@@ -153,7 +153,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   SizedBox(
                       height: 25 * SizeConfig.heightMultiplier,
                       width: 25 * SizeConfig.widthMultiplier,
-                      child: new Image.asset("assets/icons/Invite friends.png")),
+                      child: new Image.asset("assets/icons/invite_friends.png")),
                 SizedBox(
                     width: 70,
                     height: 20,
@@ -162,7 +162,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xff151515),
-                        fontSize: 9,
+                        fontSize: 11,
                       ),
                     ),
                   ),
