@@ -73,7 +73,8 @@ class _SignUpState extends State<SignUp> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xff151515),
-                fontSize: (18) * SizeConfig.heightMultiplier,
+                fontSize: (20) * SizeConfig.heightMultiplier,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -82,7 +83,7 @@ class _SignUpState extends State<SignUp> {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Color(0xff151515),
-              fontSize: (15) * SizeConfig.heightMultiplier,
+              fontSize: (14) * SizeConfig.heightMultiplier,
               fontFamily: "Roboto",
               fontWeight: FontWeight.w300,
             ),
@@ -334,7 +335,8 @@ class _SignUpState extends State<SignUp> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff151515),
-                    fontSize: (18) * SizeConfig.heightMultiplier,
+                    fontSize: (20) * SizeConfig.heightMultiplier,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
