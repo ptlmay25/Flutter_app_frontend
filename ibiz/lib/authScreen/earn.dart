@@ -20,7 +20,8 @@ class Earn extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xff151515),
-                  fontSize: 28 * SizeConfig.heightMultiplier,
+                  fontSize: 32 * SizeConfig.heightMultiplier,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),
@@ -31,7 +32,7 @@ class Earn extends StatelessWidget {
                 left: 17 * SizeConfig.widthMultiplier,
                 right: 17 * SizeConfig.widthMultiplier),
             child: Image.asset(
-              'assets/images/Group.jpg',
+              'assets/images/Group.png',
               fit: BoxFit.fill,
             ),
           ), //image
