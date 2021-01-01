@@ -70,33 +70,33 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           child: new TabBar(controller: controller, tabs: <Tab>[
             new Tab(
                 icon: SizedBox(
-                    height: 45 * SizeConfig.heightMultiplier,
-                    width: 70 * SizeConfig.widthMultiplier,
-                    child: new Image.asset("assets/icons/home.png",
+                    height: 30 * SizeConfig.heightMultiplier,
+                    width: 30 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/home30px.png",
                         fit: BoxFit.fitHeight))),
             new Tab(
                 icon: SizedBox(
-                    height: 45 * SizeConfig.heightMultiplier,
-                    width: 70 * SizeConfig.widthMultiplier,
-                    child: new Image.asset("assets/icons/search.png",
+                    height: 30 * SizeConfig.heightMultiplier,
+                    width: 30 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/search30px.png",
                         fit: BoxFit.fitHeight))),
             new Tab(
                 icon: SizedBox(
-                    height: 40 * SizeConfig.heightMultiplier,
-                    width: 70 * SizeConfig.widthMultiplier,
-                    child: new Image.asset("assets/icons/scan_code.png",
+                    height: 30 * SizeConfig.heightMultiplier,
+                    width: 30 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/scan_code30px.png",
                         fit: BoxFit.fitHeight))),
             new Tab(
                 icon: SizedBox(
-                    height: 45 * SizeConfig.heightMultiplier,
-                    width: 70 * SizeConfig.widthMultiplier,
-                    child: new Image.asset("assets/icons/account.png",
+                    height: 30 * SizeConfig.heightMultiplier,
+                    width: 30 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/account30px.png",
                         fit: BoxFit.fitHeight))),
             new Tab(
                 icon: SizedBox(
-                    height: 45 * SizeConfig.heightMultiplier,
-                    width: 70 * SizeConfig.widthMultiplier,
-                    child: new Image.asset("assets/icons/search.png",
+                    height: 30 * SizeConfig.heightMultiplier,
+                    width: 30 * SizeConfig.widthMultiplier,
+                    child: new Image.asset("assets/icons/invite_friend30px.png",
                         fit: BoxFit.fitHeight))),
           ]),
         ),
