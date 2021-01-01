@@ -62,11 +62,11 @@ flutter:
     - assets/icons/contact_us.png
     - assets/icons/bank_building.png
     - assets/icons/clipboards.png
-    - assets/icons/home.png
-    - assets/icons/search.png
-    - assets/icons/invite_friend.png
-    - assets/icons/scan_code.png
-    - assets/icons/account.png
+    - assets/icons/home30px.png
+    - assets/icons/search30px.png
+    - assets/icons/invite_friend30px.png
+    - assets/icons/scan_code30px.png
+    - assets/icons/account30px.png
     - assets/icons/Notification.png
     - assets/icons/Logout.png
 
