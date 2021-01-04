@@ -80,39 +80,41 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 11 * SizeConfig.heightMultiplier),
-                      child: SizedBox(
-                        height: 60 * SizeConfig.heightMultiplier,
-                        width: 60 * SizeConfig.widthMultiplier,
-                        child: CircleAvatar(
-                          backgroundImage:
-                              AssetImage("assets/icons/user_icon.png"),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 11 * SizeConfig.heightMultiplier),
+                          child: SizedBox(
+                            height: 60 * SizeConfig.heightMultiplier,
+                            width: 60 * SizeConfig.widthMultiplier,
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/icons/user_icon.png"),
+                            ),
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: EdgeInsets.only(),
+                          child: SizedBox(
+                            height: 20 * SizeConfig.heightMultiplier,
+                            width: 100 * SizeConfig.widthMultiplier,
+                            child: FlatButton(
+                              onPressed: null,
+                              child: Text(
+                                "Edit photo",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xff838587),
+                                  fontSize: 13 * SizeConfig.textMultiplier,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 230 * SizeConfig.widthMultiplier,
-                  ),
-                  child: SizedBox(
-                    height: 20 * SizeConfig.heightMultiplier,
-                    width: 100 * SizeConfig.widthMultiplier,
-                    child: FlatButton(
-                      onPressed: null,
-                      child: Text(
-                        "Edit photo",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xff838587),
-                          fontSize: 13 * SizeConfig.textMultiplier,
-                        ),
-                      ),
-                    ),
-                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -191,8 +193,11 @@ class _ProfileState extends State<Profile> {
                               keyboardType: TextInputType.emailAddress,
                               initialValue: email,
                               validator: (value) {
-                                if (value.isEmpty) {
-                                  return "Please Enter Email Address";
+                                bool validEmail = RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(value);
+                                if (!validEmail) {
+                                  return "Invalid Email";
                                 }
                               },
                             ),
@@ -272,8 +277,11 @@ class _ProfileState extends State<Profile> {
                                   keyboardType: TextInputType.number,
                                   initialValue: zipconde,
                                   validator: (value) {
-                                    if (value.isEmpty) {
-                                      return "Please Enter Zipcode";
+                                    bool validZipcode =
+                                        RegExp("[0-9][0-9][0-9][0-9][0-9][0-9]")
+                                            .hasMatch(value);
+                                    if (!validZipcode) {
+                                      return "Invalid Zipcode";
                                     }
                                   },
                                 ),
