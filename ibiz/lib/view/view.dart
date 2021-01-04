@@ -36,7 +36,7 @@ class _ViewState extends State<View> {
       print("View Received Null");
     }
     if (widget.user.contact != "+917600257008") {
-      return SignUp();
+      return SignUp(mobileNo: widget.user.contact,);
     } else {
       return Home();
     }

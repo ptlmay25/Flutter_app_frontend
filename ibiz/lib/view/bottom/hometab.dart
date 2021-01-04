@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/service/database/userdb.dart';
 
 class Hometab extends StatefulWidget {
   @override
@@ -9,7 +10,9 @@ class _HometabState extends State<Hometab> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Icon(Icons.home),
+      child: IconButton(icon: Icon(Icons.home), onPressed: (){
+        Userdb().getUsers();
+      }),
     );
   }
 }

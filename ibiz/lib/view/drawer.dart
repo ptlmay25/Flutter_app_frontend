@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/view/navbar/BankInfo.dart';
+import 'package:ibiz/view/navbar/contact_us.dart';
+import 'package:ibiz/view/navbar/profile.dart';
+import 'package:ibiz/view/navbar/withdrawal_history.dart';
 
 class HomeDrawer extends StatelessWidget {
   @override
@@ -51,7 +55,10 @@ class HomeDrawer extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              onTap: null,
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Profile()));
+              },
             ),
           ),
           Padding(
@@ -68,7 +75,10 @@ class HomeDrawer extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              onTap: null,
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => BankInfo()));
+              },
             ),
           ),
           Padding(
@@ -85,7 +95,9 @@ class HomeDrawer extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              onTap: null,
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Withdraw_History()));
+              },
             ),
           ),
           Padding(
@@ -102,7 +114,9 @@ class HomeDrawer extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              onTap: null,
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Contact_Us()));
+              },
             ),
           ),
           Padding(
@@ -121,7 +135,8 @@ class HomeDrawer extends StatelessWidget {
               ),
               onTap: () async {
                 AuthService().signOut();
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyApp()));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => MyApp()));
               },
             ),
           )

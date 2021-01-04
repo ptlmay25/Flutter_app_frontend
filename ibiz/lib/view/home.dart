@@ -7,6 +7,7 @@ import 'package:ibiz/view/bottom/scantab.dart';
 import 'package:ibiz/view/bottom/searchtab.dart';
 import 'package:ibiz/view/bottom/sharetab.dart';
 import 'package:ibiz/view/drawer.dart';
+import 'package:ibiz/view/navbar/notification.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -59,8 +60,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 right: 5 * SizeConfig.widthMultiplier,
               ),
               child: IconButton(
-                  icon: Image.asset("assets/icons/notification.png"),
-                  onPressed: null),
+                icon: Image.asset("assets/icons/Notification.png"),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Notification_Page()));
+                },
+              ),
             ),
           ],
         ),

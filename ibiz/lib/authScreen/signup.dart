@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ibiz/authScreen/firefly.dart';
 import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
+import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/home.dart';
 
 class SignUp extends StatefulWidget {
+  final String mobileNo;
+  SignUp({this.mobileNo});
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -59,7 +61,10 @@ class _SignUpState extends State<SignUp> {
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
-                  icon: Icon(Icons.keyboard_arrow_left),
+                  icon: SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: Icon(Icons.keyboard_arrow_left)),
                   onPressed: () {
                     AuthService().signOut();
                   }),
@@ -176,20 +181,6 @@ class _SignUpState extends State<SignUp> {
                         ],
                       )),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: (30) * SizeConfig.heightMultiplier,
-                      bottom: (30) * SizeConfig.heightMultiplier,
-                      left: (30) * SizeConfig.widthMultiplier,
-                      right: (30) * SizeConfig.widthMultiplier),
-                  child: IconButton(
-                      icon: Icon(Icons.keyboard_arrow_right),
-                      onPressed: () async {
-                        await AuthService().signOut();
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => MyApp()));
-                      }),
-                ),
               ],
             ),
           )
@@ -211,7 +202,10 @@ class _SignUpState extends State<SignUp> {
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
-                  icon: Icon(Icons.keyboard_arrow_left),
+                  icon: SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: Icon(Icons.keyboard_arrow_left)),
                   onPressed: () {
                     setState(() {
                       flag = 2;
@@ -315,7 +309,10 @@ class _SignUpState extends State<SignUp> {
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
-                  icon: Icon(Icons.keyboard_arrow_left),
+                  icon: SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: Icon(Icons.keyboard_arrow_left)),
                   onPressed: () {
                     setState(() {
                       flag = 1;
@@ -460,9 +457,11 @@ class _SignUpState extends State<SignUp> {
                     f2();
                     print(gender);
                     //Todo Database Entry
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Home()));
+                    Userdb().addUser(widget.mobileNo,this.fname+" "+this.lname, gender);
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => Home()));
                   },
-                  color: Color.fromARGB(255, 66,71,112),
+                  color: Color.fromARGB(255, 66, 71, 112),
                   child: Text(
                     'Next',
                     style: TextStyle(
