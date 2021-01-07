@@ -1,0 +1,31 @@
+class UserModel {
+  UserModel(
+      {this.id,
+      this.mobileNo,
+      this.IFSC,
+      this.UPI,
+      this.bankAccountNo,
+      this.city,
+      this.country,
+      this.email,
+      this.gender,
+      this.homeAddress,
+      this.password,
+      this.state,
+      this.username,
+      this.zipcode});
+  final String id,
+      username,
+      gender,
+      email,
+      password,
+      mobileNo,
+      homeAddress,
+      city,
+      state,
+      zipcode,
+      country,
+      UPI,
+      bankAccountNo,
+      IFSC;
+}

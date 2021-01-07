@@ -457,9 +457,9 @@ class _SignUpState extends State<SignUp> {
                     f2();
                     print(gender);
                     //Todo Database Entry
-                    Userdb().addUser(widget.mobileNo,this.fname+" "+this.lname, gender);
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => Home()));
+                    Userdb().addUser(widget.mobileNo,
+                        this.fname + " " + this.lname, this.gender);
+                    Navigator.of(context as Element).reassemble();
                   },
                   color: Color.fromARGB(255, 66, 71, 112),
                   child: Text(
