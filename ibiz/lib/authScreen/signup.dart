@@ -5,6 +5,8 @@ import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/home.dart';
+import 'package:ibiz/view/view.dart';
+import 'package:ibiz/view/wrapper.dart';
 
 class SignUp extends StatefulWidget {
   final String mobileNo;
@@ -453,13 +455,19 @@ class _SignUpState extends State<SignUp> {
                 width: (200) * SizeConfig.widthMultiplier,
                 height: (45) * SizeConfig.heightMultiplier,
                 child: RaisedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     f2();
                     print(gender);
                     //Todo Database Entry
-                    Userdb().addUser(widget.mobileNo,
+                    bool result = await Userdb().addUser(widget.mobileNo,
                         this.fname + " " + this.lname, this.gender);
-                    Navigator.of(context as Element).reassemble();
+                    if (result == true) {
+                      print("User Created");
+                      //Navigator.of(context as Element).reassemble();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              View(mobileNo: widget.mobileNo)));
+                    }
                   },
                   color: Color.fromARGB(255, 66, 71, 112),
                   child: Text(

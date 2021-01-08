@@ -10,6 +10,8 @@ import 'package:ibiz/view/drawer.dart';
 import 'package:ibiz/view/navbar/notification.dart';
 
 class Home extends StatefulWidget {
+  Home({this.mobileNo});
+  final String mobileNo;
   @override
   _HomeState createState() => _HomeState();
 }
@@ -69,7 +71,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ],
         ),
-        drawer: HomeDrawer(),
+        drawer: HomeDrawer(mobileNo: widget.mobileNo),
         bottomNavigationBar: Material(
           color: Colors.white,
           child: new TabBar(controller: controller, tabs: <Tab>[

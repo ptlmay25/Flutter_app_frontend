@@ -15,7 +15,7 @@ class Wrapper extends StatelessWidget {
       return Earn();
     } else {
       print("UID: " + user.uid);
-      return View(user: user);
+      return View(mobileNo: user.contact);
     }
   }
 }

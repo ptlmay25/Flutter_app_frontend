@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:ibiz/models/usermodel.dart';
 
 class Userdb {
   //Jiten
@@ -15,27 +16,78 @@ class Userdb {
     Map data = {'mobileNo': mobileNo, 'username': username, 'gender': gender};
     var response = await http.post(url + "user/create", body: data);
     if (response.statusCode == 200) {
-      print("User Created");
+      //print("User Created");
+      return true;
     } else {
       print(response.body);
       print("Failure");
+      return false;
     }
   }
 
   Future<bool> checkUser(String mobileNo) async {
-    http.Response response = await http.get(url+"user/checkUser/"+mobileNo);
+    http.Response response = await http.get(url + "user/checkUser/" + mobileNo);
     if (response.statusCode == 200) {
       //print(response.body);
-      Map<String,dynamic> data=json.decode(response.body);
-      print("data: "+data.toString());
-      if(data['messageCode']==true){
-        print("User Already Regestered");
+      Map<String, dynamic> data = json.decode(response.body);
+      print(data.toString());
+      if (data['messageCode'] == true) {
+        //print("User Already Regestered");
         return true;
-      }else{
+      } else {
         return false;
       }
     } else {
       print("Failure");
+    }
+  }
+
+  Future<bool> updateUserProfile(String email, String homeAddress, String city,
+      String zipcode, String state) async {
+    Map data = {
+      'email': email,
+      'homeAddress': homeAddress,
+      'city': city,
+      'zipcode': zipcode,
+      'state': state
+    };
+    var response = await http.put(url + "user/update", body: data);
+    if (response.statusCode == 200) {
+      //print("User Updated");
+      return true;
+    } else {
+      print(response.body);
+      print("Failure");
+      return false;
+    }
+  }
+
+  Future<UserModel> getUserByMobileNo(String mobileNo) async {
+    http.Response response =
+        await http.get(url + "user/viewMobile/" + mobileNo);
+    //print("Inside getUserByMobileNo"+response.body);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body)['data'][0];
+      print("Inside getUserByMobileNo" + data.toString());
+      return UserModel(
+        username: data['username'],
+        country: data['country'],
+        IFSC: data['IFSC'],
+        UPI: data['UPI'],
+        bankAccountNo: data['bankAccountNo'],
+        city: data['city'],
+        email: data['email'],
+        gender: data['gender'],
+        homeAddress: data['homeAddress'],
+        id: data['id'],
+        mobileNo: data['mobileNo'],
+        password: data['password'],
+        state: data['state'],
+        zipcode: data['zipcode'],
+      );
+    } else {
+      print("No user found with: " + mobileNo);
+      return null;
     }
   }
 }

@@ -4,13 +4,16 @@ import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 
 class Profile extends StatefulWidget {
+  Profile({this.userModel});
+  final UserModel userModel;
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
-  String username, mobileNo, email, homeAddress, city, zipconde;
+  final GlobalKey<FormState> _profileFormKey = GlobalKey<FormState>();
+  String username, email, homeAddress, city, zipcode;
+  String _selectedLocation;
   List<String> _states = [
     "Andhra Pradesh",
     "Arunachal Pradesh",
@@ -42,7 +45,8 @@ class _ProfileState extends State<Profile> {
     "Uttarakhand",
     "West Bengal"
   ];
-  String _selectedLocation;
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,274 +118,288 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
                 Padding(
-                    padding: EdgeInsets.only(
-                        left: 45 * SizeConfig.widthMultiplier,
-                        right: 50 * SizeConfig.widthMultiplier),
-                    child: FutureBuilder(
-                        future: viewUser(),
-                        builder: (context, AsyncSnapshot<Widget> snapshot) {
-                          Widget widget = Container();
-                          if (snapshot.hasData) {
-                            widget = snapshot.data;
-                          }
-                          return widget;
-                        }))
+                  padding: EdgeInsets.only(
+                      left: 45 * SizeConfig.widthMultiplier,
+                      right: 50 * SizeConfig.widthMultiplier),
+                  child: Form(
+                    key: _profileFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Full Name*",
+                            style: TextStyle(
+                              color: Color(0xff838587),
+                              fontSize: 13 * SizeConfig.textMultiplier,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(),
+                          child: SizedBox(
+                            child: TextFormField(
+                              initialValue: widget.userModel.username,
+                              enabled: false,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 28.5 * SizeConfig.heightMultiplier),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Phone Number*",
+                              style: TextStyle(
+                                color: Color(0xff838587),
+                                fontSize: 13 * SizeConfig.textMultiplier,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(),
+                          child: SizedBox(
+                            child: TextFormField(
+                              initialValue: widget.userModel.mobileNo,
+                              enabled: false,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 28.5 * SizeConfig.heightMultiplier),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Email Address*",
+                              style: TextStyle(
+                                color: Color(0xff838587),
+                                fontSize: 13 * SizeConfig.textMultiplier,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(),
+                          child: SizedBox(
+                            child: TextFormField(
+                              keyboardType: TextInputType.emailAddress,
+                              initialValue: widget.userModel.email,
+                              onSaved: (value) {
+                                setState(() {
+                                  this.email = value;
+                                });
+                              },
+                              validator: (value) {
+                                bool validEmail = RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(value);
+                                if (!validEmail) {
+                                  return "Invalid Email";
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 28.5 * SizeConfig.heightMultiplier),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Home Address*",
+                              style: TextStyle(
+                                color: Color(0xff838587),
+                                fontSize: 13 * SizeConfig.textMultiplier,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(),
+                          child: SizedBox(
+                            child: TextFormField(
+                              onSaved: (value) {
+                                setState(() {
+                                  this.homeAddress = value;
+                                });
+                              },
+                              initialValue: widget.userModel.homeAddress,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 28.5 * SizeConfig.heightMultiplier,
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "City*                                         Zipcode*",
+                                    style: TextStyle(
+                                      color: Color(0xff838587),
+                                      fontSize: 13 * SizeConfig.textMultiplier,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 5 * SizeConfig.heightMultiplier),
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    right: 35 * SizeConfig.widthMultiplier),
+                                child: SizedBox(
+                                  width: 120 * SizeConfig.widthMultiplier,
+                                  child: TextFormField(
+                                    initialValue: widget.userModel.city,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return "Please Enter City";
+                                      }
+                                    },
+                                    onSaved: (value) {
+                                      setState(() {
+                                        this.city = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 120 * SizeConfig.widthMultiplier,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  initialValue: widget.userModel.zipcode,
+                                  validator: (value) {
+                                    bool validZipcode =
+                                        RegExp("[0-9][0-9][0-9][0-9][0-9][0-9]")
+                                            .hasMatch(value);
+                                    if (!validZipcode) {
+                                      return "Invalid Zipcode";
+                                    }
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      this.zipcode = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 28.5 * SizeConfig.heightMultiplier),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "State*",
+                              style: TextStyle(
+                                color: Color(0xff838587),
+                                fontSize: 13 * SizeConfig.textMultiplier,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 3.5 * SizeConfig.heightMultiplier,
+                          ),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: DropdownButton(
+                              value: _selectedLocation,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _selectedLocation = newValue;
+                                });
+                              },
+                              items: _states.map((location) {
+                                return DropdownMenuItem(
+                                  child: new Text(
+                                    location,
+                                    style: TextStyle(
+                                      color: Color(0xff151515),
+                                      fontSize: 15,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                  value: location,
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: (40) * SizeConfig.heightMultiplier,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                                (5) * SizeConfig.heightMultiplier),
+                            child: Container(
+                              height: (40) * SizeConfig.heightMultiplier,
+                              width: (160) * SizeConfig.widthMultiplier,
+                              child: RaisedButton(
+                                onPressed: () async {
+                                  if (_profileFormKey.currentState.validate()) {
+                                    _profileFormKey.currentState.save();
+                                    bool res = await Userdb().updateUserProfile(
+                                        email,
+                                        homeAddress,
+                                        city,
+                                        zipcode,
+                                        _selectedLocation);
+                                    if (res == true) {
+                                      print("User Updated");
+                                    }
+                                  }
+                                },
+                                color: Color.fromARGB(255, 66, 71, 112),
+                                child: Text(
+                                  'Update',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize:
+                                          (16) * SizeConfig.heightMultiplier),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<Widget> viewUser() async {
-    //UserModel userModel=await Userdb().getUserbyContact();
-    return Container(
-      child: Form(
-        key: _signUpFormKey,
-        child: Column(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Full Name*",
-                style: TextStyle(
-                  color: Color(0xff838587),
-                  fontSize: 13 * SizeConfig.textMultiplier,
-                  fontFamily: "Roboto",
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(),
-              child: SizedBox(
-                child: TextFormField(
-                  initialValue: username,
-                  enabled: false,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 28.5 * SizeConfig.heightMultiplier),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Phone Number*",
-                  style: TextStyle(
-                    color: Color(0xff838587),
-                    fontSize: 13 * SizeConfig.textMultiplier,
-                    fontFamily: "Roboto",
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(),
-              child: SizedBox(
-                child: TextFormField(
-                  initialValue: mobileNo,
-                  enabled: false,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 28.5 * SizeConfig.heightMultiplier),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Email Address*",
-                  style: TextStyle(
-                    color: Color(0xff838587),
-                    fontSize: 13 * SizeConfig.textMultiplier,
-                    fontFamily: "Roboto",
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(),
-              child: SizedBox(
-                child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  initialValue: email,
-                  validator: (value) {
-                    bool validEmail = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value);
-                    if (!validEmail) {
-                      return "Invalid Email";
-                    }
-                  },
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 28.5 * SizeConfig.heightMultiplier),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Home Address*",
-                  style: TextStyle(
-                    color: Color(0xff838587),
-                    fontSize: 13 * SizeConfig.textMultiplier,
-                    fontFamily: "Roboto",
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(),
-              child: SizedBox(
-                child: TextFormField(
-                  initialValue: homeAddress,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 28.5 * SizeConfig.heightMultiplier,
-              ),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "City*                                         Zipcode*",
-                        style: TextStyle(
-                          color: Color(0xff838587),
-                          fontSize: 13 * SizeConfig.textMultiplier,
-                          fontFamily: "Roboto",
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 5 * SizeConfig.heightMultiplier),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        EdgeInsets.only(right: 35 * SizeConfig.widthMultiplier),
-                    child: SizedBox(
-                      width: 120 * SizeConfig.widthMultiplier,
-                      child: TextFormField(
-                        initialValue: city,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return "Please Enter City";
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 120 * SizeConfig.widthMultiplier,
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      initialValue: zipconde,
-                      validator: (value) {
-                        bool validZipcode =
-                            RegExp("[0-9][0-9][0-9][0-9][0-9][0-9]")
-                                .hasMatch(value);
-                        if (!validZipcode) {
-                          return "Invalid Zipcode";
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 28.5 * SizeConfig.heightMultiplier),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "State*",
-                  style: TextStyle(
-                    color: Color(0xff838587),
-                    fontSize: 13 * SizeConfig.textMultiplier,
-                    fontFamily: "Roboto",
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 3.5 * SizeConfig.heightMultiplier,
-              ),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: DropdownButton(
-                  value: _selectedLocation,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedLocation = newValue;
-                    });
-                  },
-                  items: _states.map((location) {
-                    return DropdownMenuItem(
-                      child: new Text(
-                        location,
-                        style: TextStyle(
-                          color: Color(0xff151515),
-                          fontSize: 15,
-                          fontFamily: "Roboto",
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      value: location,
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: (40) * SizeConfig.heightMultiplier,
-              ),
-              child: ClipRRect(
-                borderRadius:
-                    BorderRadius.circular((5) * SizeConfig.heightMultiplier),
-                child: Container(
-                  height: (40) * SizeConfig.heightMultiplier,
-                  width: (160) * SizeConfig.widthMultiplier,
-                  child: RaisedButton(
-                    onPressed: () {
-                      if (_signUpFormKey.currentState.validate()) {
-                        setState(() {});
-                      }
-                      print('Full name: ' + this.username);
-                      print('Phone Number: ' + this.mobileNo);
-                      print('Email: ' + this.email);
-                      print('Home Address: ' + this.homeAddress);
-                      print('City: ' + this.city);
-                      print('Zipcode: ' + this.zipconde);
-                      print('State: ' + this._selectedLocation);
-                    },
-                    color: Color.fromARGB(255, 66, 71, 112),
-                    child: Text(
-                      'Update',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.normal,
-                          fontSize: (16) * SizeConfig.heightMultiplier),
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

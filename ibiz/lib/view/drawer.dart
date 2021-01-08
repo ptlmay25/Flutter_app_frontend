@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/main.dart';
+import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/auth.dart';
+import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/navbar/BankInfo.dart';
 import 'package:ibiz/view/navbar/contact_us.dart';
@@ -8,6 +10,8 @@ import 'package:ibiz/view/navbar/profile.dart';
 import 'package:ibiz/view/navbar/withdrawal_history.dart';
 
 class HomeDrawer extends StatelessWidget {
+  HomeDrawer({this.mobileNo});
+  final String mobileNo;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -55,9 +59,11 @@ class HomeDrawer extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              onTap: () {
+              onTap: () async {
+                UserModel userModel=await Userdb().getUserByMobileNo(mobileNo);
+                print(userModel.mobileNo);
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Profile()));
+                    .push(MaterialPageRoute(builder: (context) => Profile(userModel: userModel,)));
               },
             ),
           ),
