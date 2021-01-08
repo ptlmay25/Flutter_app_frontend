@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ibiz/view/bottom/accounttab.dart';
@@ -10,8 +11,8 @@ import 'package:ibiz/view/drawer.dart';
 import 'package:ibiz/view/navbar/notification.dart';
 
 class Home extends StatefulWidget {
-  Home({this.mobileNo});
-  final String mobileNo;
+  Home({this.userModel});
+  final UserModel userModel;
   @override
   _HomeState createState() => _HomeState();
 }
@@ -71,7 +72,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ],
         ),
-        drawer: HomeDrawer(mobileNo: widget.mobileNo),
+        drawer: HomeDrawer(userModel: widget.userModel),
         bottomNavigationBar: Material(
           color: Colors.white,
           child: new TabBar(controller: controller, tabs: <Tab>[

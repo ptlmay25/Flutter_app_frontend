@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 
 class BankInfo extends StatefulWidget {
+  BankInfo({this.userModel});
+  final UserModel userModel;
   @override
   _BankInfoState createState() => _BankInfoState();
 }
 
 class _BankInfoState extends State<BankInfo> {
-  final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
-  String upi_id = 'helloworld@oksbi',
-      account_number = '36963349596',
-      account_holder_name = 'Jenil Chandibhamar',
-      ifsc_code = 'SBIN0060071';
+  final GlobalKey<FormState> _bankFormKey = GlobalKey<FormState>();
+  String UPI, bankAccountNo, username, IFSC;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +49,7 @@ class _BankInfoState extends State<BankInfo> {
                       left: 40 * SizeConfig.widthMultiplier,
                       right: 50 * SizeConfig.widthMultiplier),
                   child: Form(
-                    key: _signUpFormKey,
+                    key: _bankFormKey,
                     child: Column(
                       children: <Widget>[
                         Padding(
@@ -70,7 +71,17 @@ class _BankInfoState extends State<BankInfo> {
                           padding: EdgeInsets.only(),
                           child: SizedBox(
                             child: TextFormField(
-                              initialValue: upi_id,
+                              onSaved: (value) {
+                                setState(() {
+                                  this.UPI = value;
+                                });
+                              },
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Please Enter Bank UPI";
+                                }
+                              },
+                              initialValue: widget.userModel.UPI,
                             ),
                           ),
                         ),
@@ -94,7 +105,12 @@ class _BankInfoState extends State<BankInfo> {
                           padding: EdgeInsets.only(),
                           child: SizedBox(
                             child: TextFormField(
-                              initialValue: account_number,
+                              initialValue: widget.userModel.bankAccountNo,
+                              onSaved: (value) {
+                                setState(() {
+                                  this.bankAccountNo = value;
+                                });
+                              },
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Please Enter Account Number";
@@ -123,7 +139,8 @@ class _BankInfoState extends State<BankInfo> {
                           padding: EdgeInsets.only(),
                           child: SizedBox(
                             child: TextFormField(
-                              initialValue: account_holder_name,
+                              enabled: false,
+                              initialValue: widget.userModel.username,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Please Enter Account Holder Name";
@@ -152,7 +169,12 @@ class _BankInfoState extends State<BankInfo> {
                           padding: EdgeInsets.only(),
                           child: SizedBox(
                             child: TextFormField(
-                              initialValue: ifsc_code,
+                              initialValue: widget.userModel.IFSC,
+                              onSaved: (value) {
+                                setState(() {
+                                  this.IFSC = value;
+                                });
+                              },
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Please Enter IFSC Code";
@@ -172,16 +194,18 @@ class _BankInfoState extends State<BankInfo> {
                               height: (40) * SizeConfig.heightMultiplier,
                               width: (160) * SizeConfig.widthMultiplier,
                               child: RaisedButton(
-                                onPressed: () {
-                                  if (_signUpFormKey.currentState.validate()) {
-                                    setState(() {});
+                                onPressed: () async {
+                                  if (_bankFormKey.currentState.validate()) {
+                                    _bankFormKey.currentState.save();
+                                    bool res = await Userdb().updateUserBankDetails(
+                                        widget.userModel.id,
+                                        UPI,
+                                        bankAccountNo,
+                                        IFSC);
+                                    if (res == true) {
+                                      print("BankDetails Updated");
+                                    }
                                   }
-                                  print('Bank UPI: ' + this.upi_id);
-                                  print(
-                                      'Account Number: ' + this.account_number);
-                                  print('Account Holder Name: ' +
-                                      this.account_holder_name);
-                                  print('IFSC code: ' + this.ifsc_code);
                                 },
                                 color: Color.fromARGB(255, 66, 71, 112),
                                 child: Text(

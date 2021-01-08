@@ -15,12 +15,12 @@ class _ViewState extends State<View> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Userdb().checkUser(widget.mobileNo),
+      future: Userdb().getUserByMobileNo(widget.mobileNo),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           // print("Inside View.dart "+snapshot.data.toString());
-          if (snapshot.data == true) {
-            return Home(mobileNo: widget.mobileNo);
+          if (snapshot.data != 0) {
+            return Home(userModel: snapshot.data);
           } else {
             return SignUp(
               mobileNo: widget.mobileNo,
@@ -30,6 +30,7 @@ class _ViewState extends State<View> {
           return Scaffold(
               body: Align(
                   alignment: Alignment.center,
+                  // child: Home()));
                   child: CircularProgressIndicator()));
         }
       },

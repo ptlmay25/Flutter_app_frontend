@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
 
+// ignore: camel_case_types
 class Withdraw_History extends StatefulWidget {
+  Withdraw_History({this.userModel});
+  final UserModel userModel;
   @override
   _Withdraw_HistoryState createState() => _Withdraw_HistoryState();
 }
 
+// ignore: camel_case_types
 class _Withdraw_HistoryState extends State<Withdraw_History> {
   @override
   Widget build(BuildContext context) {

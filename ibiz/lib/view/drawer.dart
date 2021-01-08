@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ibiz/main.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/auth.dart';
-import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/navbar/BankInfo.dart';
 import 'package:ibiz/view/navbar/contact_us.dart';
@@ -10,8 +9,8 @@ import 'package:ibiz/view/navbar/profile.dart';
 import 'package:ibiz/view/navbar/withdrawal_history.dart';
 
 class HomeDrawer extends StatelessWidget {
-  HomeDrawer({this.mobileNo});
-  final String mobileNo;
+  HomeDrawer({this.userModel});
+  final UserModel userModel;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -30,9 +29,9 @@ class HomeDrawer extends StatelessWidget {
                 padding: EdgeInsets.only(left: 13 * SizeConfig.widthMultiplier),
                 child: SizedBox(
                   width: 200,
-                  height: 20,
+                  height: 60,
                   child: Text(
-                    "Account ID: 11232",
+                    "Account ID: ${userModel.id}",
                     style: TextStyle(
                       color: Color(0xff151515),
                       fontSize: 15,
@@ -60,10 +59,10 @@ class HomeDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () async {
-                UserModel userModel=await Userdb().getUserByMobileNo(mobileNo);
-                print(userModel.mobileNo);
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Profile(userModel: userModel,)));
+                // UserModel userModel=await Userdb().getUserByMobileNo(mobileNo);
+                // print(userModel.mobileNo);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Profile(userModel: userModel)));
               },
             ),
           ),
@@ -83,7 +82,7 @@ class HomeDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => BankInfo()));
+                    .push(MaterialPageRoute(builder: (context) => BankInfo(userModel: userModel)));
               },
             ),
           ),
@@ -101,8 +100,9 @@ class HomeDrawer extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Withdraw_History()));
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Withdraw_History(userModel: userModel)));
               },
             ),
           ),
@@ -120,8 +120,9 @@ class HomeDrawer extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Contact_Us()));
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => Contact_Us()));
               },
             ),
           ),

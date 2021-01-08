@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
 
+// ignore: camel_case_types
 class Notification_Page extends StatefulWidget {
+  Notification_Page({this.userModel});
+  final UserModel userModel;
   @override
   _Notification_PageState createState() => _Notification_PageState();
 }
 
+// ignore: camel_case_types
 class _Notification_PageState extends State<Notification_Page> {
   @override
   Widget build(BuildContext context) {
