@@ -84,8 +84,8 @@ class _OTPState extends State<OTP> {
                     Padding(
                       padding: EdgeInsets.only(
                           bottom: 80 * SizeConfig.heightMultiplier,
-                          left: 10*SizeConfig.widthMultiplier,
-                          right: 10*SizeConfig.widthMultiplier
+                          left: 5*SizeConfig.widthMultiplier,
+                          right: 5*SizeConfig.widthMultiplier
                           ),
                       child: TextFieldPin(
                           

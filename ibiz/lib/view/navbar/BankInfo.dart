@@ -13,6 +13,7 @@ class BankInfo extends StatefulWidget {
 class _BankInfoState extends State<BankInfo> {
   final GlobalKey<FormState> _bankFormKey = GlobalKey<FormState>();
   String UPI, bankAccountNo, username, IFSC;
+  bool isUpdated = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +26,7 @@ class _BankInfoState extends State<BankInfo> {
           children: [
             Column(
               children: <Widget>[
+                showAlert(),
                 Padding(
                   padding: EdgeInsets.only(
                       top: 38 * SizeConfig.heightMultiplier,
@@ -217,6 +219,9 @@ class _BankInfoState extends State<BankInfo> {
                       bool res = await Userdb().updateUserBankDetails(
                           widget.userModel.id, UPI, bankAccountNo, IFSC);
                       if (res == true) {
+                        setState(() {
+                          this.isUpdated = true;
+                        });
                         print("BankDetails Updated");
                       }
                     }
@@ -236,5 +241,15 @@ class _BankInfoState extends State<BankInfo> {
         ],
       ),
     );
+  }
+  Widget showAlert() {
+    if (this.isUpdated == false) {
+      return Container();
+    } else {
+      return Container(
+        color: Colors.amber,
+        child: Text("Bank Details Updated"),
+      );
+    }
   }
 }

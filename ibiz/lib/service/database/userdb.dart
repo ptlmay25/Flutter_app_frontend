@@ -85,7 +85,7 @@ class Userdb {
   Future<dynamic> getUserByMobileNo(String mobileNo) async {
     http.Response response =
         await http.get(url + "user/viewMobile/" + mobileNo);
-    print("Inside getUserByMobileNo"+response.body);
+    //print("Inside getUserByMobileNo"+response.body);
     if (response.statusCode == 200) {
       List userList=json.decode(response.body)['data'];
       print(userList.length);

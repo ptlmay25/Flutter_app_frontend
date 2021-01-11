@@ -14,6 +14,7 @@ class _ProfileState extends State<Profile> {
   final GlobalKey<FormState> _profileFormKey = GlobalKey<FormState>();
   String username, email, homeAddress, city, zipcode;
   String _selectedLocation;
+  bool isUpdated = false;
   List<String> _states = [
     "Andhra Pradesh",
     "Arunachal Pradesh",
@@ -58,6 +59,7 @@ class _ProfileState extends State<Profile> {
           children: [
             Column(
               children: <Widget>[
+                showAlert(),
                 Row(
                   children: [
                     Padding(
@@ -120,13 +122,15 @@ class _ProfileState extends State<Profile> {
                     padding: EdgeInsets.only(
                         left: 45 * SizeConfig.widthMultiplier,
                         right: 50 * SizeConfig.widthMultiplier),
-                    child: FutureBuilder(future: viewUser(), builder: (context,AsyncSnapshot<Widget> snapshot){
-                      Widget widget=Container(child:Text("Loading..."));
-                      if(snapshot.hasData){
-                        widget=snapshot.data;
-                      }
-                      return widget;
-                    })),
+                    child: FutureBuilder(
+                        future: viewUser(),
+                        builder: (context, AsyncSnapshot<Widget> snapshot) {
+                          Widget widget = Container(child: Text("Loading..."));
+                          if (snapshot.hasData) {
+                            widget = snapshot.data;
+                          }
+                          return widget;
+                        })),
               ],
             )
           ],
@@ -138,6 +142,7 @@ class _ProfileState extends State<Profile> {
   Future<Widget> viewUser() async {
     UserModel userModel =
         await Userdb().getUserByMobileNo(widget.userModel.mobileNo);
+    // String _selectedLocation;
     return Form(
       key: _profileFormKey,
       child: Column(
@@ -158,7 +163,7 @@ class _ProfileState extends State<Profile> {
             padding: EdgeInsets.only(),
             child: SizedBox(
               child: TextFormField(
-                initialValue: widget.userModel.username,
+                initialValue: userModel.username,
                 enabled: false,
               ),
             ),
@@ -382,14 +387,25 @@ class _ProfileState extends State<Profile> {
                   onPressed: () async {
                     if (_profileFormKey.currentState.validate()) {
                       _profileFormKey.currentState.save();
+                      String newState;
+                      if (_selectedLocation == null) {
+                        print("InsideIf");
+                        newState = userModel.state;
+                      } else {
+                        print("InsideElse");
+                        newState = _selectedLocation;
+                      }
                       bool res = await Userdb().updateUserProfile(
                           widget.userModel.id,
                           email,
                           homeAddress,
                           city,
                           zipcode,
-                          _selectedLocation);
+                          newState);
                       if (res == true) {
+                        setState(() {
+                          this.isUpdated = true;
+                        });
                         print("User Updated");
                       }
                     }
@@ -409,5 +425,16 @@ class _ProfileState extends State<Profile> {
         ],
       ),
     );
+  }
+
+  Widget showAlert() {
+    if (this.isUpdated == false) {
+      return Container();
+    } else {
+      return Container(
+        color: Colors.amber,
+        child: Text("User Profile Updated"),
+      );
+    }
   }
 }
