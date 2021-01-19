@@ -389,10 +389,10 @@ class _ProfileState extends State<Profile> {
                       _profileFormKey.currentState.save();
                       String newState;
                       if (_selectedLocation == null) {
-                        print("InsideIf");
+                        // print("InsideIf");
                         newState = userModel.state;
                       } else {
-                        print("InsideElse");
+                        //print("InsideElse");
                         newState = _selectedLocation;
                       }
                       bool res = await Userdb().updateUserProfile(
