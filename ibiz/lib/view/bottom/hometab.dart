@@ -22,6 +22,19 @@ class _HometabState extends State<Hometab> {
             Container(
                 width: MediaQuery.of(context).size.width,
                 height: 154,
+                child: Column(children: <Widget>[
+                  Text(
+                    "₹ 2550.25",
+                    style: TextStyle(
+                        fontSize: 30 * SizeConfig.heightMultiplier,
+                        fontFamily: "Roboto",
+                        color: Colors.white),
+                  ),
+                  Text('+15.00 (0.1%) This month',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 212, 31),
+                          fontSize: 16 * SizeConfig.heightMultiplier))
+                ]),
                 color: Color.fromARGB(255, 66, 71, 112))
           ],
         ),
