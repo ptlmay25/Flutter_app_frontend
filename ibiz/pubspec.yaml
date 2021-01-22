@@ -70,7 +70,9 @@ flutter:
     - assets/icons/scan_code30px.png
     - assets/icons/account30px.png
     - assets/icons/Logout.png
-    - assets/images/
+    - assets/icons/Ellipse 9.png
+    - assets/icons/Withdraw.png
+    - assets/images/Share pic.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
