@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/authScreen/getStarted.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Earn extends StatelessWidget {
   @override

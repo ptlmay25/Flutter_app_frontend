@@ -54,25 +54,26 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    # - assets/images/Group.jpg
-    - assets/images/Group.png
-    - assets/icons/name.png
-    - assets/icons/Notification.png
-    - assets/icons/menu_bar.png
-    - assets/icons/menubar_profile_pic.png
-    - assets/icons/user_icon.png
-    - assets/icons/contact_us.png
-    - assets/icons/bank_building.png
-    - assets/icons/clipboards.png
-    - assets/icons/home30px.png
-    - assets/icons/Business30px.png
-    - assets/icons/invite_friend30px.png
-    - assets/icons/scan_code30px.png
-    - assets/icons/account30px.png
-    - assets/icons/Logout.png
-    - assets/icons/Ellipse 9.png
-    - assets/icons/Withdraw.png
-    - assets/images/Share pic.png
+    - assets/images/
+    - assets/icons/
+    # - assets/images/Group.png
+    # - assets/icons/name.png
+    # - assets/icons/Notification.png
+    # - assets/icons/menu_bar.png
+    # - assets/icons/menubar_profile_pic.png
+    # - assets/icons/user_icon.png
+    # - assets/icons/contact_us.png
+    # - assets/icons/bank_building.png
+    # - assets/icons/clipboards.png
+    # - assets/icons/home30px.png
+    # - assets/icons/Business30px.png
+    # - assets/icons/invite_friend30px.png
+    # - assets/icons/scan_code30px.png
+    # - assets/icons/account30px.png
+    # - assets/icons/Logout.png
+    # - assets/icons/Ellipse 9.png
+    # - assets/icons/Withdraw.png
+    # - assets/images/Share pic.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

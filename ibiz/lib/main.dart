@@ -26,27 +26,27 @@ class MyApp extends StatelessWidget {
     //   ),
     // );
 
-    // return LayoutBuilder(builder: (context, constraints) {
-    //   return OrientationBuilder(
-    //     builder: (context, orientation) {
-    //       SizeConfig().init(constraints, orientation);
-    //       return StreamProvider<User>.value(
-    //         value: AuthService().user,
-    //         child: MaterialApp(
-    //           home: Wrapper(),
-    //           // home: View(mobileNo: '+919737582544',),
-    //         ),
-    //       );
-    //     },
-    //   );
-    // });
-    return LayoutBuilder(builder: (context,constraints){
-      return OrientationBuilder(builder: (context,orientation){
-        SizeConfig().init(constraints, orientation);
-          return MaterialApp(
-            home: View(mobileNo: '+919737582544'),
+    return LayoutBuilder(builder: (context, constraints) {
+      return OrientationBuilder(
+        builder: (context, orientation) {
+          SizeConfig().init(constraints, orientation);
+          return StreamProvider<User>.value(
+            value: AuthService().user,
+            child: MaterialApp(
+              home: Wrapper(),
+              // home: View(mobileNo: '+919737582544',),
+            ),
           );
-      });
+        },
+      );
     });
+    // return LayoutBuilder(builder: (context,constraints){
+    //   return OrientationBuilder(builder: (context,orientation){
+    //     SizeConfig().init(constraints, orientation);
+    //       return MaterialApp(
+    //         home: View(mobileNo: '+919737582544'),
+    //       );
+    //   });
+    // });
   }
 }

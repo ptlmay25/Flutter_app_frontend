@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:universal_io/io.dart';
 
 class Accounttab extends StatefulWidget {
+  final UserModel userModel;
+  Accounttab({this.userModel});
   @override
   _AccounttabState createState() => _AccounttabState();
 }
@@ -45,7 +47,7 @@ class _AccounttabState extends State<Accounttab> {
                       padding: EdgeInsets.only(
                           left: 18 * SizeConfig.widthMultiplier),
                       child: Text(
-                        "User name",
+                        widget.userModel.username,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,

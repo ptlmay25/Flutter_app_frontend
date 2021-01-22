@@ -66,12 +66,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         body: new TabBarView(
           controller: controller,
           children: <Widget>[
-            new Hometab(
-              userModel: widget.userModel,
-            ),
+            new Hometab(userModel: widget.userModel),
             new Searchtab(),
-            new Accounttab(),
-            new Sharetab()
+            new Accounttab(userModel: widget.userModel),
+            new Sharetab(userModel: widget.userModel)
           ],
         ));
   }

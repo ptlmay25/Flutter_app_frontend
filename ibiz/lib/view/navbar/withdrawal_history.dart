@@ -15,123 +15,116 @@ class _Withdraw_HistoryState extends State<Withdraw_History> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 66, 71, 112),
-      ),
-      body: SafeArea(
-          child: ListView(
-        scrollDirection: Axis.vertical,
-        children: [
-          Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 25 * SizeConfig.heightMultiplier),
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(
-                        color: Color(0xff909090),
-                        width: 0.50,
-                      ),
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 66, 71, 112),
+        ),
+        body: Column(
+          //scrollDirection: Axis.vertical,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 25 * SizeConfig.heightMultiplier),
+              child: Container(
+                  height: 40 * SizeConfig.heightMultiplier,
+                  width: 320 * SizeConfig.heightMultiplier,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                      color: Color(0xff909090),
+                      width: 0.50,
                     ),
-                    child: TextField(
-                        decoration: InputDecoration(
-                            hintText: "Search",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
-                            )))),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 25 * SizeConfig.widthMultiplier,
-                    right: 150 * SizeConfig.widthMultiplier,
-                    top: 38 * SizeConfig.heightMultiplier),
-                child: SizedBox(
-                  width: 200,
-                  height: 30,
-                  child: Text(
-                    "Withdrawal History :",
-                    style: TextStyle(
-                      color: Color(0xff151515),
-                      fontSize: 20,
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w500,
-                    ),
+                  ),
+                  child: TextField(
+                      decoration: InputDecoration(
+                          hintText: "Search",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                          )))),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 25 * SizeConfig.widthMultiplier,
+                  right: 150 * SizeConfig.widthMultiplier,
+                  top: 38 * SizeConfig.heightMultiplier),
+              child: SizedBox(
+                width: 200,
+                height: 30,
+                child: Text(
+                  "Withdrawal History :",
+                  style: TextStyle(
+                    color: Color(0xff151515),
+                    fontSize: 20,
+                    fontFamily: "Roboto",
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-              Expanded(
-                  child: ListView(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 25 * SizeConfig.heightMultiplier,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              children: [
-                                Container(
+            ),
+            Expanded(
+                child: ListView(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 25 * SizeConfig.heightMultiplier,
+                    left: 35 * SizeConfig.widthMultiplier,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Padding(
+                                  padding: EdgeInsets.only(),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 28 *
-                                                SizeConfig.widthMultiplier),
-                                        child: Text(
-                                          "Withdrawal No: W-1023569",
-                                          style: TextStyle(
-                                            color: Color(0xff151515),
-                                            fontSize: 13,
-                                          ),
+                                      Text(
+                                        "Withdrawal No: W-1023569",
+                                        style: TextStyle(
+                                          color: Color(0xff151515),
+                                          fontSize: 13,
                                         ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 23 *
-                                                SizeConfig.widthMultiplier),
-                                        child: Text(
-                                          "Date: 10/12/2020",
-                                          style: TextStyle(
-                                            color: Color(0xff151515),
-                                            fontSize: 14,
-                                            fontFamily: "Roboto",
-                                            fontWeight: FontWeight.w300,
-                                          ),
+                                      Text(
+                                        "Date: 10/12/2020",
+                                        style: TextStyle(
+                                          color: Color(0xff151515),
+                                          fontSize: 14,
+                                          fontFamily: "Roboto",
+                                          fontWeight: FontWeight.w300,
                                         ),
                                       ),
                                     ],
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                        Text(
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            right: 17 * SizeConfig.widthMultiplier),
+                        child: Text(
                           "- 5,000 INR",
                           textAlign: TextAlign.right,
                           style: TextStyle(
                             color: Color(0xff8c2f0f),
-                            fontSize: 15,
+                            fontSize: 15 * SizeConfig.heightMultiplier,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ))
-            ],
-          )
-        ],
-      )),
-    );
+                ),
+              ],
+            ))
+          ],
+        ));
   }
 }
