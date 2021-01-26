@@ -37,14 +37,14 @@ class _SearchtabState extends State<Searchtab> {
                 children: [
                   Expanded(
                       child: Text(
-                    "Total Brands",
+                    "Total Hotels",
                     style: TextStyle(
                         fontSize: 16 * SizeConfig.heightMultiplier,
                         fontWeight: FontWeight.normal,
                         color: Colors.white),
                   )),
                   Text(
-                    'No. Stores',
+                    'No. Rooms',
                     style: TextStyle(
                         fontSize: 16 * SizeConfig.heightMultiplier,
                         fontWeight: FontWeight.normal,

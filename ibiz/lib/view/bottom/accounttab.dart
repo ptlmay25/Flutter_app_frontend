@@ -24,95 +24,103 @@ class _AccounttabState extends State<Accounttab> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+          elevation: 0.0,
+          toolbarHeight: 200 * SizeConfig.heightMultiplier,
           backgroundColor: Color.fromARGB(255, 66, 71, 112),
-          toolbarHeight: 260 * SizeConfig.widthMultiplier,
-          title: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 50 * SizeConfig.heightMultiplier,
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 25 * SizeConfig.widthMultiplier),
-                      child: Image.asset(
-                        "assets/icons/Ellipse 9.png",
-                        height: 50,
-                        width: 50,
+          title: Column(children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(),
+                    child: Text(
+                      "₹ 65,000.00",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w500,
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 18 * SizeConfig.widthMultiplier),
-                      child: Text(
-                        widget.userModel.username,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontFamily: "Roboto",
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 40 * SizeConfig.heightMultiplier,
-                    left: 30 * SizeConfig.widthMultiplier),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "₹ 65,000.00",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 10 * SizeConfig.heightMultiplier,
-                    bottom: 35 * SizeConfig.widthMultiplier),
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 30 * SizeConfig.widthMultiplier),
-                      child: Text(
-                        "Your Balance\n" + "10/10/2020  11:24 AM",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontFamily: "Roboto",
-                          fontWeight: FontWeight.w300,
-                        ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: 20 * SizeConfig.heightMultiplier),
+                    child: Text(
+                      "Your Balance",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 115 * SizeConfig.widthMultiplier),
-                      child: Container(
-                        height: 70 * SizeConfig.heightMultiplier,
-                        width: 70 * SizeConfig.widthMultiplier,
-                        child: IconButton(
-                            icon: Image.asset(
-                              "assets/icons/Withdraw.png",
-                            ),
-                            onPressed: null),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: 5 * SizeConfig.heightMultiplier),
+                    child: Text(
+                      "10/10/2020  11:24 AM",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w300,
                       ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          )),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 58 * SizeConfig.widthMultiplier,
+                        top: 26 * SizeConfig.heightMultiplier,
+                        bottom: 38 * SizeConfig.heightMultiplier),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Container(
+                            height: 40 * SizeConfig.heightMultiplier,
+                            width: 120 * SizeConfig.widthMultiplier,
+                            child: RaisedButton(
+                              onPressed: () async {},
+                              color: Color.fromARGB(255, 108, 113, 156),
+                              child: Text(
+                                'Add Funds',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 16 * SizeConfig.heightMultiplier),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 20 * SizeConfig.widthMultiplier),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Container(
+                            height: 40 * SizeConfig.heightMultiplier,
+                            width: 120 * SizeConfig.widthMultiplier,
+                            child: RaisedButton(
+                              onPressed: () async {},
+                              color: Color.fromARGB(255, 108, 113, 156),
+                              child: Text(
+                                'Withrow',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 16 * SizeConfig.heightMultiplier),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ])),
       body: Column(
         children: <Widget>[
           Padding(
@@ -121,16 +129,18 @@ class _AccounttabState extends State<Accounttab> {
                 left: 22 * SizeConfig.widthMultiplier),
             child: Row(
               children: <Widget>[
-                Text(
-                  "Transaction",
-                  style: TextStyle(
-                    color: Color(0xff151515),
-                    fontSize: 18,
+                Expanded(
+                  child: Text(
+                    "Transaction",
+                    style: TextStyle(
+                      color: Color(0xff151515),
+                      fontSize: 18,
+                    ),
                   ),
                 ),
                 Padding(
                   padding:
-                      EdgeInsets.only(left: 135 * SizeConfig.widthMultiplier),
+                      EdgeInsets.only(right: 21 * SizeConfig.widthMultiplier),
                   child: Container(
                     height: 30 * SizeConfig.heightMultiplier,
                     width: 107 * SizeConfig.widthMultiplier,
@@ -190,7 +200,7 @@ class _AccounttabState extends State<Accounttab> {
               Padding(
                 padding: EdgeInsets.only(
                     top: 32 * SizeConfig.heightMultiplier,
-                    right: 15 * SizeConfig.widthMultiplier),
+                    right: 21 * SizeConfig.widthMultiplier),
                 child: Row(
                   children: [
                     Expanded(

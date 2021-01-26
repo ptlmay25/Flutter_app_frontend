@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/view/bottom/complete_order.dart';
 
 class PaymentMethod extends StatefulWidget {
+  final int amount;
+  PaymentMethod({this.amount});
   @override
   _PaymentMethodState createState() => _PaymentMethodState();
 }
 
 class _PaymentMethodState extends State<PaymentMethod> {
-  String payableAmount = "55,000.00";
   String availableBalance = "20,00,000.00";
   int b = 0;
   String paymentMethodUsed = "";
@@ -58,7 +60,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                   padding:
                       EdgeInsets.only(right: 70 * SizeConfig.widthMultiplier),
                   child: Text(
-                    "    ₹ " + payableAmount,
+                    "    ₹ " + widget.amount.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color.fromRGBO(140, 47, 15, 1),
@@ -169,8 +171,8 @@ class _PaymentMethodState extends State<PaymentMethod> {
                 height: (45) * SizeConfig.heightMultiplier,
                 child: RaisedButton(
                   onPressed: () {
-                    // Place order
-                    print(paymentMethodUsed);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CompleteOrder()));
                   },
                   color: Color.fromRGBO(255, 212, 31, 1),
                   child: Text(

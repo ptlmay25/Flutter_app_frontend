@@ -22,7 +22,7 @@ class _CompleteOrderState extends State<CompleteOrder> {
                 right: 137 * SizeConfig.widthMultiplier,
                 top: 116 * SizeConfig.heightMultiplier),
             child: Image.asset(
-              "assets/icons/Vector.png",
+              "assets/images/Vector.png",
               width: 100,
               height: 100,
             ),
@@ -53,7 +53,9 @@ class _CompleteOrderState extends State<CompleteOrder> {
                 height: (45) * SizeConfig.heightMultiplier,
                 child: RaisedButton(
                   onPressed: () {
-                    // Go Back To Home
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   },
                   color: Color.fromRGBO(255, 212, 31, 1),
                   child: Text(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:ibiz/view/navbar/notification.dart';
-import 'package:ibiz/view/drawer.dart';
+import 'package:ibiz/view/bottom/HomeScreen/buysheet.dart';
+import 'package:ibiz/view/bottom/HomeScreen/profitlist.dart';
+import 'package:ibiz/view/bottom/HomeScreen/sellsheet.dart';
+import 'package:ibiz/view/bottom/payment_method.dart';
 
 class Hometab extends StatefulWidget {
   final UserModel userModel;
@@ -15,70 +17,33 @@ class _HometabState extends State<Hometab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 50,
-        leading: Builder(builder: (context) {
-          return IconButton(
-            icon: SizedBox(
-              height: 50 * SizeConfig.heightMultiplier,
-              width: 25 * SizeConfig.widthMultiplier,
-              child: new Image.asset("assets/icons/menu_bar.png"),
-            ),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          );
-        }),
-        backgroundColor: Color.fromARGB(255, 66, 71, 112),
-        // title: Padding(
-        //   padding: EdgeInsets.only(
-        //     top: 15 * SizeConfig.heightMultiplier,
-        //     bottom: 14.3 * SizeConfig.heightMultiplier,
-        //     left: 65 * SizeConfig.widthMultiplier,
-        //   ),
-        //   child: SizedBox(
-        //       height: 34.71 * SizeConfig.heightMultiplier,
-        //       width: 100 * SizeConfig.widthMultiplier,
-        //       child: Image.asset("assets/icons/name.png")),
-        // ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(
-              right: 5 * SizeConfig.widthMultiplier,
-            ),
-            child: IconButton(
-              icon: Image.asset("assets/icons/Notification.png"),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Notification_Page()));
-              },
-            ),
-          ),
-        ],
-      ),
-      drawer: HomeDrawer(userModel: widget.userModel),
       body: Stack(
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 154,
-                  child: Column(children: <Widget>[
-                    Text(
-                      "₹ 2550.25",
-                      style: TextStyle(
-                          fontSize: 30 * SizeConfig.heightMultiplier,
-                          fontFamily: "Roboto",
-                          color: Colors.white),
-                    ),
-                    Text('+15.00 (0.1%) This month',
+          Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 154,
+                    child: Column(children: <Widget>[
+                      Text(
+                        "₹ 2550.25",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 255, 212, 31),
-                            fontSize: 16 * SizeConfig.heightMultiplier))
-                  ]),
-                  color: Color.fromARGB(255, 66, 71, 112)),
-            ],
+                            fontSize: 30 * SizeConfig.heightMultiplier,
+                            fontFamily: "Roboto",
+                            color: Colors.white),
+                      ),
+                      Text('+15.00 (0.1%) This month',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 255, 212, 31),
+                              fontSize: 16 * SizeConfig.heightMultiplier))
+                    ]),
+                    color: Color.fromARGB(255, 66, 71, 112)),
+              ],
+            ),
           ),
           Positioned(
               top: 66 * SizeConfig.heightMultiplier,
@@ -163,7 +128,7 @@ class _HometabState extends State<Hometab> {
                               Column(
                                 children: [
                                   Text(
-                                    'TOTAL VALUE         ',
+                                    'TOTAL DIVIDEND   ',
                                     style: TextStyle(
                                         fontSize:
                                             15 * SizeConfig.heightMultiplier,
@@ -198,7 +163,7 @@ class _HometabState extends State<Hometab> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        'AVG COSTS          ',
+                                        'PRICE PER TOCKEN',
                                         style: TextStyle(
                                             fontSize: 15 *
                                                 SizeConfig.heightMultiplier,
@@ -210,7 +175,7 @@ class _HometabState extends State<Hometab> {
                                             top: 7 *
                                                 SizeConfig.heightMultiplier),
                                         child: Text(
-                                          '₹ 3550.00',
+                                          '₹ 3550.00   ',
                                           style: TextStyle(
                                               fontSize: 25 *
                                                   SizeConfig.heightMultiplier),
@@ -223,7 +188,7 @@ class _HometabState extends State<Hometab> {
                               Column(
                                 children: [
                                   Text(
-                                    'TOTAL RETURN      ',
+                                    'TOTAL RETURN     ',
                                     style: TextStyle(
                                         fontSize:
                                             15 * SizeConfig.heightMultiplier,
@@ -234,7 +199,7 @@ class _HometabState extends State<Hometab> {
                                     padding: EdgeInsets.only(
                                         top: 7 * SizeConfig.heightMultiplier),
                                     child: Text(
-                                      '4.05%         ',
+                                      '4.05%           ',
                                       style: TextStyle(
                                           fontSize:
                                               25 * SizeConfig.heightMultiplier),
@@ -268,7 +233,7 @@ class _HometabState extends State<Hometab> {
                                   height: 45 * SizeConfig.heightMultiplier,
                                   width: 140 * SizeConfig.widthMultiplier,
                                   child: RaisedButton(
-                                    onPressed: () async {},
+                                    onPressed: showBuyBottomSheet,
                                     color: Color.fromARGB(255, 66, 71, 112),
                                     child: Text(
                                       'Buy',
@@ -292,7 +257,7 @@ class _HometabState extends State<Hometab> {
                                   height: 45 * SizeConfig.heightMultiplier,
                                   width: 140 * SizeConfig.widthMultiplier,
                                   child: RaisedButton(
-                                    onPressed: () async {},
+                                    onPressed: showSellBottomSheet,
                                     color: Color.fromARGB(255, 66, 71, 112),
                                     child: Text(
                                       'Sell',
@@ -311,7 +276,7 @@ class _HometabState extends State<Hometab> {
                       )),
                   Card(
                     child: Container(
-                      height: 260 * SizeConfig.heightMultiplier,
+                      height: 411 * SizeConfig.heightMultiplier,
                       width: 350 * SizeConfig.widthMultiplier,
                       child: Column(children: <Widget>[
                         Align(
@@ -321,38 +286,12 @@ class _HometabState extends State<Hometab> {
                                   left: 20 * SizeConfig.widthMultiplier,
                                   top: 20 * SizeConfig.heightMultiplier),
                               child: Text(
-                                "Revenue History",
+                                "Profit History",
                                 style: TextStyle(
                                     fontSize: 20 * SizeConfig.heightMultiplier),
                               ),
                             )),
-                        Expanded(
-                            child: ListView(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: 20*SizeConfig.heightMultiplier,
-                                  left: 15 * SizeConfig.widthMultiplier,
-                                  right: 15 * SizeConfig.widthMultiplier),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Column(
-                                        children: [
-                                          Text('January 2021        '),
-                                          Text('Date: 05/03/2021')
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Text('10,150 INR')
-                                ],
-                              ),
-                            ),
-                          ],
-                        ))
+                        Expanded(child: ProfitList())
                       ]),
                     ),
                   ),
@@ -361,5 +300,21 @@ class _HometabState extends State<Hometab> {
         ],
       ),
     );
+  }
+
+  showBuyBottomSheet() {
+    showBottomSheet(
+        context: context,
+        builder: (context) {
+          return BuySheet();
+        });
+  }
+
+  showSellBottomSheet() {
+    showBottomSheet(
+        context: context,
+        builder: (context) {
+          return SellSheet();
+        });
   }
 }
