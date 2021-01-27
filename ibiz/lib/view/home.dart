@@ -33,7 +33,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 50,
+          elevation: 0.0,
           leading: Builder(builder: (context) {
             return IconButton(
               icon: SizedBox(
