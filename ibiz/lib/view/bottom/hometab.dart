@@ -4,7 +4,6 @@ import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeScreen/buysheet.dart';
 import 'package:ibiz/view/bottom/HomeScreen/profitlist.dart';
 import 'package:ibiz/view/bottom/HomeScreen/sellsheet.dart';
-import 'package:ibiz/view/bottom/payment_method.dart';
 
 class Hometab extends StatefulWidget {
   final UserModel userModel;
@@ -17,41 +16,41 @@ class _HometabState extends State<Hometab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 154,
-                    child: Column(children: <Widget>[
-                      Text(
-                        "₹ 2550.25",
-                        style: TextStyle(
-                            fontSize: 30 * SizeConfig.heightMultiplier,
-                            fontFamily: "Roboto",
-                            color: Colors.white),
-                      ),
-                      Text('+15.00 (0.1%) This month',
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            Container(height: 1000 * SizeConfig.heightMultiplier),
+            Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 154,
+                      child: Column(children: <Widget>[
+                        Text(
+                          "₹ 2550.25",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 255, 212, 31),
-                              fontSize: 16 * SizeConfig.heightMultiplier))
-                    ]),
-                    color: Color.fromARGB(255, 66, 71, 112)),
-              ],
+                              fontSize: 30 * SizeConfig.heightMultiplier,
+                              fontFamily: "Roboto",
+                              color: Colors.white),
+                        ),
+                        Text('+15.00 (0.1%) This month',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 212, 31),
+                                fontSize: 16 * SizeConfig.heightMultiplier))
+                      ]),
+                      color: Color.fromARGB(255, 66, 71, 112)),
+                ],
+              ),
             ),
-          ),
-          Positioned(
-              top: 66 * SizeConfig.heightMultiplier,
-              left: 12 * SizeConfig.widthMultiplier,
-              right: 12 * SizeConfig.widthMultiplier,
-              child: Container(
-                height: 650 * SizeConfig.heightMultiplier,
-                child: ListView(children: <Widget>[
+            Positioned(
+                top: 66 * SizeConfig.heightMultiplier,
+                left: 12 * SizeConfig.widthMultiplier,
+                right: 12 * SizeConfig.widthMultiplier,
+                child: Column(children: <Widget>[
                   Card(
                     child: Container(
                       decoration: BoxDecoration(
@@ -295,9 +294,9 @@ class _HometabState extends State<Hometab> {
                       ]),
                     ),
                   ),
-                ]),
-              )),
-        ],
+                ])),
+          ],
+        ),
       ),
     );
   }

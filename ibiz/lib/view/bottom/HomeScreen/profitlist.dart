@@ -49,7 +49,7 @@ class _ProfitListState extends State<ProfitList> {
                             ),
                           ),
                         ),
-                        Text('₹ ' + profit.headerProfit.toString() + ' INR',
+                        Text('+ ₹ ' + profit.headerProfit.toString() + ' INR',
                             style: TextStyle(
                                 fontSize: 14 * SizeConfig.heightMultiplier,
                                 color: Colors.green))
@@ -87,16 +87,19 @@ class _ProfitListState extends State<ProfitList> {
                     Expanded(child: Text('Service fee')),
                     Text('- ₹ ' + profit.serviceFee.toString())
                   ]),
+                  const Divider(color: Colors.grey, height: 2, thickness: 2),
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
                     Expanded(child: Text('Net profit')),
                     Text('₹ ' + profit.netProfit.toString())
                   ]),
+                  const Divider(color: Colors.grey, height: 2, thickness: 2),
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
                     Expanded(child: Text('Total outstanding  tokens :')),
                     Text('÷ ' + profit.totalTokens.toString())
                   ]),
+                  const Divider(color: Colors.grey, height: 2, thickness: 2),
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
                     Expanded(child: Text('Dividend per token :')),
