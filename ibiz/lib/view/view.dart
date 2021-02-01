@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/authScreen/signup.dart';
-import 'package:ibiz/models/user.dart';
+import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/view/home.dart';
+import 'package:provider/provider.dart';
 
 class View extends StatefulWidget {
   final String mobileNo;
@@ -20,7 +21,8 @@ class _ViewState extends State<View> {
         if (snapshot.hasData) {
           // print("Inside View.dart "+snapshot.data.toString());
           if (snapshot.data != 0) {
-            return Home(userModel: snapshot.data);
+            return ChangeNotifierProvider<UserModel>.value(
+                value: snapshot.data, child: Home());
           } else {
             return SignUp(
               mobileNo: widget.mobileNo,

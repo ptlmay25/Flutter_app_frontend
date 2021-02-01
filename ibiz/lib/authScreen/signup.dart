@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/home.dart';
 import 'package:ibiz/view/view.dart';
-import 'package:ibiz/view/wrapper.dart';
 
 class SignUp extends StatefulWidget {
   final String mobileNo;

@@ -7,10 +7,10 @@ import 'package:ibiz/view/bottom/searchtab.dart';
 import 'package:ibiz/view/bottom/sharetab.dart';
 import 'package:ibiz/view/drawer.dart';
 import 'package:ibiz/view/navbar/notification.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
-  Home({this.userModel});
-  final UserModel userModel;
+  Home();
   @override
   _HomeState createState() => _HomeState();
 }
@@ -31,6 +31,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final userModel = Provider.of<UserModel>(context);
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
@@ -71,7 +72,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ],
         ),
-        drawer: HomeDrawer(userModel: widget.userModel),
+        drawer: HomeDrawer(userModel: userModel),
         bottomNavigationBar: Material(
           color: Colors.white,
           child: new TabBar(controller: controller, tabs: <Tab>[
@@ -104,10 +105,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         body: new TabBarView(
           controller: controller,
           children: <Widget>[
-            new Hometab(userModel: widget.userModel),
+            new Hometab(userModel: userModel),
             new Searchtab(),
-            new Accounttab(userModel: widget.userModel),
-            new Sharetab(userModel: widget.userModel)
+            new Accounttab(userModel: userModel),
+            new Sharetab(userModel: userModel)
           ],
         ));
   }

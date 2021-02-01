@@ -1,4 +1,6 @@
-class UserModel {
+import 'package:flutter/cupertino.dart';
+
+class UserModel with ChangeNotifier {
   UserModel(
       {this.id,
       this.mobileNo,
@@ -13,8 +15,10 @@ class UserModel {
       this.password,
       this.state,
       this.username,
-      this.zipcode});
-  final String id,
+      this.zipcode,
+      this.acc_bal,
+      this.tokens});
+  String id,
       username,
       gender,
       email,
@@ -28,4 +32,12 @@ class UserModel {
       UPI,
       bankAccountNo,
       IFSC;
+  int tokens, acc_bal;
+
+  void updateTokenAndBal({newToken, newBal}) {
+    this.tokens = newToken;
+    this.acc_bal = newBal;
+    notifyListeners();
+    print('TokenUpdated');
+  }
 }

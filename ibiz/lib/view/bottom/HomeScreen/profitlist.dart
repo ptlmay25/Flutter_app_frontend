@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/profit.dart';
+import 'package:ibiz/service/database/profitdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:intl/intl.dart';
 
@@ -8,7 +10,8 @@ class ProfitList extends StatefulWidget {
 }
 
 class _ProfitListState extends State<ProfitList> {
-  List<Profit> _data = getProfit();
+  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  List<Profit> _data = ProfitDb().getProfit();
   Widget _buildProfitList() {
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
@@ -49,7 +52,7 @@ class _ProfitListState extends State<ProfitList> {
                             ),
                           ),
                         ),
-                        Text('+ ₹ ' + profit.headerProfit.toString() + ' INR',
+                        Text(curf.format(profit.headerProfit) + ' INR',
                             style: TextStyle(
                                 fontSize: 14 * SizeConfig.heightMultiplier,
                                 color: Colors.green))
@@ -62,36 +65,37 @@ class _ProfitListState extends State<ProfitList> {
             body: Padding(
               padding: EdgeInsets.only(
                   left: 20 * SizeConfig.widthMultiplier,
-                  right: 65 * SizeConfig.widthMultiplier),
+                  right: 65 * SizeConfig.widthMultiplier,
+                  bottom: 10*SizeConfig.heightMultiplier),
               child: Container(
                 child: Column(children: <Widget>[
                   Row(children: [
                     Expanded(child: Text('Total Revenue:')),
-                    Text('₹ ' + profit.totalRevenue.toString(),
+                    Text('- ' + curf.format(profit.totalRevenue),
                         style: TextStyle(color: Colors.red))
                   ]),
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
                     Expanded(child: Text('Operating Expenes:')),
-                    Text('- ₹ ' + profit.oparatingExpenses.toString(),
+                    Text('- ' + curf.format(profit.oparatingExpenses),
                         style: TextStyle(color: Colors.red))
                   ]),
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
                     Expanded(child: Text('interest + tax:')),
-                    Text('- ₹ ' + profit.interest.toString(),
+                    Text('- ' + curf.format(profit.interest),
                         style: TextStyle(color: Colors.red))
                   ]),
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
                     Expanded(child: Text('Service fee')),
-                    Text('- ₹ ' + profit.serviceFee.toString())
+                    Text('- ' + curf.format(profit.serviceFee))
                   ]),
                   const Divider(color: Colors.grey, height: 2, thickness: 2),
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
                     Expanded(child: Text('Net profit')),
-                    Text('₹ ' + profit.netProfit.toString())
+                    Text(curf.format(profit.netProfit))
                   ]),
                   const Divider(color: Colors.grey, height: 2, thickness: 2),
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
@@ -103,7 +107,7 @@ class _ProfitListState extends State<ProfitList> {
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
                     Expanded(child: Text('Dividend per token :')),
-                    Text('₹ ' + profit.dividendPerToken.toString())
+                    Text(curf.format(profit.dividendPerToken))
                   ]),
                 ]),
               ),
@@ -116,51 +120,11 @@ class _ProfitListState extends State<ProfitList> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(child: _buildProfitList()),
+      child: Container(
+          child: Padding(
+        padding: EdgeInsets.only(top: 5 * SizeConfig.heightMultiplier),
+        child: _buildProfitList(),
+      )),
     );
   }
-}
-
-class Profit {
-  int headerProfit,
-      totalRevenue,
-      oparatingExpenses,
-      interest,
-      serviceFee,
-      netProfit,
-      totalTokens,
-      dividendPerToken;
-  bool isExpanded;
-  String headerDate;
-  String headerMonth, headerYear;
-  Profit(
-      {this.dividendPerToken,
-      this.headerDate,
-      this.headerMonth,
-      this.headerProfit,
-      this.headerYear,
-      this.interest,
-      this.netProfit,
-      this.oparatingExpenses,
-      this.serviceFee,
-      this.totalRevenue,
-      this.totalTokens,
-      this.isExpanded = false});
-}
-
-List<Profit> getProfit() {
-  return List.generate(1, (index) {
-    return Profit(
-        headerMonth: 'January',
-        headerYear: '2021',
-        headerDate: DateFormat('2021-05-03').format(null),
-        headerProfit: 5000,
-        totalRevenue: 210000,
-        oparatingExpenses: 2000000,
-        interest: 5000,
-        serviceFee: 5000,
-        netProfit: 5000,
-        totalTokens: 500,
-        dividendPerToken: 10);
-  });
 }

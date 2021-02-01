@@ -1,6 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/payment_method.dart';
+import 'package:provider/provider.dart';
 
 class BuySheet extends StatefulWidget {
   @override
@@ -11,123 +15,136 @@ class _BuySheetState extends State<BuySheet> {
   int _n = 1;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15 * SizeConfig.heightMultiplier),
-      ),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 2,
-      child: Column(children: <Widget>[
-        Align(
-          alignment: Alignment.topRight,
-          child: IconButton(
-            icon: Icon(Icons.highlight_off),
-            onPressed: () => Navigator.pop(context),
+    UserModel userModel = Provider.of<UserModel>(context);
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:
+                BorderRadius.circular(15 * SizeConfig.heightMultiplier),
+            border: Border.all(width: 1, color: Colors.black)),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height / 2,
+        child: Column(children: <Widget>[
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: Icon(Icons.highlight_off),
+              onPressed: () => Navigator.pop(context),
+            ),
           ),
-        ),
-        Text(
-          '₹ 3550.00',
-          style: TextStyle(fontSize: 50 * SizeConfig.heightMultiplier),
-        ),
-        SizedBox(height: 5 * SizeConfig.widthMultiplier),
-        Text(
-          'Price per Token',
-          style: TextStyle(
-              fontSize: 15 * SizeConfig.heightMultiplier,
-              fontWeight: FontWeight.w300),
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-              top: 45 * SizeConfig.heightMultiplier,
-              left: 98 * SizeConfig.widthMultiplier),
-          child: Row(
-            children: [
-              Text(
-                'Token: ',
-                style: TextStyle(
-                    fontSize: 14 * SizeConfig.heightMultiplier,
-                    fontWeight: FontWeight.normal),
-              ),
-              Container(
-                height: 35 * SizeConfig.heightMultiplier,
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Container(
-                          height: 35 * SizeConfig.heightMultiplier,
-                          width: 35 * SizeConfig.widthMultiplier,
-                          child: RaisedButton(
-                            onPressed: () async {
-                              setState(() {
-                                if (_n != 1) _n--;
-                              });
-                            },
-                            color: Color.fromARGB(255, 235, 235, 235),
-                            child: Text('-'),
+          Text(
+            '₹ 3550.00',
+            style: TextStyle(fontSize: 50 * SizeConfig.heightMultiplier),
+          ),
+          SizedBox(height: 5 * SizeConfig.widthMultiplier),
+          Text(
+            'Price per Token',
+            style: TextStyle(
+                fontSize: 15 * SizeConfig.heightMultiplier,
+                fontWeight: FontWeight.w300),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 45 * SizeConfig.heightMultiplier,
+                left: 98 * SizeConfig.widthMultiplier),
+            child: Row(
+              children: [
+                Text(
+                  'Token: ',
+                  style: TextStyle(
+                      fontSize: 14 * SizeConfig.heightMultiplier,
+                      fontWeight: FontWeight.normal),
+                ),
+                Container(
+                  height: 35 * SizeConfig.heightMultiplier,
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Container(
+                            height: 35 * SizeConfig.heightMultiplier,
+                            width: 35 * SizeConfig.widthMultiplier,
+                            child: RaisedButton(
+                              onPressed: () async {
+                                setState(() {
+                                  if (_n != 1) _n--;
+                                });
+                              },
+                              color: Color.fromARGB(255, 235, 235, 235),
+                              child: Text('-'),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                          height: 35 * SizeConfig.widthMultiplier,
-                          width: 35 * SizeConfig.widthMultiplier,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text('$_n',
-                                style: new TextStyle(
-                                    fontSize: 18 * SizeConfig.widthMultiplier)),
-                          )),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Container(
-                          height: 35 * SizeConfig.heightMultiplier,
-                          width: 35 * SizeConfig.widthMultiplier,
-                          child: RaisedButton(
-                            onPressed: () async {
-                              setState(() {
-                                if (_n != 20) _n++;
-                              });
-                            },
-                            color: Color.fromARGB(255, 235, 235, 235),
-                            child: Text('+'),
+                        SizedBox(
+                            height: 35 * SizeConfig.widthMultiplier,
+                            width: 35 * SizeConfig.widthMultiplier,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text('$_n',
+                                  style: new TextStyle(
+                                      fontSize:
+                                          18 * SizeConfig.widthMultiplier)),
+                            )),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Container(
+                            height: 35 * SizeConfig.heightMultiplier,
+                            width: 35 * SizeConfig.widthMultiplier,
+                            child: RaisedButton(
+                              onPressed: () async {
+                                setState(() {
+                                  if (_n != 20) _n++;
+                                });
+                              },
+                              color: Color.fromARGB(255, 235, 235, 235),
+                              child: Text('+'),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 50 * SizeConfig.heightMultiplier),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(5),
-          child: Container(
-            height: 45 * SizeConfig.heightMultiplier,
-            width: 240 * SizeConfig.widthMultiplier,
-            child: RaisedButton(
-              onPressed: () async {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PaymentMethod(amount : _n*3550)));
-              },
-              color: Color.fromARGB(255, 66, 71, 112),
-              child: Text(
-                'Buy',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16 * SizeConfig.heightMultiplier),
+          SizedBox(height: 50 * SizeConfig.heightMultiplier),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Container(
+              height: 45 * SizeConfig.heightMultiplier,
+              width: 240 * SizeConfig.widthMultiplier,
+              child: RaisedButton(
+                onPressed: () async {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ChangeNotifierProvider.value(
+                            value: userModel,
+                            child: PaymentMethod(
+                              amount: _n * 3550,
+                              userModel: userModel,
+                              tokens: _n,
+                            ),
+                          )));
+                },
+                color: Color.fromARGB(255, 66, 71, 112),
+                child: Text(
+                  'Buy',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16 * SizeConfig.heightMultiplier),
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(height:25*SizeConfig.heightMultiplier),
-        Text('Total: ₹ ${_n*3550}'),
-      ]),
+          SizedBox(height: 25 * SizeConfig.heightMultiplier),
+          Text('Total: ₹ ${_n * 3550}'),
+        ]),
+      ),
     );
     ;
   }

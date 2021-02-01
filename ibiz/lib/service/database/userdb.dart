@@ -112,6 +112,8 @@ class Userdb {
         password: data['password'],
         state: data['state'],
         zipcode: data['zipcode'],
+        tokens: data['tokens'],
+        acc_bal: data['acc_bal']
       );
     } else {
       print("No user found with: " + mobileNo);

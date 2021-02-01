@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/user.dart';
 import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeScreen/buysheet.dart';
 import 'package:ibiz/view/bottom/HomeScreen/profitlist.dart';
 import 'package:ibiz/view/bottom/HomeScreen/sellsheet.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Hometab extends StatefulWidget {
   final UserModel userModel;
@@ -13,8 +17,10 @@ class Hometab extends StatefulWidget {
 }
 
 class _HometabState extends State<Hometab> {
+  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
   @override
   Widget build(BuildContext context) {
+    UserModel userModel = Provider.of<UserModel>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -31,7 +37,7 @@ class _HometabState extends State<Hometab> {
                       height: 154,
                       child: Column(children: <Widget>[
                         Text(
-                          "₹ 2550.25",
+                          curf.format(2550.25),
                           style: TextStyle(
                               fontSize: 30 * SizeConfig.heightMultiplier,
                               fontFamily: "Roboto",
@@ -114,7 +120,8 @@ class _HometabState extends State<Hometab> {
                                             top: 7 *
                                                 SizeConfig.heightMultiplier),
                                         child: Text(
-                                          '250          ',
+                                          userModel.tokens.toString() +
+                                              '          ',
                                           style: TextStyle(
                                               fontSize: 25 *
                                                   SizeConfig.heightMultiplier),
@@ -138,7 +145,7 @@ class _HometabState extends State<Hometab> {
                                     padding: EdgeInsets.only(
                                         top: 7 * SizeConfig.heightMultiplier),
                                     child: Text(
-                                      '₹ 55,650.25',
+                                      curf.format(55650.25),
                                       style: TextStyle(
                                           fontSize:
                                               25 * SizeConfig.heightMultiplier),
@@ -174,7 +181,7 @@ class _HometabState extends State<Hometab> {
                                             top: 7 *
                                                 SizeConfig.heightMultiplier),
                                         child: Text(
-                                          '₹ 3550.00   ',
+                                          curf.format(3550.00),
                                           style: TextStyle(
                                               fontSize: 25 *
                                                   SizeConfig.heightMultiplier),

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ibiz/models/user.dart';
 
 class AuthService {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   String verificationId;
   bool codeSent = false;
 
@@ -11,21 +11,21 @@ class AuthService {
   }
 
   Stream<User> get user {
-    return _firebaseAuth.onAuthStateChanged
+    return firebaseAuth.onAuthStateChanged
         //.map((FirebaseUser user) => _userFromFirebaseUser(user));
         .map(_userFromFirebaseUser);
   }
 
   //Sign out
   Future signOut() async {
-    _firebaseAuth.signOut();
+    firebaseAuth.signOut();
   }
 
   //check credencial for otp
   Future signIn(AuthCredential authCredential) async {
     try {
       AuthResult result =
-          await _firebaseAuth.signInWithCredential(authCredential);
+          await firebaseAuth.signInWithCredential(authCredential);
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
     } catch (error) {
@@ -63,7 +63,7 @@ class AuthService {
     final PhoneCodeAutoRetrievalTimeout autoTimeOut = (String verId) {
       this.verificationId = verId;
     };
-    await _firebaseAuth.verifyPhoneNumber(
+    await firebaseAuth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         timeout: const Duration(seconds: 60),
         verificationCompleted: verified,
