@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/view/navbar/withdrawal_history.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Accounttab extends StatefulWidget {
-  final UserModel userModel;
-  Accounttab({this.userModel});
   @override
   _AccounttabState createState() => _AccounttabState();
 }
@@ -21,108 +22,116 @@ class _AccounttabState extends State<Accounttab> {
 
   @override
   Widget build(BuildContext context) {
+    var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+    UserModel userModel = Provider.of<UserModel>(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-          elevation: 0.0,
-          toolbarHeight: 200 * SizeConfig.heightMultiplier,
-          backgroundColor: Color.fromARGB(255, 66, 71, 112),
-          title: Column(children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(),
-                    child: Text(
-                      "₹ 65,000.00",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontFamily: "Roboto",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.only(top: 20 * SizeConfig.heightMultiplier),
-                    child: Text(
-                      "Your Balance",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontFamily: "Roboto",
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.only(top: 5 * SizeConfig.heightMultiplier),
-                    child: Text(
-                      "10/10/2020  11:24 AM",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontFamily: "Roboto",
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 58 * SizeConfig.widthMultiplier,
-                        top: 26 * SizeConfig.heightMultiplier,
-                        bottom: 38 * SizeConfig.heightMultiplier),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Container(
-                            height: 40 * SizeConfig.heightMultiplier,
-                            width: 120 * SizeConfig.widthMultiplier,
-                            child: RaisedButton(
-                              onPressed: () async {},
-                              color: Color.fromARGB(255, 108, 113, 156),
-                              child: Text(
-                                'Add Funds',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16 * SizeConfig.heightMultiplier),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 20 * SizeConfig.widthMultiplier),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Container(
-                            height: 40 * SizeConfig.heightMultiplier,
-                            width: 120 * SizeConfig.widthMultiplier,
-                            child: RaisedButton(
-                              onPressed: () async {},
-                              color: Color.fromARGB(255, 108, 113, 156),
-                              child: Text(
-                                'Withrow',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16 * SizeConfig.heightMultiplier),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ])),
       body: Column(
         children: <Widget>[
+          Container(
+              color: Color.fromARGB(255, 66, 71, 112),
+              child: Column(children: <Widget>[
+                Padding(
+                  padding:
+                      EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(),
+                        child: Text(
+                          curf.format(userModel.acc_bal),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20 * SizeConfig.heightMultiplier),
+                        child: Text(
+                          "Your Balance",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 5 * SizeConfig.heightMultiplier),
+                        child: Text(
+                          "10/10/2020  11:24 AM",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 58 * SizeConfig.widthMultiplier,
+                            top: 26 * SizeConfig.heightMultiplier,
+                            bottom: 38 * SizeConfig.heightMultiplier),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Container(
+                                height: 40 * SizeConfig.heightMultiplier,
+                                width: 120 * SizeConfig.widthMultiplier,
+                                child: RaisedButton(
+                                  onPressed: () async {},
+                                  color: Color.fromARGB(255, 108, 113, 156),
+                                  child: Text(
+                                    'Add Funds',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize:
+                                            16 * SizeConfig.heightMultiplier),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 20 * SizeConfig.widthMultiplier),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Container(
+                                height: 40 * SizeConfig.heightMultiplier,
+                                width: 120 * SizeConfig.widthMultiplier,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Withdraw_History()));
+                                  },
+                                  color: Color.fromARGB(255, 108, 113, 156),
+                                  child: Text(
+                                    'Withrow',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize:
+                                            16 * SizeConfig.heightMultiplier),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ])),
           Padding(
             padding: EdgeInsets.only(
                 top: 30 * SizeConfig.heightMultiplier,

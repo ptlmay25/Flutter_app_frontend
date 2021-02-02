@@ -3,8 +3,6 @@ import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
 
 class Sharetab extends StatefulWidget {
-  final UserModel userModel;
-  Sharetab({this.userModel});
   @override
   _SharetabState createState() => _SharetabState();
 }

@@ -18,9 +18,9 @@ class _SellSheetState extends State<SellSheet> {
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius:
-                BorderRadius.circular(15 * SizeConfig.heightMultiplier),
-            border: Border.all(color: Colors.black, width: 1)),
+            // borderRadius:
+            //     BorderRadius.circular(15 * SizeConfig.heightMultiplier),
+            border: Border(top: BorderSide(width: 1, color: Colors.black))),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height / 2,
         child: Column(children: <Widget>[

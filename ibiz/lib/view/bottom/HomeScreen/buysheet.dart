@@ -21,9 +21,9 @@ class _BuySheetState extends State<BuySheet> {
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius:
-                BorderRadius.circular(15 * SizeConfig.heightMultiplier),
-            border: Border.all(width: 1, color: Colors.black)),
+            // borderRadius:
+            //     BorderRadius.circular(15 * SizeConfig.heightMultiplier),
+            border: Border(top: BorderSide(width: 1, color: Colors.black))),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height / 2,
         child: Column(children: <Widget>[

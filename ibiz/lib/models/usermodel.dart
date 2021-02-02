@@ -40,4 +40,21 @@ class UserModel with ChangeNotifier {
     notifyListeners();
     print('TokenUpdated');
   }
+
+  void updateUserProfile(
+      {newEmail, newAddress, newCity, newZipcode, newState}) {
+    this.email = newEmail;
+    this.homeAddress = newAddress;
+    this.city = newCity;
+    this.zipcode = newZipcode;
+    this.state = newState;
+    notifyListeners();
+    print('Profile Updated');
+  }
+
+  void updateBankDetails({newUpi, newAccNo, newIfsc}) {
+    this.UPI = newUpi;
+    this.bankAccountNo = newAccNo;
+    this.IFSC = newIfsc;
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/accounttab.dart';
@@ -20,6 +21,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     controller = new TabController(length: 4, vsync: this);
   }
 
@@ -72,7 +74,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ],
         ),
-        drawer: HomeDrawer(userModel: userModel),
+        drawer: HomeDrawer(),
         bottomNavigationBar: Material(
           color: Colors.white,
           child: new TabBar(controller: controller, tabs: <Tab>[
@@ -105,10 +107,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         body: new TabBarView(
           controller: controller,
           children: <Widget>[
-            new Hometab(userModel: userModel),
+            new Hometab(),
             new Searchtab(),
-            new Accounttab(userModel: userModel),
-            new Sharetab(userModel: userModel)
+            new Accounttab(),
+            new Sharetab()
           ],
         ));
   }

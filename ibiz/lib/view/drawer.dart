@@ -7,12 +7,13 @@ import 'package:ibiz/view/navbar/BankInfo.dart';
 import 'package:ibiz/view/navbar/contact_us.dart';
 import 'package:ibiz/view/navbar/profile.dart';
 import 'package:ibiz/view/navbar/withdrawal_history.dart';
+import 'package:provider/provider.dart';
 
 class HomeDrawer extends StatelessWidget {
-  HomeDrawer({this.userModel});
-  final UserModel userModel;
+  HomeDrawer();
   @override
   Widget build(BuildContext context) {
+    UserModel userModel = Provider.of<UserModel>(context);
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -31,7 +32,7 @@ class HomeDrawer extends StatelessWidget {
                   width: 200,
                   height: 60,
                   child: Text(
-                    "Account ID: ${userModel.id}",
+                    "Account ID: ${userModel.mobileNo}",
                     style: TextStyle(
                       color: Color(0xff151515),
                       fontSize: 15,
@@ -62,7 +63,8 @@ class HomeDrawer extends StatelessWidget {
                 // UserModel userModel=await Userdb().getUserByMobileNo(mobileNo);
                 // print(userModel.mobileNo);
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Profile(userModel: userModel)));
+                    builder: (context) => ChangeNotifierProvider.value(
+                        value: userModel, child: Profile())));
               },
             ),
           ),
@@ -81,8 +83,9 @@ class HomeDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => BankInfo(userModel: userModel)));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ChangeNotifierProvider.value(
+                        value: userModel, child: BankInfo())));
               },
             ),
           ),
@@ -102,7 +105,8 @@ class HomeDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Withdraw_History(userModel: userModel)));
+                    builder: (context) =>
+                        Withdraw_History(userModel: userModel)));
               },
             ),
           ),

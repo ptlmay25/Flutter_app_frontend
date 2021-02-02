@@ -10,8 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class Hometab extends StatefulWidget {
-  final UserModel userModel;
-  Hometab({this.userModel});
   @override
   _HometabState createState() => _HometabState();
 }
