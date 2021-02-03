@@ -4,6 +4,7 @@ import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/navbar/withdrawal_history.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:ibiz/view/bottom/AccountTab/addfund.dart';
 
 class Accounttab extends StatefulWidget {
   @override
@@ -87,7 +88,14 @@ class _AccounttabState extends State<Accounttab> {
                                 height: 40 * SizeConfig.heightMultiplier,
                                 width: 120 * SizeConfig.widthMultiplier,
                                 child: RaisedButton(
-                                  onPressed: () async {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ChangeNotifierProvider.value(
+                                                    value: userModel,
+                                                    child: AddFund())));
+                                  },
                                   color: Color.fromARGB(255, 108, 113, 156),
                                   child: Text(
                                     'Add Funds',

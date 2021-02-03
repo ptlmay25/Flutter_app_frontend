@@ -3,7 +3,7 @@ import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/buytoken.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:ibiz/view/bottom/complete_order.dart';
+import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 

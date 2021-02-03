@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:ibiz/view/bottom/payment_method.dart';
 
 class SellSheet extends StatefulWidget {
   @override

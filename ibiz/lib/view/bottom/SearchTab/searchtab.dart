@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ibiz/view/bottom/categorylist.dart';
+import 'package:ibiz/view/bottom/SearchTab/categorylist.dart';
 
-import '../../size_config.dart';
+import 'package:ibiz/size_config.dart';
 
 class Searchtab extends StatefulWidget {
   @override

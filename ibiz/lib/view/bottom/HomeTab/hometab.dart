@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ibiz/models/user.dart';
 import 'package:ibiz/models/usermodel.dart';
-import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:ibiz/view/bottom/HomeScreen/buysheet.dart';
-import 'package:ibiz/view/bottom/HomeScreen/profitlist.dart';
-import 'package:ibiz/view/bottom/HomeScreen/sellsheet.dart';
+import 'package:ibiz/view/bottom/HomeTab/buysheet.dart';
+import 'package:ibiz/view/bottom/HomeTab/profitlist.dart';
+import 'package:ibiz/view/bottom/HomeTab/sellsheet.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
