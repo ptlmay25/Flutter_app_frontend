@@ -87,34 +87,31 @@ class Userdb {
         await http.get(url + "user/viewMobile/" + mobileNo);
     //print("Inside getUserByMobileNo"+response.body);
     if (response.statusCode == 200) {
-      List userList=json.decode(response.body)['data'];
-      print(userList.length);
+      List userList = json.decode(response.body)['data'];
       //Map<String, dynamic> data = json.decode(response.body)['data'][0];
-      if(userList.length==0){
+      if (userList.length == 0) {
         print("ZERO RETURNED");
         return 0;
       }
-        
-      Map<String,dynamic> data=userList[0];
-      print("Inside getUserByMobileNo" + data.toString());
+
+      Map<String, dynamic> data = userList[0];
       return UserModel(
-        username: data['username'],
-        country: data['country'],
-        IFSC: data['IFSC'],
-        UPI: data['UPI'],
-        bankAccountNo: data['bankAccountNo'],
-        city: data['city'],
-        email: data['email'],
-        gender: data['gender'],
-        homeAddress: data['homeAddress'],
-        id: data['_id'],
-        mobileNo: data['mobileNo'],
-        password: data['password'],
-        state: data['state'],
-        zipcode: data['zipcode'],
-        tokens: data['tokens'],
-        acc_bal: data['acc_bal']
-      );
+          username: data['username'],
+          country: data['country'],
+          IFSC: data['IFSC'],
+          UPI: data['UPI'],
+          bankAccountNo: data['bankAccountNo'],
+          city: data['city'],
+          email: data['email'],
+          gender: data['gender'],
+          homeAddress: data['homeAddress'],
+          id: data['_id'],
+          mobileNo: data['mobileNo'],
+          password: data['password'],
+          state: data['state'],
+          zipcode: data['zipcode'],
+          tokens: data['tokens'],
+          acc_bal: data['acc_bal']);
     } else {
       print("No user found with: " + mobileNo);
       return null;

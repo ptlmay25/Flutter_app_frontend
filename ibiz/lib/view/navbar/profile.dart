@@ -5,7 +5,8 @@ import 'package:ibiz/size_config.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
-  Profile();
+  // Profile({this.userModel});
+  // UserModel userModel;
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -50,6 +51,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
+    // UserModel userModel = widget.userModel;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 66, 71, 112),
@@ -336,7 +338,7 @@ class _ProfileState extends State<Profile> {
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: DropdownButton(
-                                hint: Text(userModel.state),
+                                //hint: Text(userModel.state),
                                 value: _selectedLocation,
                                 onChanged: (newValue) {
                                   setState(() {

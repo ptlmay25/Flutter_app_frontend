@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/buytoken.dart';
 import 'package:ibiz/service/database/userdb.dart';
@@ -6,16 +7,34 @@ import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class PaymentMethod extends StatefulWidget {
   final int amount, tokens;
   final UserModel userModel;
+
   PaymentMethod({this.amount, this.userModel, this.tokens});
   @override
   _PaymentMethodState createState() => _PaymentMethodState();
 }
 
 class _PaymentMethodState extends State<PaymentMethod> {
+  Razorpay _razorpay;
+  @override
+  void initState() {
+    super.initState();
+    _razorpay = new Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _razorpay.clear();
+  }
+
   var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
   int b = 0;
   String paymentMethodUsed;
@@ -197,7 +216,9 @@ class _PaymentMethodState extends State<PaymentMethod> {
                       } else {
                         print('Insufficient Balance');
                       }
-                    } else if (this.paymentMethodUsed == 'Online Paymnet') {}
+                    } else if (this.paymentMethodUsed == 'Online Paymnet') {
+                      openCheckout(userModel);
+                    }
                   },
                   color: Color.fromRGBO(255, 212, 31, 1),
                   child: Text(
@@ -214,5 +235,46 @@ class _PaymentMethodState extends State<PaymentMethod> {
         ],
       ),
     );
+  }
+
+  void openCheckout(UserModel userModel) async {
+    var options = {
+      'key': 'rzp_test_v6Iu0KnIVSKqGC',
+      'amount': widget.amount*100,
+      'name': 'Firefly',
+      'description': 'Payment for new Token',
+      'image':
+          'https://firebasestorage.googleapis.com/v0/b/mytestApp.appspot.com/o/images%2FpZm8daajsIS4LvqBYTiWiuLIgmE2?alt=media&token=3kuli4cd-dc45-7845-b87d-5c4acc7da3c2',
+      'prefill': {'contact': userModel.mobileNo, 'email': userModel.email},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      // debugPrint(e);
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    bool res = await BuyToken().buyToken(newBal: widget.userModel.acc_bal,newToken: widget.tokens);
+    if(res){
+      print("Result:"+res.toString());
+    }
+    Fluttertoast.showToast(
+        msg: "SUCCESS: " + response.paymentId, timeInSecForIosWeb: 4);
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(
+        msg: "ERROR: " + response.code.toString() + " - " + response.message,
+        timeInSecForIosWeb: 4);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: " + response.walletName, timeInSecForIosWeb: 4);
   }
 }
