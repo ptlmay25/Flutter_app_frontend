@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/buytoken.dart';
 import 'package:provider/provider.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class AddFund extends StatefulWidget {
+  final UserModel userModel;
+  AddFund({this.userModel});
   @override
   _AddFundState createState() => _AddFundState();
 }
@@ -11,7 +16,24 @@ class AddFund extends StatefulWidget {
 class _AddFundState extends State<AddFund> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String email;
-  double amount;
+  int amount;
+  Razorpay _razorpay;
+  bool paymentDone = false;
+  @override
+  void initState() {
+    super.initState();
+    _razorpay = new Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _razorpay.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
@@ -45,7 +67,7 @@ class _AddFundState extends State<AddFund> {
                     decoration: InputDecoration(hintText: 'Amount'),
                     onSaved: (value) {
                       setState(() {
-                        this.amount = double.parse(value);
+                        this.amount = int.parse(value);
                       });
                     },
                     validator: (value) {
@@ -91,6 +113,7 @@ class _AddFundState extends State<AddFund> {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
                               print('$email $amount ${userModel.mobileNo}');
+                              openCheckout(userModel);
                               // Navigator.of(context).push(
                               //     MaterialPageRoute(builder: (context) => GetStarted()));
                             }
@@ -112,5 +135,56 @@ class _AddFundState extends State<AddFund> {
         ],
       ),
     );
+  }
+
+  void openCheckout(UserModel userModel) async {
+    var options = {
+      'key': 'rzp_test_v6Iu0KnIVSKqGC',
+      'amount': amount * 100,
+      'name': 'Firefly',
+      'description': 'Payment for new Token',
+      'image':
+          'https://firebasestorage.googleapis.com/v0/b/mytestApp.appspot.com/o/images%2FpZm8daajsIS4LvqBYTiWiuLIgmE2?alt=media&token=3kuli4cd-dc45-7845-b87d-5c4acc7da3c2',
+      'prefill': {'contact': userModel.mobileNo, 'email': userModel.email},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      // debugPrint(e);
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    Fluttertoast.showToast(
+        msg: "SUCCESS: " + response.paymentId, timeInSecForIosWeb: 4);
+    print('payment done');
+    bool res = await BuyToken().buyToken(
+        id: widget.userModel.id,
+        newToken: widget.userModel.tokens,
+        newBal: widget.userModel.acc_bal + amount);
+    if (res) {
+      print("Result:" + res.toString());
+      widget.userModel.updateTokenAndBal(
+          newToken: widget.userModel.tokens,
+          newBal: widget.userModel.acc_bal + amount);
+      setState(() {
+        paymentDone = true;
+      });
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(
+        msg: "ERROR: " + response.code.toString() + " - " + response.message,
+        timeInSecForIosWeb: 4);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: " + response.walletName, timeInSecForIosWeb: 4);
   }
 }

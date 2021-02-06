@@ -55,7 +55,6 @@ class _CompleteOrderState extends State<CompleteOrder> {
                   onPressed: () {
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
-                    Navigator.of(context).pop();
                   },
                   color: Color.fromRGBO(255, 212, 31, 1),
                   child: Text(

@@ -32,7 +32,7 @@ dependencies:
   flutter_svg:
   http: any
   intl: ^0.16.1
-  razorpay_flutter: ^1.2.3
+  razorpay_flutter: ^1.2.2
   fluttertoast: ^7.1.6
 
   # The following adds the Cupertino Icons font to your application.

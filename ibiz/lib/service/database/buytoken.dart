@@ -10,7 +10,7 @@ class BuyToken {
     };
     var response = await http.put(url + "user/update/" + id, body: data);
     if (response.statusCode == 200) {
-      //print("User Updated");
+      print("User Updated");
       return true;
     } else {
       print(response.body);

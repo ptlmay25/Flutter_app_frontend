@@ -20,6 +20,7 @@ class PaymentMethod extends StatefulWidget {
 
 class _PaymentMethodState extends State<PaymentMethod> {
   Razorpay _razorpay;
+  bool paymentDone = false;
   @override
   void initState() {
     super.initState();
@@ -56,191 +57,198 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   @override
   Widget build(BuildContext context) {
-    UserModel userModel = Provider.of<UserModel>(context);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 66, 71, 112),
-      ),
-      body: ListView(
-        scrollDirection: Axis.vertical,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 14),
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 25 * SizeConfig.widthMultiplier),
-                  child: Text(
-                    "Payable amount: ",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color.fromRGBO(21, 21, 21, 1),
-                      fontSize: (15) * SizeConfig.heightMultiplier,
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.only(right: 70 * SizeConfig.widthMultiplier),
-                  child: Text(
-                    curf.format(widget.amount),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color.fromRGBO(140, 47, 15, 1),
-                      fontSize: (18) * SizeConfig.heightMultiplier,
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Divider(
-            thickness: 2,
-            height: 30,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: 25 * SizeConfig.heightMultiplier,
-                left: 25 * SizeConfig.widthMultiplier),
-            child: Text(
-              "Select a Payment method : ",
-              style: TextStyle(
-                color: Color.fromRGBO(21, 21, 21, 1),
-                fontSize: (18) * SizeConfig.heightMultiplier,
-                fontFamily: "Roboto",
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20 * SizeConfig.heightMultiplier),
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 10 * SizeConfig.widthMultiplier),
-                  child: Radio(
-                    value: 1,
-                    groupValue: b,
-                    onChanged: (v) {
-                      f1(v);
-                    },
-                    activeColor: Color.fromRGBO(255, 212, 31, 1),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 14 * SizeConfig.widthMultiplier, top: 15),
-                  child: Text(
-                    "Use account balance.\n" +
-                        "Available balance  " +
-                        curf.format(userModel.acc_bal) +
-                        " ) ",
-                    style: TextStyle(
-                      color: Color.fromRGBO(21, 21, 21, 1),
-                      fontSize: (15) * SizeConfig.heightMultiplier,
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 15),
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 10 * SizeConfig.widthMultiplier),
-                  child: Radio(
-                    value: 2,
-                    groupValue: b,
-                    onChanged: (v) {
-                      f1(v);
-                    },
-                    activeColor: Color.fromRGBO(255, 212, 31, 1),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 14 * SizeConfig.widthMultiplier),
-                  child: Text(
-                    "Online Payment",
-                    style: TextStyle(
-                      color: Color.fromRGBO(21, 21, 21, 1),
-                      fontSize: (15) * SizeConfig.heightMultiplier,
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: (40) * SizeConfig.heightMultiplier,
-                left: (17) * SizeConfig.widthMultiplier,
-                right: (18) * SizeConfig.widthMultiplier),
-            child: ClipRRect(
-              borderRadius:
-                  BorderRadius.circular((5) * SizeConfig.heightMultiplier),
-              child: Container(
-                width: (340) * SizeConfig.widthMultiplier,
-                height: (45) * SizeConfig.heightMultiplier,
-                child: RaisedButton(
-                  onPressed: () async {
-                    f2();
-                    if (this.paymentMethodUsed == 'Account Balance') {
-                      UserModel userDataModel = await Userdb()
-                          .getUserByMobileNo(widget.userModel.mobileNo);
-                      if (userDataModel.acc_bal >= widget.amount) {
-                        bool res = await BuyToken().buyToken(
-                            id: userDataModel.id,
-                            newBal: userDataModel.acc_bal - widget.amount,
-                            newToken: userDataModel.tokens + widget.tokens);
-                        if (res) {
-                          userModel.updateTokenAndBal(
-                              newToken: userModel.tokens + widget.tokens,
-                              newBal: userModel.acc_bal - widget.amount);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => CompleteOrder()));
-                        }
-                      } else {
-                        print('Insufficient Balance');
-                      }
-                    } else if (this.paymentMethodUsed == 'Online Paymnet') {
-                      openCheckout(userModel);
-                    }
-                  },
-                  color: Color.fromRGBO(255, 212, 31, 1),
-                  child: Text(
-                    'Place Order',
-                    style: TextStyle(
+    if (paymentDone == true) {
+      return CompleteOrder();
+    } else {
+      UserModel userModel = Provider.of<UserModel>(context);
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 66, 71, 112),
+        ),
+        body: ListView(
+          scrollDirection: Axis.vertical,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 14),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: 25 * SizeConfig.widthMultiplier),
+                    child: Text(
+                      "Payable amount: ",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
                         color: Color.fromRGBO(21, 21, 21, 1),
-                        fontWeight: FontWeight.normal,
-                        fontSize: (15) * SizeConfig.heightMultiplier),
+                        fontSize: (15) * SizeConfig.heightMultiplier,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(right: 70 * SizeConfig.widthMultiplier),
+                    child: Text(
+                      curf.format(widget.amount),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color.fromRGBO(140, 47, 15, 1),
+                        fontSize: (18) * SizeConfig.heightMultiplier,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Divider(
+              thickness: 2,
+              height: 30,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 25 * SizeConfig.heightMultiplier,
+                  left: 25 * SizeConfig.widthMultiplier),
+              child: Text(
+                "Select a Payment method : ",
+                style: TextStyle(
+                  color: Color.fromRGBO(21, 21, 21, 1),
+                  fontSize: (18) * SizeConfig.heightMultiplier,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),
-          )
-        ],
-      ),
-    );
+            Padding(
+              padding: EdgeInsets.only(top: 20 * SizeConfig.heightMultiplier),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: 10 * SizeConfig.widthMultiplier),
+                    child: Radio(
+                      value: 1,
+                      groupValue: b,
+                      onChanged: (v) {
+                        f1(v);
+                      },
+                      activeColor: Color.fromRGBO(255, 212, 31, 1),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 14 * SizeConfig.widthMultiplier, top: 15),
+                    child: Text(
+                      "Use account balance.\n" +
+                          "Available balance  " +
+                          curf.format(userModel.acc_bal) +
+                          " ) ",
+                      style: TextStyle(
+                        color: Color.fromRGBO(21, 21, 21, 1),
+                        fontSize: (15) * SizeConfig.heightMultiplier,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 15),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: 10 * SizeConfig.widthMultiplier),
+                    child: Radio(
+                      value: 2,
+                      groupValue: b,
+                      onChanged: (v) {
+                        f1(v);
+                      },
+                      activeColor: Color.fromRGBO(255, 212, 31, 1),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: 14 * SizeConfig.widthMultiplier),
+                    child: Text(
+                      "Online Payment",
+                      style: TextStyle(
+                        color: Color.fromRGBO(21, 21, 21, 1),
+                        fontSize: (15) * SizeConfig.heightMultiplier,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: (40) * SizeConfig.heightMultiplier,
+                  left: (17) * SizeConfig.widthMultiplier,
+                  right: (18) * SizeConfig.widthMultiplier),
+              child: ClipRRect(
+                borderRadius:
+                    BorderRadius.circular((5) * SizeConfig.heightMultiplier),
+                child: Container(
+                  width: (340) * SizeConfig.widthMultiplier,
+                  height: (45) * SizeConfig.heightMultiplier,
+                  child: RaisedButton(
+                    onPressed: () async {
+                      f2();
+                      if (this.paymentMethodUsed == 'Account Balance') {
+                        UserModel userDataModel = await Userdb()
+                            .getUserByMobileNo(widget.userModel.mobileNo);
+                        if (userDataModel.acc_bal >= widget.amount) {
+                          bool res = await BuyToken().buyToken(
+                              id: userDataModel.id,
+                              newBal: userDataModel.acc_bal - widget.amount,
+                              newToken: userDataModel.tokens + widget.tokens);
+                          if (res) {
+                            userModel.updateTokenAndBal(
+                                newToken: userModel.tokens + widget.tokens,
+                                newBal: userModel.acc_bal - widget.amount);
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) => CompleteOrder()));
+                            setState(() {
+                              paymentDone = true;
+                            });
+                          }
+                        } else {
+                          print('Insufficient Balance');
+                        }
+                      } else if (this.paymentMethodUsed == 'Online Paymnet') {
+                        openCheckout(userModel);
+                      }
+                    },
+                    color: Color.fromRGBO(255, 212, 31, 1),
+                    child: Text(
+                      'Place Order',
+                      style: TextStyle(
+                          color: Color.fromRGBO(21, 21, 21, 1),
+                          fontWeight: FontWeight.normal,
+                          fontSize: (15) * SizeConfig.heightMultiplier),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }
   }
 
   void openCheckout(UserModel userModel) async {
     var options = {
       'key': 'rzp_test_v6Iu0KnIVSKqGC',
-      'amount': widget.amount*100,
+      'amount': widget.amount * 100,
       'name': 'Firefly',
       'description': 'Payment for new Token',
       'image':
@@ -259,12 +267,22 @@ class _PaymentMethodState extends State<PaymentMethod> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    bool res = await BuyToken().buyToken(newBal: widget.userModel.acc_bal,newToken: widget.tokens);
-    if(res){
-      print("Result:"+res.toString());
-    }
     Fluttertoast.showToast(
         msg: "SUCCESS: " + response.paymentId, timeInSecForIosWeb: 4);
+    print('payment done');
+    bool res = await BuyToken().buyToken(
+        id: widget.userModel.id,
+        newBal: widget.userModel.acc_bal,
+        newToken: widget.tokens + widget.userModel.tokens);
+    if (res) {
+      print("Result:" + res.toString());
+      widget.userModel.updateTokenAndBal(
+          newToken: widget.userModel.tokens + widget.tokens,
+          newBal: widget.userModel.acc_bal);
+      setState(() {
+        paymentDone = true;
+      });
+    }
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

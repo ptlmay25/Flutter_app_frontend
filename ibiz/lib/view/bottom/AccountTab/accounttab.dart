@@ -94,7 +94,9 @@ class _AccounttabState extends State<Accounttab> {
                                             builder: (context) =>
                                                 ChangeNotifierProvider.value(
                                                     value: userModel,
-                                                    child: AddFund())));
+                                                    child: AddFund(
+                                                      userModel: userModel,
+                                                    ))));
                                   },
                                   color: Color.fromARGB(255, 108, 113, 156),
                                   child: Text(
@@ -119,7 +121,10 @@ class _AccounttabState extends State<Accounttab> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Withdraw_History()));
+                                                ChangeNotifierProvider.value(
+                                                    value: userModel,
+                                                    child:
+                                                        Withdraw_History())));
                                   },
                                   color: Color.fromARGB(255, 108, 113, 156),
                                   child: Text(
