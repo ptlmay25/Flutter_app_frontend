@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
@@ -394,9 +395,9 @@ class _ProfileState extends State<Profile> {
                                               zipcode,
                                               newState);
                                       if (res == true) {
-                                        setState(() {
-                                          this.isUpdated = true;
-                                        });
+                                        Fluttertoast.showToast(
+                                            msg: "User Profile Updated",
+                                            timeInSecForIosWeb: 4);
                                         print("User Updated");
                                         userModel.updateUserProfile(
                                             newEmail: email,
@@ -404,6 +405,10 @@ class _ProfileState extends State<Profile> {
                                             newCity: city,
                                             newState: newState,
                                             newZipcode: zipcode);
+                                      }else{
+                                        Fluttertoast.showToast(
+                                            msg: "Internal error accoured",
+                                            timeInSecForIosWeb: 4);
                                       }
                                     }
                                   },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
@@ -203,15 +204,26 @@ class _BankInfoState extends State<BankInfo> {
                                       bool res = await Userdb()
                                           .updateUserBankDetails(userModel.id,
                                               UPI, bankAccountNo, IFSC);
+                                      print(userModel.id +
+                                          ' ' +
+                                          UPI +
+                                          ' ' +
+                                          bankAccountNo +
+                                          ' ' +
+                                          IFSC);
                                       if (res == true) {
-                                        setState(() {
-                                          this.isUpdated = true;
-                                        });
+                                        Fluttertoast.showToast(
+                                            msg: "Bankdetails Updated",
+                                            timeInSecForIosWeb: 4);
                                         print("BankDetails Updated");
                                         userModel.updateBankDetails(
                                             newAccNo: bankAccountNo,
                                             newUpi: UPI,
                                             newIfsc: IFSC);
+                                      }else{
+                                        Fluttertoast.showToast(
+                                            msg: "Internal error accoured",
+                                            timeInSecForIosWeb: 4);
                                       }
                                     }
                                   },

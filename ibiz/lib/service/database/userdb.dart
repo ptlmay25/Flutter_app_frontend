@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:ibiz/models/usermodel.dart';
 
 class Userdb {
-  //Jiten
   final String url = "https://tranquil-river-00045.herokuapp.com/api/";
   // final String url = "http://192.168.43.24:5000/api/";
   Future getUsers() async {
@@ -52,7 +51,10 @@ class Userdb {
       'zipcode': zipcode,
       'state': state
     };
-    var response = await http.put(url + "user/update/" + id, body: data);
+    var response = await http
+        .put(url + "user/update/" + id, body: json.encode(data), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
     if (response.statusCode == 200) {
       //print("User Updated");
       return true;
@@ -71,7 +73,10 @@ class Userdb {
       'bankAccountNo': bankAccountNo,
       'IFSC': IFSC
     };
-    var response = await http.put(url + "user/update/" + id, body: data);
+    var response = await http
+        .put(url + "user/update/" + id, body: json.encode(data), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
     if (response.statusCode == 200) {
       //print("User Updated");
       return true;

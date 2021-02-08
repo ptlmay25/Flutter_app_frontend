@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/withdrawrequest.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/navbar/withdrawal_history.dart';
 import 'package:intl/intl.dart';
@@ -13,7 +15,7 @@ class Withdraw extends StatefulWidget {
 class _WithdrawState extends State<Withdraw> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
-  String name, accNo, IFSC;
+  String name, accNo, IFSC, UPI;
   int amount;
   @override
   Widget build(BuildContext context) {
@@ -125,6 +127,27 @@ class _WithdrawState extends State<Withdraw> {
                   SizedBox(height: 40 * SizeConfig.heightMultiplier),
                   Align(
                     alignment: Alignment.topLeft,
+                    child: Text('UPI',
+                        style: TextStyle(
+                            fontSize: 11 * SizeConfig.heightMultiplier,
+                            fontWeight: FontWeight.w400)),
+                  ),
+                  TextFormField(
+                    initialValue: userModel.IFSC,
+                    onSaved: (value) {
+                      setState(() {
+                        this.UPI = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "field is empty";
+                      }
+                    },
+                  ),
+                  SizedBox(height: 40 * SizeConfig.heightMultiplier),
+                  Align(
+                    alignment: Alignment.topLeft,
                     child: Text('Amount (₹)',
                         style: TextStyle(
                             fontSize: 11 * SizeConfig.heightMultiplier,
@@ -143,7 +166,7 @@ class _WithdrawState extends State<Withdraw> {
                       }
                     },
                   ),
-                  SizedBox(height: 95 * SizeConfig.heightMultiplier),
+                  SizedBox(height: 80 * SizeConfig.heightMultiplier),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Container(
@@ -151,9 +174,21 @@ class _WithdrawState extends State<Withdraw> {
                       width: 330 * SizeConfig.widthMultiplier,
                       child: RaisedButton(
                         onPressed: () async {
-                          if(_formKey.currentState.validate()){
+                          if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                            print('${this.accNo}');
+                            bool res = await WithdrawRequest().request(
+                                userId: userModel.id,
+                                IFSC: IFSC,
+                                UPI: UPI,
+                                amount: amount);
+                            if (res) {
+                              Fluttertoast.showToast(
+                                  msg: "Request Sent", timeInSecForIosWeb: 4);
+                                  
+                            }else{
+                              Fluttertoast.showToast(
+                                  msg: "Multiple Requests are not allowed\nTry again later", timeInSecForIosWeb: 4);
+                            }
                           }
                         },
                         color: Color.fromARGB(255, 255, 212, 31),
