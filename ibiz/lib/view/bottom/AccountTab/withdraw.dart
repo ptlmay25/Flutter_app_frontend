@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/withdrawrequest.dart';
@@ -133,7 +134,7 @@ class _WithdrawState extends State<Withdraw> {
                             fontWeight: FontWeight.w400)),
                   ),
                   TextFormField(
-                    initialValue: userModel.IFSC,
+                    initialValue: userModel.UPI,
                     onSaved: (value) {
                       setState(() {
                         this.UPI = value;
@@ -154,6 +155,7 @@ class _WithdrawState extends State<Withdraw> {
                             fontWeight: FontWeight.w400)),
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     onSaved: (value) {
                       setState(() {
                         this.amount = int.parse(value);
@@ -166,7 +168,7 @@ class _WithdrawState extends State<Withdraw> {
                       }
                     },
                   ),
-                  SizedBox(height: 80 * SizeConfig.heightMultiplier),
+                  SizedBox(height: 40 * SizeConfig.heightMultiplier),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Container(
@@ -180,6 +182,7 @@ class _WithdrawState extends State<Withdraw> {
                                 userId: userModel.id,
                                 IFSC: IFSC,
                                 UPI: UPI,
+                                accNo: accNo,
                                 amount: amount);
                             if (res) {
                               Fluttertoast.showToast(

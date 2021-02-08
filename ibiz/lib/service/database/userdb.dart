@@ -51,10 +51,11 @@ class Userdb {
       'zipcode': zipcode,
       'state': state
     };
-    var response = await http
-        .put(url + "user/update/" + id, body: json.encode(data), headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    var response = await http.put(url + "user/update/" + id,
+        body: json.encode(data),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
     if (response.statusCode == 200) {
       //print("User Updated");
       return true;
@@ -67,16 +68,12 @@ class Userdb {
 
   Future<bool> updateUserBankDetails(
       String id, String UPI, String bankAccountNo, String IFSC) async {
-    Map data = {
-      'id': id,
-      'UPI': UPI,
-      'bankAccountNo': bankAccountNo,
-      'IFSC': IFSC
-    };
-    var response = await http
-        .put(url + "user/update/" + id, body: json.encode(data), headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    Map data = {'UPI': UPI, 'bankAccountNo': bankAccountNo, 'IFSC': IFSC};
+    var response = await http.put(url + "user/update/" + id,
+        body: json.encode(data),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
     if (response.statusCode == 200) {
       //print("User Updated");
       return true;

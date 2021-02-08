@@ -296,7 +296,7 @@ class _HometabState extends State<Hometab> {
                             )),
                         Expanded(
                             child: Container(
-                          // height: 411 * SizeConfig.heightMultiplier,
+                          height: 411 * SizeConfig.heightMultiplier,
                           child: SingleChildScrollView(
                             child: FutureBuilder(
                               future: TokenDb().getToken(),
@@ -305,7 +305,16 @@ class _HometabState extends State<Hometab> {
                                 if (snapshot.hasData) {
                                   return ChangeNotifierProvider.value(
                                       value: userModel,
-                                      child: TokenList(data: snapshot.data));
+                                      child: Container(
+                                          child: SingleChildScrollView(
+                                              child: Column(
+                                        children: [
+                                          TokenList(data: snapshot.data),
+                                          SizedBox(
+                                              height: 200 *
+                                                  SizeConfig.heightMultiplier)
+                                        ],
+                                      ))));
                                 } else {
                                   return CircularProgressIndicator();
                                 }
