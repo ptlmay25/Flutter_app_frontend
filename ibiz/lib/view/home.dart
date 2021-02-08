@@ -33,7 +33,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final userModel = Provider.of<UserModel>(context);
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,

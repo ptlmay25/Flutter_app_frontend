@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/view/bottom/AccountTab/withdraw.dart';
 import 'package:ibiz/view/navbar/withdrawal_history.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -118,13 +119,14 @@ class _AccounttabState extends State<Accounttab> {
                                 width: 120 * SizeConfig.widthMultiplier,
                                 child: RaisedButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ChangeNotifierProvider.value(
-                                                    value: userModel,
-                                                    child:
-                                                        Withdraw_History())));
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            ChangeNotifierProvider.value(
+                                                value: userModel,
+                                                child: ChangeNotifierProvider
+                                                    .value(
+                                                        value: userModel,
+                                                        child: Withdraw()))));
                                   },
                                   color: Color.fromARGB(255, 108, 113, 156),
                                   child: Text(
