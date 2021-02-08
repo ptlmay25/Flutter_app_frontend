@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/tokendb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/buysheet.dart';
-import 'package:ibiz/view/bottom/HomeTab/profitlist.dart';
+import 'package:ibiz/view/bottom/HomeTab/tokenlist.dart';
 import 'package:ibiz/view/bottom/HomeTab/sellsheet.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -293,7 +294,25 @@ class _HometabState extends State<Hometab> {
                                     fontSize: 20 * SizeConfig.heightMultiplier),
                               ),
                             )),
-                        Expanded(child: ProfitList())
+                        Expanded(
+                            child: Container(
+                          // height: 411 * SizeConfig.heightMultiplier,
+                          child: SingleChildScrollView(
+                            child: FutureBuilder(
+                              future: TokenDb().getToken(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  return ChangeNotifierProvider.value(
+                                      value: userModel,
+                                      child: TokenList(data: snapshot.data));
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
+                            ),
+                          ),
+                        ))
                       ]),
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ibiz/authScreen/signup.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/userdb.dart';
@@ -13,6 +14,12 @@ class View extends StatefulWidget {
 }
 
 class _ViewState extends State<View> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

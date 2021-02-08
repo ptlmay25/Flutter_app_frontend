@@ -1,4 +1,4 @@
-class Profit {
+class Token {
   int headerProfit,
       totalRevenue,
       oparatingExpenses,
@@ -9,13 +9,12 @@ class Profit {
       dividendPerToken;
   bool isExpanded;
   String headerDate;
-  String headerMonth, headerYear;
-  Profit(
+  String headerMonthYear;
+  Token(
       {this.dividendPerToken,
       this.headerDate,
-      this.headerMonth,
+      this.headerMonthYear,
       this.headerProfit,
-      this.headerYear,
       this.interest,
       this.netProfit,
       this.oparatingExpenses,

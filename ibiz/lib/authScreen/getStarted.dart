@@ -10,6 +10,7 @@ class GetStarted extends StatefulWidget {
 
 class _GetStartedState extends State<GetStarted> {
   final _formkey = GlobalKey<FormState>();
+  // ignore: non_constant_identifier_names
   String phone_number, invitation_code;
   @override
   Widget build(BuildContext context) {
