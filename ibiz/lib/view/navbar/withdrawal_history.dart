@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/WithdrawHistory.dart';
 import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/witdhrawhistorydb.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:intl/intl.dart';
 
 // ignore: camel_case_types
 class Withdraw_History extends StatefulWidget {
-  Withdraw_History({this.userModel});
+  Withdraw_History({this.userModel, this.data});
+  final List<WithdrawHistory> data;
   final UserModel userModel;
   @override
   _Withdraw_HistoryState createState() => _Withdraw_HistoryState();
@@ -12,6 +16,8 @@ class Withdraw_History extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Withdraw_HistoryState extends State<Withdraw_History> {
+  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var datef = new DateFormat('yyyy-MM-dd');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,71 +66,75 @@ class _Withdraw_HistoryState extends State<Withdraw_History> {
               ),
             ),
             Expanded(
-                child: ListView(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 25 * SizeConfig.heightMultiplier,
-                    left: 35 * SizeConfig.widthMultiplier,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            children: [
-                              Container(
-                                child: Padding(
-                                  padding: EdgeInsets.only(),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Withdrawal No: W-1023569",
-                                        style: TextStyle(
-                                          color: Color(0xff151515),
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Date: 10/12/2020",
-                                        style: TextStyle(
-                                          color: Color(0xff151515),
-                                          fontSize: 14,
-                                          fontFamily: "Roboto",
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: 17 * SizeConfig.widthMultiplier),
-                        child: Text(
-                          "- 5,000 INR",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            color: Color(0xff8c2f0f),
-                            fontSize: 15 * SizeConfig.heightMultiplier,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ))
+                child: ListView.builder(
+              itemCount: widget.data.length,
+              itemBuilder: (context, index) {
+                return getList(widget.data[index]);
+              },
+            )),
           ],
         ));
+  }
+
+  Widget getList(WithdrawHistory data) {
+    print('getList');
+    return Padding(
+      padding: EdgeInsets.only(
+        top: 25 * SizeConfig.heightMultiplier,
+        left: 35 * SizeConfig.widthMultiplier,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                children: [
+                  Container(
+                    child: Padding(
+                      padding: EdgeInsets.only(),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Withdrawal No: ${data.request_number}",
+                            style: TextStyle(
+                              color: Color(0xff151515),
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            "Date: " + data.date.substring(0, 10),
+                            style: TextStyle(
+                              color: Color(0xff151515),
+                              fontSize: 14,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 17 * SizeConfig.widthMultiplier),
+            child: Text(
+              curf.format(data.total_amount) + ' INR',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: Color(0xff8c2f0f),
+                fontSize: 15 * SizeConfig.heightMultiplier,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
