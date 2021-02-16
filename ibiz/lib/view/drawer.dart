@@ -131,8 +131,9 @@ class HomeDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => Contact_Us()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ChangeNotifierProvider.value(
+                        value: userModel, child: Contact_Us())));
               },
             ),
           ),

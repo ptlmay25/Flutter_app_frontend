@@ -130,7 +130,7 @@ class _AccounttabState extends State<Accounttab> {
                                   },
                                   color: Color.fromARGB(255, 108, 113, 156),
                                   child: Text(
-                                    'Withrow',
+                                    'Withdraw',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.normal,

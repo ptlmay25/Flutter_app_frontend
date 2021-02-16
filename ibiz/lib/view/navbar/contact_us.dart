@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/contactusdb.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:provider/provider.dart';
 
 class Contact_Us extends StatefulWidget {
   @override
@@ -7,13 +11,11 @@ class Contact_Us extends StatefulWidget {
 }
 
 class _Contact_UsState extends State<Contact_Us> {
+  String fullName, accNo, email, message;
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
-    String Name = 'Nishidh Patel',
-        Account_number = '11000501',
-        Email = "",
-        Message = "";
+    UserModel userModel = Provider.of<UserModel>(context);
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 66, 71, 112),
@@ -47,7 +49,7 @@ class _Contact_UsState extends State<Contact_Us> {
                       left: 40 * SizeConfig.widthMultiplier,
                       right: 50 * SizeConfig.widthMultiplier),
                   child: Form(
-                    key: _signUpFormKey,
+                    key: _formKey,
                     child: Column(
                       children: <Widget>[
                         Padding(
@@ -70,7 +72,12 @@ class _Contact_UsState extends State<Contact_Us> {
                           child: SizedBox(
                             child: TextFormField(
                               enabled: false,
-                              initialValue: Name,
+                              initialValue: userModel.username,
+                              onSaved: (value) {
+                                setState(() {
+                                  this.fullName = value;
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -95,7 +102,12 @@ class _Contact_UsState extends State<Contact_Us> {
                           child: SizedBox(
                             child: TextFormField(
                               enabled: false,
-                              initialValue: Account_number,
+                              initialValue: userModel.bankAccountNo,
+                              onSaved: (value) {
+                                setState(() {
+                                  this.accNo = value;
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -119,7 +131,12 @@ class _Contact_UsState extends State<Contact_Us> {
                           padding: EdgeInsets.only(),
                           child: SizedBox(
                             child: TextFormField(
-                              initialValue: Email,
+                              initialValue: userModel.email,
+                              onSaved: (value) {
+                                setState(() {
+                                  this.email = value;
+                                });
+                              },
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Please Enter Email Address";
@@ -158,7 +175,11 @@ class _Contact_UsState extends State<Contact_Us> {
                                   ),
                                 ),
                               ),
-                              initialValue: Message,
+                              onSaved: (value) {
+                                setState(() {
+                                  this.message = value;
+                                });
+                              },
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Please Enter Message";
@@ -178,14 +199,26 @@ class _Contact_UsState extends State<Contact_Us> {
                               height: (40) * SizeConfig.heightMultiplier,
                               width: (160) * SizeConfig.widthMultiplier,
                               child: RaisedButton(
-                                onPressed: () {
-                                  if (_signUpFormKey.currentState.validate()) {
-                                    setState(() {});
+                                onPressed: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    _formKey.currentState.save();
+                                    var res = await ContactUsDb().contact(
+                                        userId: userModel.id,
+                                        name: fullName,
+                                        message: message,
+                                        accNo: accNo,
+                                        email: email);
+                                    if (res == true) {
+                                      Fluttertoast.showToast(
+                                          msg: "Message Sent",
+                                          timeInSecForIosWeb: 4);
+                                      print("Message Sent");
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "Internal error accoured",
+                                          timeInSecForIosWeb: 4);
+                                    }
                                   }
-                                  print('Name: ' + Name);
-                                  print('Account Number: ' + Account_number);
-                                  print('Email: ' + Email);
-                                  print('Message: ' + Message);
                                 },
                                 color: Color.fromARGB(255, 66, 71, 112),
                                 child: Text(
