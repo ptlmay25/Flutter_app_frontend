@@ -3,6 +3,7 @@ import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/tokendb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/buysheet.dart';
+import 'package:ibiz/view/bottom/HomeTab/chart.dart';
 import 'package:ibiz/view/bottom/HomeTab/tokenlist.dart';
 import 'package:ibiz/view/bottom/HomeTab/sellsheet.dart';
 import 'package:intl/intl.dart';
@@ -58,17 +59,20 @@ class _HometabState extends State<Hometab> {
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12)),
-                      height: 280 * SizeConfig.heightMultiplier,
+                      //height: 280 * SizeConfig.heightMultiplier,
                       width: 350 * SizeConfig.widthMultiplier,
                       child: Column(children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                              top: 14 * SizeConfig.heightMultiplier,
-                              left: 14 * SizeConfig.widthMultiplier),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text('25 Jan 2021')),
-                        )
+                            padding: EdgeInsets.only(
+                                left: 14 * SizeConfig.widthMultiplier),
+                            child: ListTile(
+                              leading: Text(curf.format(1000.00),
+                                  style: TextStyle(color: Colors.green)),
+                              trailing: Text(
+                                  DateTime.now().toString().substring(0, 11)),
+                            )),
+                        Chart(),
+                        SizedBox(height: 20 * SizeConfig.heightMultiplier)
                       ]),
                     ),
                   ),

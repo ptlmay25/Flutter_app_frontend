@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:ibiz/models/token.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 class TokenDb {
