@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:ibiz/service/database/api.dart';
 
 class WithdrawRequest {
-  final String url = "https://tranquil-river-00045.herokuapp.com/api/";
+  // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
   // final String url = "http://192.168.43.24:5000/api/";
-
+  String url = Api().baseurl;
   Future<bool> request({userId, name, UPI, accNo, IFSC, amount}) async {
     Map data = {
       "userId": userId,

@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:ibiz/models/WithdrawHistory.dart';
 import 'package:http/http.dart' as http;
+import 'package:ibiz/service/database/api.dart';
 
 class WithdrawHistoryDb {
   Future<List<WithdrawHistory>> getWithdrawList({uid}) async {
     print(uid);
-    final String url = "https://tranquil-river-00045.herokuapp.com/api/";
+    // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
     // final String url = "http://192.168.43.24:5000/api/";
-
+    String url = Api().baseurl;
     http.Response response =
         await http.get(url + "withdrawHistory"); //apppend uid is remaining
     List list = json.decode(response.body)['data'];

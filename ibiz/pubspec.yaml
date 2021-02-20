@@ -34,7 +34,7 @@ dependencies:
   intl: ^0.16.1
   razorpay_flutter: ^1.2.2
   fluttertoast: ^7.1.6
-  dependencies:
+  share: ^0.6.5+4
   fl_chart: ^0.12.3
 
 

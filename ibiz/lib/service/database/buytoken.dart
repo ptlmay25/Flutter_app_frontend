@@ -1,7 +1,9 @@
 import 'package:http/http.dart' as http;
+import 'package:ibiz/service/database/api.dart';
 
 class BuyToken {
-  String url = "https://tranquil-river-00045.herokuapp.com/api/";
+  // String url = "https://tranquil-river-00045.herokuapp.com/api/";
+  String url = Api().baseurl;
   Future<bool> buyToken({id, newToken, newBal}) async {
     print(newBal.toString() + ' ' + newToken.toString());
     Map data = {

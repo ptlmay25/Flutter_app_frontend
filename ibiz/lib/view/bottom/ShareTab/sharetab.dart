@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:share/share.dart';
 
 class Sharetab extends StatefulWidget {
   @override
@@ -39,7 +39,9 @@ class _SharetabState extends State<Sharetab> {
                 height: 40 * SizeConfig.heightMultiplier,
                 width: 200 * SizeConfig.widthMultiplier,
                 child: RaisedButton(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    Share.share("Welcome to Firefly Salers' Club: http://saler-club.surge.sh/ ");
+                  },
                   color: Color.fromARGB(255, 66, 71, 112),
                   child: Text(
                     'Invite',
