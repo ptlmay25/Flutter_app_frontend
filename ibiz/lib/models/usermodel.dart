@@ -4,7 +4,9 @@ class UserModel with ChangeNotifier {
   UserModel(
       {this.id,
       this.mobileNo,
+      // ignore: non_constant_identifier_names
       this.IFSC,
+      // ignore: non_constant_identifier_names
       this.UPI,
       this.bankAccountNo,
       this.city,
@@ -16,6 +18,7 @@ class UserModel with ChangeNotifier {
       this.state,
       this.username,
       this.zipcode,
+      // ignore: non_constant_identifier_names
       this.acc_bal,
       this.tokens});
   String id,
@@ -29,10 +32,14 @@ class UserModel with ChangeNotifier {
       state,
       zipcode,
       country,
+      // ignore: non_constant_identifier_names
       UPI,
       bankAccountNo,
+      // ignore: non_constant_identifier_names
       IFSC;
-  int tokens, acc_bal;
+  int tokens;
+  // ignore: non_constant_identifier_names
+  double acc_bal;
 
   void updateTokenAndBal({newToken, newBal}) {
     this.tokens = newToken;

@@ -7,12 +7,15 @@ import 'package:ibiz/view/bottom/HomeTab/payment_method.dart';
 import 'package:provider/provider.dart';
 
 class BuySheet extends StatefulWidget {
+  final double tokenPrice;
+  BuySheet({this.tokenPrice});
   @override
   _BuySheetState createState() => _BuySheetState();
 }
 
 class _BuySheetState extends State<BuySheet> {
   int _n = 1;
+
   @override
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
@@ -35,7 +38,7 @@ class _BuySheetState extends State<BuySheet> {
             ),
           ),
           Text(
-            '₹ 3550.00',
+            widget.tokenPrice.toString(),
             style: TextStyle(fontSize: 50 * SizeConfig.heightMultiplier),
           ),
           SizedBox(height: 5 * SizeConfig.widthMultiplier),
@@ -124,7 +127,7 @@ class _BuySheetState extends State<BuySheet> {
                       builder: (context) => ChangeNotifierProvider.value(
                             value: userModel,
                             child: PaymentMethod(
-                              amount: _n * 3550,
+                              amount: _n * widget.tokenPrice,
                               userModel: userModel,
                               tokens: _n,
                             ),
@@ -142,7 +145,7 @@ class _BuySheetState extends State<BuySheet> {
             ),
           ),
           SizedBox(height: 25 * SizeConfig.heightMultiplier),
-          Text('Total: ₹ ${_n * 3550}'),
+          Text('Total: ₹ ${_n * widget.tokenPrice}'),
         ]),
       ),
     );

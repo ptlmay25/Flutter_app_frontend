@@ -34,30 +34,16 @@ class _TokenListState extends State<TokenList> {
                     padding: EdgeInsets.only(
                         top: 10 * SizeConfig.heightMultiplier,
                         left: 10 * SizeConfig.widthMultiplier),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              children: [
-                                Text(token.headerMonthYear,
-                                    style: TextStyle(
-                                        fontSize:
-                                            14 * SizeConfig.heightMultiplier)),
-                                Text('Date: ' + token.headerDate.toString(),
-                                    style: TextStyle(
-                                        fontSize:
-                                            11 * SizeConfig.heightMultiplier))
-                              ],
-                            ),
-                          ),
-                        ),
-                        Text(curf.format(token.netProfit) + ' INR',
-                            style: TextStyle(
-                                fontSize: 14 * SizeConfig.heightMultiplier,
-                                color: Colors.green))
-                      ],
+                    child: ListTile(
+                      leading: Text(
+                          'Date: ' +
+                              token.headerDate.toString().substring(0, 16),
+                          style: TextStyle(
+                              fontSize: 11 * SizeConfig.heightMultiplier)),
+                      trailing: Text(curf.format(token.netProfit) + ' INR',
+                          style: TextStyle(
+                              fontSize: 14 * SizeConfig.heightMultiplier,
+                              color: Colors.green)),
                     ),
                   ),
                 ),
@@ -107,8 +93,8 @@ class _TokenListState extends State<TokenList> {
                   const Divider(color: Colors.grey, height: 2, thickness: 2),
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
-                    Expanded(child: Text('Your Dividend :')),
-                    Text(curf.format(token.dividendPerToken * userModel.tokens))
+                    Expanded(child: Text('Token Price :')),
+                    Text(curf.format(token.tokenPrice))
                   ]),
                 ]),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/token.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/tokendb.dart';
 import 'package:ibiz/size_config.dart';
@@ -19,11 +20,12 @@ class _HometabState extends State<Hometab> {
   @override
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
+    Future<List<Token>> tokenList = TokenDb().getToken();
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
-            Container(height: 1000 * SizeConfig.heightMultiplier),
+            Container(height: 1200 * SizeConfig.heightMultiplier),
             Padding(
               padding: const EdgeInsets.all(0.0),
               child: Column(
@@ -34,13 +36,27 @@ class _HometabState extends State<Hometab> {
                       width: MediaQuery.of(context).size.width,
                       height: 154,
                       child: Column(children: <Widget>[
-                        Text(
-                          curf.format(2550.25),
-                          style: TextStyle(
-                              fontSize: 30 * SizeConfig.heightMultiplier,
-                              fontFamily: "Roboto",
-                              color: Colors.white),
-                        ),
+                        FutureBuilder(
+                            future: tokenList,
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData) {
+                                Token latestToken = snapshot.data[0];
+                                return Text(curf.format(latestToken.tokenPrice),
+                                    style: TextStyle(
+                                        fontSize:
+                                            30 * SizeConfig.heightMultiplier,
+                                        fontFamily: "Roboto",
+                                        color: Colors.white));
+                              } else {
+                                return Text(curf.format(0),
+                                    style: TextStyle(
+                                        fontSize:
+                                            30 * SizeConfig.heightMultiplier,
+                                        fontFamily: "Roboto",
+                                        color: Colors.white));
+                              }
+                            }),
                         Text('+15.00 (0.1%) This month',
                             style: TextStyle(
                                 color: Color.fromARGB(255, 255, 212, 31),
@@ -66,8 +82,22 @@ class _HometabState extends State<Hometab> {
                             padding: EdgeInsets.only(
                                 left: 14 * SizeConfig.widthMultiplier),
                             child: ListTile(
-                              leading: Text(curf.format(1000.00),
-                                  style: TextStyle(color: Colors.green)),
+                              leading: FutureBuilder(
+                                  future: tokenList,
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot) {
+                                    if (snapshot.hasData) {
+                                      Token latestToken = snapshot.data[0];
+                                      return Text(
+                                          curf.format(latestToken.tokenPrice),
+                                          style:
+                                              TextStyle(color: Colors.green));
+                                    } else {
+                                      return Text(curf.format(0),
+                                          style:
+                                              TextStyle(color: Colors.green));
+                                    }
+                                  }),
                               trailing: Text(
                                   DateTime.now().toString().substring(0, 11)),
                             )),
@@ -181,12 +211,29 @@ class _HometabState extends State<Hometab> {
                                         padding: EdgeInsets.only(
                                             top: 7 *
                                                 SizeConfig.heightMultiplier),
-                                        child: Text(
-                                          curf.format(3550.00),
-                                          style: TextStyle(
-                                              fontSize: 25 *
-                                                  SizeConfig.heightMultiplier),
-                                        ),
+                                        child: FutureBuilder(
+                                            future: tokenList,
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snapshot) {
+                                              if (snapshot.hasData) {
+                                                Token latestToken =
+                                                    snapshot.data[0];
+                                                return Text(
+                                                  curf.format(
+                                                      latestToken.tokenPrice),
+                                                  style: TextStyle(
+                                                      fontSize: 25 *
+                                                          SizeConfig
+                                                              .heightMultiplier),
+                                                );
+                                              } else {
+                                                return Text(curf.format(0),
+                                                    style: TextStyle(
+                                                        fontSize: 25 *
+                                                            SizeConfig
+                                                                .heightMultiplier));
+                                              }
+                                            }),
                                       ),
                                     ],
                                   ),
@@ -220,67 +267,102 @@ class _HometabState extends State<Hometab> {
                       ]),
                     ),
                   ),
-                  Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(13)),
-                      height: 80 * SizeConfig.heightMultiplier,
-                      width: 350 * SizeConfig.widthMultiplier,
-                      child: Card(
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: 15 * SizeConfig.heightMultiplier,
-                                  left: 25 * SizeConfig.widthMultiplier,
-                                  right: 20 * SizeConfig.widthMultiplier,
-                                  bottom: 15 * SizeConfig.heightMultiplier),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Container(
-                                  height: 45 * SizeConfig.heightMultiplier,
-                                  width: 140 * SizeConfig.widthMultiplier,
-                                  child: RaisedButton(
-                                    onPressed: showBuyBottomSheet,
-                                    color: Color.fromARGB(255, 66, 71, 112),
-                                    child: Text(
-                                      'Buy',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.normal,
-                                          fontSize:
-                                              16 * SizeConfig.heightMultiplier),
+                  FutureBuilder(
+                    future: tokenList,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(13)),
+                            height: 80 * SizeConfig.heightMultiplier,
+                            width: 350 * SizeConfig.widthMultiplier,
+                            child: Card(
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 15 * SizeConfig.heightMultiplier,
+                                        left: 25 * SizeConfig.widthMultiplier,
+                                        right: 20 * SizeConfig.widthMultiplier,
+                                        bottom:
+                                            15 * SizeConfig.heightMultiplier),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Container(
+                                        height:
+                                            45 * SizeConfig.heightMultiplier,
+                                        width: 140 * SizeConfig.widthMultiplier,
+                                        child: RaisedButton(
+                                          onPressed: () async {
+                                            Token token = snapshot.data[0];
+                                            double price = token.tokenPrice;
+                                            showBottomSheet(
+                                                context: context,
+                                                builder: (context) {
+                                                  return BuySheet(
+                                                      tokenPrice: price);
+                                                });
+                                          },
+                                          color:
+                                              Color.fromARGB(255, 66, 71, 112),
+                                          child: Text(
+                                            'Buy',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 16 *
+                                                    SizeConfig
+                                                        .heightMultiplier),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: 15 * SizeConfig.heightMultiplier,
-                                  bottom: 15 * SizeConfig.heightMultiplier),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Container(
-                                  height: 45 * SizeConfig.heightMultiplier,
-                                  width: 140 * SizeConfig.widthMultiplier,
-                                  child: RaisedButton(
-                                    onPressed: showSellBottomSheet,
-                                    color: Color.fromARGB(255, 66, 71, 112),
-                                    child: Text(
-                                      'Sell',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.normal,
-                                          fontSize:
-                                              16 * SizeConfig.heightMultiplier),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 15 * SizeConfig.heightMultiplier,
+                                        bottom:
+                                            15 * SizeConfig.heightMultiplier),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Container(
+                                        height:
+                                            45 * SizeConfig.heightMultiplier,
+                                        width: 140 * SizeConfig.widthMultiplier,
+                                        child: RaisedButton(
+                                          onPressed: () async {
+                                            Token token = snapshot.data[0];
+                                            double price = token.tokenPrice;
+                                            showBottomSheet(
+                                                context: context,
+                                                builder: (context) {
+                                                  return SellSheet(
+                                                      tokenPrice: price);
+                                                });
+                                          },
+                                          color:
+                                              Color.fromARGB(255, 66, 71, 112),
+                                          child: Text(
+                                            'Sell',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 16 *
+                                                    SizeConfig
+                                                        .heightMultiplier),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      )),
+                            ));
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
                   Card(
                     child: Container(
                       height: 411 * SizeConfig.heightMultiplier,
@@ -303,7 +385,7 @@ class _HometabState extends State<Hometab> {
                           height: 411 * SizeConfig.heightMultiplier,
                           child: SingleChildScrollView(
                             child: FutureBuilder(
-                              future: TokenDb().getToken(),
+                              future: tokenList,
                               builder: (BuildContext context,
                                   AsyncSnapshot snapshot) {
                                 if (snapshot.hasData) {
@@ -336,19 +418,19 @@ class _HometabState extends State<Hometab> {
     );
   }
 
-  showBuyBottomSheet() {
-    showBottomSheet(
-        context: context,
-        builder: (context) {
-          return BuySheet();
-        });
-  }
+  // showBuyBottomSheet() {
+  //   showBottomSheet(
+  //       context: context,
+  //       builder: (context) {
+  //         return BuySheet();
+  //       });
+  // }
 
-  showSellBottomSheet() {
-    showBottomSheet(
-        context: context,
-        builder: (context) {
-          return SellSheet();
-        });
-  }
+  // showSellBottomSheet() {
+  //   showBottomSheet(
+  //       context: context,
+  //       builder: (context) {
+  //         return SellSheet();
+  //       });
+  // }
 }

@@ -47,7 +47,8 @@ class MyApp extends StatelessWidget {
       return OrientationBuilder(builder: (context, orientation) {
         SizeConfig().init(constraints, orientation);
         return MaterialApp(
-          home: View(mobileNo: '+919737582544'),
+          // home: View(mobileNo: '+918780546954'),
+          home: View(mobileNo: '+919737582544')
         );
       });
     });

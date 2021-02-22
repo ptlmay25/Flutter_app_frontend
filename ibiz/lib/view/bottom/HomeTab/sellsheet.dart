@@ -2,8 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/service/database/selltoken.dart';
+import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
+import 'package:provider/provider.dart';
 
 class SellSheet extends StatefulWidget {
+  final double tokenPrice;
+  SellSheet({this.tokenPrice});
   @override
   _SellSheetState createState() => _SellSheetState();
 }
@@ -12,6 +18,7 @@ class _SellSheetState extends State<SellSheet> {
   int _n = 1;
   @override
   Widget build(BuildContext context) {
+    UserModel userModel = Provider.of<UserModel>(context);
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
       child: Container(
@@ -36,7 +43,7 @@ class _SellSheetState extends State<SellSheet> {
           ),
           SizedBox(height: 5 * SizeConfig.widthMultiplier),
           Text(
-            'Price per Token: 3550.00',
+            'Price per Token: ${widget.tokenPrice}',
             style: TextStyle(
                 fontSize: 15 * SizeConfig.heightMultiplier,
                 fontWeight: FontWeight.w300),
@@ -116,7 +123,16 @@ class _SellSheetState extends State<SellSheet> {
               width: 240 * SizeConfig.widthMultiplier,
               child: RaisedButton(
                 onPressed: () async {
-                  //TODO SELL
+                  Map data = {"user_id": userModel.id, "num_of_tokens": _n};
+                  var res = await SellToken().sell(body: data);
+                  if (res) {
+                    print(res);
+                    userModel.updateTokenAndBal(
+                        newBal: userModel.acc_bal + _n * widget.tokenPrice,
+                        newToken: userModel.tokens - _n);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CompleteOrder()));
+                  }
                 },
                 color: Color.fromARGB(255, 66, 71, 112),
                 child: Text(
@@ -130,7 +146,7 @@ class _SellSheetState extends State<SellSheet> {
             ),
           ),
           SizedBox(height: 25 * SizeConfig.heightMultiplier),
-          Text('Total: ₹ ${_n * 3550}'),
+          Text('Total: ₹ ${_n * widget.tokenPrice}'),
         ]),
       ),
     );

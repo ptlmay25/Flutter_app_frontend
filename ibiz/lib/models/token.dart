@@ -7,11 +7,12 @@ class Token {
       netProfit,
       totalTokens,
       dividendPerToken;
+    double tokenPrice;
   bool isExpanded;
   String headerDate;
   String headerMonthYear;
   Token(
-      {this.dividendPerToken,
+      {this.tokenPrice,
       this.headerDate,
       this.headerMonthYear,
       this.headerProfit,

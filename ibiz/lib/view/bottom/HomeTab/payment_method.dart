@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class PaymentMethod extends StatefulWidget {
-  final int amount, tokens;
+  final int tokens;
+  final double amount;
   final UserModel userModel;
 
   PaymentMethod({this.amount, this.userModel, this.tokens});

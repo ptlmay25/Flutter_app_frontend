@@ -89,7 +89,7 @@ class Userdb {
   Future<dynamic> getUserByMobileNo(String mobileNo) async {
     http.Response response =
         await http.get(url + "user/viewMobile/" + mobileNo);
-    //print("Inside getUserByMobileNo"+response.body);
+    print("Inside getUserByMobileNo" + response.body);
     if (response.statusCode == 200) {
       List userList = json.decode(response.body)['data'];
       //Map<String, dynamic> data = json.decode(response.body)['data'][0];
@@ -99,6 +99,7 @@ class Userdb {
       }
 
       Map<String, dynamic> data = userList[0];
+      // print("Returning");
       return UserModel(
           username: data['username'],
           country: data['country'],
@@ -115,10 +116,10 @@ class Userdb {
           state: data['state'],
           zipcode: data['zipcode'],
           tokens: data['tokens'],
-          acc_bal: data['acc_bal']);
+          acc_bal: double.parse(data['acc_bal'].toString()));
     } else {
       print("No user found with: " + mobileNo);
-      return null;
+      return 0;
     }
   }
 }

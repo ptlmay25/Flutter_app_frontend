@@ -12,18 +12,20 @@ class TokenDb {
     http.Response response = await http.get(url + "token");
 
     List tokenList = json.decode(response.body)['data'];
+    // print("tokenResp:"+tokenList[0].toString());
     print(tokenList.length);
     return List.generate(tokenList.length, (index) {
       return Token(
-          headerMonthYear: tokenList[index]['month_year'],
-          headerDate: tokenList[index]['upload_date'],
+          headerMonthYear: tokenList[index]['token_date'].toString(),
+          headerDate: tokenList[index]['upload_date'].toString(),
           totalRevenue: tokenList[index]['total_revenue'],
           oparatingExpenses: tokenList[index]['operating_expenses'],
           interest: tokenList[index]['interest_and_taxes'],
           serviceFee: tokenList[index]['service_fee'],
           netProfit: tokenList[index]['net_profit'],
           totalTokens: tokenList[index]['total_number_of_tokens'],
-          dividendPerToken: tokenList[index]['divident_per_token']);
+          tokenPrice: double.parse(tokenList[index]['token_price'].toString())
+          );
     });
   }
 }
