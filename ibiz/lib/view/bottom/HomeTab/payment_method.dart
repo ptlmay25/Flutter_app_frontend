@@ -223,6 +223,9 @@ class _PaymentMethodState extends State<PaymentMethod> {
                           }
                         } else {
                           print('Insufficient Balance');
+                          Fluttertoast.showToast(
+                              msg: "Insufficient Balance",
+                              timeInSecForIosWeb: 4);
                         }
                       } else if (this.paymentMethodUsed == 'Online Paymnet') {
                         openCheckout(userModel);

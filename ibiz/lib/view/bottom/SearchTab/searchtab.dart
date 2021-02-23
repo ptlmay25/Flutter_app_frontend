@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ibiz/view/bottom/SearchTab/categorylist.dart';
 
 import 'package:ibiz/size_config.dart';
+import 'package:intl/intl.dart';
 
 class Searchtab extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class Searchtab extends StatefulWidget {
 }
 
 class _SearchtabState extends State<Searchtab> {
+  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -31,20 +33,20 @@ class _SearchtabState extends State<Searchtab> {
             SizedBox(height: 20 * SizeConfig.heightMultiplier),
             Padding(
               padding: EdgeInsets.only(
-                  left: 42 * SizeConfig.widthMultiplier,
-                  right: 42 * SizeConfig.widthMultiplier),
+                  left: 36 * SizeConfig.widthMultiplier,
+                  right: 36 * SizeConfig.widthMultiplier),
               child: Row(
                 children: [
                   Expanded(
                       child: Text(
-                    "Total Hotels",
+                    "Total Brands",
                     style: TextStyle(
                         fontSize: 16 * SizeConfig.heightMultiplier,
                         fontWeight: FontWeight.normal,
                         color: Colors.white),
                   )),
                   Text(
-                    'No. Rooms',
+                    'No. Stores',
                     style: TextStyle(
                         fontSize: 16 * SizeConfig.heightMultiplier,
                         fontWeight: FontWeight.normal,
@@ -56,8 +58,8 @@ class _SearchtabState extends State<Searchtab> {
             SizedBox(height: 10 * SizeConfig.heightMultiplier),
             Padding(
               padding: EdgeInsets.only(
-                  left: 42 * SizeConfig.widthMultiplier,
-                  right: 42 * SizeConfig.widthMultiplier),
+                  left: 36 * SizeConfig.widthMultiplier,
+                  right: 36 * SizeConfig.widthMultiplier),
               child: Row(
                 children: [
                   Expanded(

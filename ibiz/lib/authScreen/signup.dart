@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
@@ -9,11 +11,18 @@ import 'package:ibiz/view/view.dart';
 class SignUp extends StatefulWidget {
   final String mobileNo;
   SignUp({this.mobileNo});
+
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  }
+
   final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
   int flag = 1;
   String fname, lname, gender;
@@ -461,6 +470,8 @@ class _SignUpState extends State<SignUp> {
                         this.fname + " " + this.lname, this.gender);
                     if (result == true) {
                       print("User Created");
+                      Fluttertoast.showToast(
+                          msg: "User Created", timeInSecForIosWeb: 4);
                       //Navigator.of(context as Element).reassemble();
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>

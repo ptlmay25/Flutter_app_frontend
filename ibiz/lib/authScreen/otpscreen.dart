@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/size_config.dart';
@@ -21,6 +22,7 @@ class _OTPState extends State<OTP> {
   final AuthService _auth = AuthService();
   initState() {
     super.initState();
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     print(widget.contact);
     _auth.verifyPhone(widget.contact);
     _listenOtp();
@@ -28,6 +30,7 @@ class _OTPState extends State<OTP> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -84,20 +87,18 @@ class _OTPState extends State<OTP> {
                     Padding(
                       padding: EdgeInsets.only(
                           bottom: 80 * SizeConfig.heightMultiplier,
-                          left: 5*SizeConfig.widthMultiplier,
-                          right: 5*SizeConfig.widthMultiplier
-                          ),
+                          left: 5 * SizeConfig.widthMultiplier,
+                          right: 5 * SizeConfig.widthMultiplier),
                       child: TextFieldPin(
-                          
-                          codeLength: 6,
-                          // onCodeChanged: (val) {
-                          //   this.smsCode = val;
-                          //   print(val);
-                          // }
-                          onOtpCallback: (code,isAutofill){
-                            this.smsCode=code;
-                          },
-                          ),
+                        codeLength: 6,
+                        // onCodeChanged: (val) {
+                        //   this.smsCode = val;
+                        //   print(val);
+                        // }
+                        onOtpCallback: (code, isAutofill) {
+                          this.smsCode = code;
+                        },
+                      ),
                     ),
                     Padding(
                         padding: EdgeInsets.only(
@@ -128,7 +129,7 @@ class _OTPState extends State<OTP> {
                                   print("_errorMESSAGEIS" + error.message);
                                 }
                               },
-                              color: Color.fromARGB(255, 66,71,112),
+                              color: Color.fromARGB(255, 66, 71, 112),
                               child: Text(
                                 'Verify',
                                 style: TextStyle(
