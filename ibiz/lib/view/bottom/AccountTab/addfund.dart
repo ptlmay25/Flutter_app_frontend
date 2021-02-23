@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
-import 'package:ibiz/service/database/buytoken.dart';
+import 'package:ibiz/service/database/addfunddb.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -16,7 +17,7 @@ class AddFund extends StatefulWidget {
 class _AddFundState extends State<AddFund> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String email;
-  int amount;
+  double amount = 0.0;
   Razorpay _razorpay;
   bool paymentDone = false;
   @override
@@ -36,6 +37,7 @@ class _AddFundState extends State<AddFund> {
 
   @override
   Widget build(BuildContext context) {
+    var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
     UserModel userModel = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(
@@ -65,9 +67,14 @@ class _AddFundState extends State<AddFund> {
                 children: [
                   TextFormField(
                     decoration: InputDecoration(hintText: 'Amount'),
+                    onChanged: (value) {
+                      setState(() {
+                        this.amount = double.parse(value);
+                      });
+                    },
                     onSaved: (value) {
                       setState(() {
-                        this.amount = int.parse(value);
+                        this.amount = double.parse(value);
                       });
                     },
                     validator: (value) {
@@ -120,7 +127,7 @@ class _AddFundState extends State<AddFund> {
                           },
                           color: Color.fromARGB(255, 66, 71, 112),
                           child: Text(
-                            'Add ( amount )',
+                            'Add (' + curf.format(amount) + ')',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.normal,
@@ -162,10 +169,13 @@ class _AddFundState extends State<AddFund> {
     Fluttertoast.showToast(
         msg: "SUCCESS: " + response.paymentId, timeInSecForIosWeb: 4);
     print('payment done');
-    bool res = await BuyToken().buyToken(
-        id: widget.userModel.id,
-        newToken: widget.userModel.tokens,
-        newBal: widget.userModel.acc_bal + amount);
+    Map depositHistory = {
+      "user_id": widget.userModel.id,
+      "total_amount": amount,
+      "payment_token": response.paymentId.toString()
+    };
+    Map body = {"depositHistory": depositHistory};
+    bool res = await AddFundDB().add(body: body);
     if (res) {
       print("Result:" + res.toString());
       widget.userModel.updateTokenAndBal(

@@ -38,7 +38,7 @@ class _SellSheetState extends State<SellSheet> {
             ),
           ),
           Text(
-            '50',
+            userModel.tokens.toString(),
             style: TextStyle(fontSize: 50 * SizeConfig.heightMultiplier),
           ),
           SizedBox(height: 5 * SizeConfig.widthMultiplier),
@@ -100,7 +100,7 @@ class _SellSheetState extends State<SellSheet> {
                             child: RaisedButton(
                               onPressed: () async {
                                 setState(() {
-                                  if (_n != 20) _n++;
+                                  if (_n != userModel.tokens) _n++;
                                 });
                               },
                               color: Color.fromARGB(255, 235, 235, 235),
@@ -124,7 +124,7 @@ class _SellSheetState extends State<SellSheet> {
               child: RaisedButton(
                 onPressed: () async {
                   Map data = {"user_id": userModel.id, "num_of_tokens": _n};
-                  Map body = {"data":data};
+                  Map body = {"data": data};
                   var res = await SellToken().sell(body: body);
                   if (res) {
                     print(res);
