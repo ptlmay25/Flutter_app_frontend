@@ -274,7 +274,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
     bool res = await BuyToken().buyToken(
         id: widget.userModel.id,
         newBal: widget.userModel.acc_bal,
-        newToken: widget.tokens + widget.userModel.tokens);
+        newToken: widget.tokens);
     if (res) {
       print("Result:" + res.toString());
       widget.userModel.updateTokenAndBal(

@@ -101,7 +101,15 @@ class _HometabState extends State<Hometab> {
                               trailing: Text(
                                   DateTime.now().toString().substring(0, 11)),
                             )),
-                        Chart(),
+                        FutureBuilder(
+                          future: tokenList,
+                          builder: (BuildContext context,AsyncSnapshot snapshot){
+                            if(snapshot.hasData){
+                              return Chart(tokenList: snapshot.data);
+                            }else{
+                              return CircularProgressIndicator();
+                            }
+                          },),
                         SizedBox(height: 20 * SizeConfig.heightMultiplier)
                       ]),
                     ),

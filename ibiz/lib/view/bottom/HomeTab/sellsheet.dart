@@ -124,7 +124,8 @@ class _SellSheetState extends State<SellSheet> {
               child: RaisedButton(
                 onPressed: () async {
                   Map data = {"user_id": userModel.id, "num_of_tokens": _n};
-                  var res = await SellToken().sell(body: data);
+                  Map body = {"data":data};
+                  var res = await SellToken().sell(body: body);
                   if (res) {
                     print(res);
                     userModel.updateTokenAndBal(

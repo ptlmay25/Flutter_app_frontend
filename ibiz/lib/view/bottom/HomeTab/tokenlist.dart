@@ -15,7 +15,7 @@ class TokenList extends StatefulWidget {
 class _TokenListState extends State<TokenList> {
   var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
 
-  Widget _buildTokenList(userModel) {
+  Widget _buildTokenList(UserModel userModel) {
     var _data = widget.data;
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
@@ -40,7 +40,7 @@ class _TokenListState extends State<TokenList> {
                               token.headerDate.toString().substring(0, 16),
                           style: TextStyle(
                               fontSize: 11 * SizeConfig.heightMultiplier)),
-                      trailing: Text(curf.format(token.netProfit) + ' INR',
+                      trailing: Text(curf.format(token.netProfit*userModel.tokens) + ' INR',
                           style: TextStyle(
                               fontSize: 14 * SizeConfig.heightMultiplier,
                               color: Colors.green)),

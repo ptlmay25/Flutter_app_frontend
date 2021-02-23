@@ -1,8 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/token.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/view/bottom/HomeTab/tokenlist.dart';
 
 class Chart extends StatefulWidget {
+  final List<Token> tokenList;
+  Chart({this.tokenList});
   @override
   _ChartState createState() => _ChartState();
 }
@@ -14,6 +18,7 @@ class _ChartState extends State<Chart> {
   ];
   @override
   Widget build(BuildContext context) {
+    int n = widget.tokenList.length;
     return Container(
         child: LineChart(LineChartData(
       gridData: FlGridData(
@@ -43,15 +48,15 @@ class _ChartState extends State<Chart> {
                 fontSize: 16 * SizeConfig.heightMultiplier),
             getTitles: (value) {
               switch (value.toInt()) {
-                case 2:
+                case 4:
                   return '3M';
-                case 5:
-                  return '6M';
                 case 8:
+                  return '6M';
+                case 12:
                   return '1Y';
-                case 11:
+                case 16:
                   return '3Y';
-                case 14:
+                case 20:
                   return 'ALL';
               }
               return '';
@@ -86,18 +91,23 @@ class _ChartState extends State<Chart> {
         border: Border.all(color: const Color(0xff37434d), width: 1),
       ),
       minX: 0,
-      maxX: 14,
+      maxX: 20,
       minY: 0,
-      maxY: 1500,
+      maxY: widget.tokenList[n-1].tokenPrice,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 0),
-            FlSpot(2.8, 200),
-            FlSpot(5.6, 600),
-            FlSpot(8.4, 600),
-            FlSpot(11.2, 1000),
-            FlSpot(14, 1000),
+            FlSpot(0, widget.tokenList[0].tokenPrice),
+            FlSpot(2, widget.tokenList[n~/10].tokenPrice),
+            FlSpot(4, widget.tokenList[2*n~/10].tokenPrice),
+            FlSpot(6, widget.tokenList[3*n~/10].tokenPrice),
+            FlSpot(8, widget.tokenList[4*n~/10].tokenPrice),
+            FlSpot(10, widget.tokenList[5*n~/10].tokenPrice),
+            FlSpot(12, widget.tokenList[6*n~/10].tokenPrice),
+            FlSpot(14, widget.tokenList[7*n~/10].tokenPrice),
+            FlSpot(16, widget.tokenList[8*n~/10].tokenPrice),
+            FlSpot(18, widget.tokenList[9*n~/10].tokenPrice),
+            FlSpot(20, widget.tokenList[n-1].tokenPrice),
           ],
           isCurved: false,
           colors: gradientColors,
