@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/purchase.dart';
 import 'package:ibiz/models/token.dart';
 import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/purchasedb.dart';
 import 'package:ibiz/service/database/tokendb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/buysheet.dart';
@@ -21,6 +23,7 @@ class _HometabState extends State<Hometab> {
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
     Future<List<Token>> tokenList = TokenDb().getToken();
+    Future<double> estPurchaseAns = estPurchase(userModel);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -186,12 +189,32 @@ class _HometabState extends State<Hometab> {
                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: 7 * SizeConfig.heightMultiplier),
-                                    child: Text(
-                                      curf.format(55650.25),
-                                      style: TextStyle(
-                                          fontSize:
-                                              25 * SizeConfig.heightMultiplier),
-                                    ),
+                                    child: FutureBuilder(
+                                        future: Future.wait(
+                                            [estPurchaseAns, tokenList]),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          if (snapshot.hasData) {
+                                            Token token = snapshot.data[1][0];
+                                            return Text(
+                                              curf.format((token.tokenPrice -
+                                                      snapshot.data[0])
+                                                  .abs()),
+                                              style: TextStyle(
+                                                  fontSize: 25 *
+                                                      SizeConfig
+                                                          .heightMultiplier),
+                                            );
+                                          } else {
+                                            return Text(
+                                              curf.format(0),
+                                              style: TextStyle(
+                                                  fontSize: 25 *
+                                                      SizeConfig
+                                                          .heightMultiplier),
+                                            );
+                                          }
+                                        }),
                                   ),
                                 ],
                               ),
@@ -263,12 +286,37 @@ class _HometabState extends State<Hometab> {
                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: 7 * SizeConfig.heightMultiplier),
-                                    child: Text(
-                                      '4.05%           ',
-                                      style: TextStyle(
-                                          fontSize:
-                                              25 * SizeConfig.heightMultiplier),
-                                    ),
+                                    child: FutureBuilder(
+                                        future: Future.wait(
+                                            [estPurchaseAns, tokenList]),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          if (snapshot.hasData) {
+                                            Token token = snapshot.data[1][0];
+                                            return Text(
+                                              ((token.tokenPrice -
+                                                                  snapshot
+                                                                      .data[0])
+                                                              .abs() /
+                                                          100)
+                                                      .toString()
+                                                      .substring(0, 5) +
+                                                  ' %     ',
+                                              style: TextStyle(
+                                                  fontSize: 25 *
+                                                      SizeConfig
+                                                          .heightMultiplier),
+                                            );
+                                          } else {
+                                            return Text(
+                                              curf.format(0),
+                                              style: TextStyle(
+                                                  fontSize: 25 *
+                                                      SizeConfig
+                                                          .heightMultiplier),
+                                            );
+                                          }
+                                        }),
                                   ),
                                 ],
                               ),
@@ -305,7 +353,7 @@ class _HometabState extends State<Hometab> {
                                         width: 140 * SizeConfig.widthMultiplier,
                                         child: RaisedButton(
                                           onPressed: () async {
-                                            Token token = snapshot.data[0];
+                                            Token token = snapshot.data[2];
                                             double price = token.tokenPrice;
                                             showBottomSheet(
                                                 context: context,
@@ -427,6 +475,20 @@ class _HometabState extends State<Hometab> {
         ),
       ),
     );
+  }
+
+  Future<double> estPurchase(UserModel userModel) async {
+    double est = 1;
+    List<Purchase> purchaseList =
+        await PurchaseDb().getPurchase(id: userModel.id);
+    print("list" + purchaseList.toString());
+    for (Purchase purchase in purchaseList) {
+      print(purchase);
+      if (purchase.user_id == userModel.id) {
+        est += purchase.amount;
+      }
+    }
+    return est / userModel.tokens;
   }
 
   // showBuyBottomSheet() {

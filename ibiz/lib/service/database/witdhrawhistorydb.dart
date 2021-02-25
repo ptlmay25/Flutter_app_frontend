@@ -11,7 +11,8 @@ class WithdrawHistoryDb {
     // final String url = "http://192.168.43.24:5000/api/";
     String url = Api().baseurl;
     http.Response response = await http
-        .get(url + "withdrawHistory/" + id); //apppend uid is remaining
+        .get(url + "withdrawHistory/view/user/" + id);
+        print(url + "withdrawHistory/view/user/" + id);
     List list = json.decode(response.body)['data'];
     print(list.length);
 
