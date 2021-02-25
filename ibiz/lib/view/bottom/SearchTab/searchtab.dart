@@ -115,7 +115,7 @@ class _SearchtabState extends State<Searchtab> {
                   child: Text(
                     "Top Brands",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.normal,
                         fontSize: 18 * SizeConfig.heightMultiplier),
                   )),
             ),

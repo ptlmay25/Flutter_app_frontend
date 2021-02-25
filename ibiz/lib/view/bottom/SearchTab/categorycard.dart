@@ -18,36 +18,48 @@ class CategoryCard extends StatelessWidget {
                   right: 3 * SizeConfig.widthMultiplier,
                   top: 3 * SizeConfig.heightMultiplier,
                   bottom: 3 * SizeConfig.heightMultiplier),
-              child: Image.asset(myCategory.imageUrl),
+              child: SizedBox(
+                  height: 114 * SizeConfig.heightMultiplier,
+                  child: Image.asset(myCategory.imageUrl)),
             ),
             Padding(
               padding: EdgeInsets.only(
                   top: 10 * SizeConfig.heightMultiplier,
-                  left: 5 * SizeConfig.widthMultiplier),
+                  left: 10 * SizeConfig.widthMultiplier,
+                  right: 9 * SizeConfig.heightMultiplier),
               child: Row(
                 children: [
                   Expanded(
                       child: Text(
-                    myCategory.name,
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    "Brand Name",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11 * SizeConfig.heightMultiplier),
                   )),
-                  Text('Margin  ',
-                      style: TextStyle(fontWeight: FontWeight.w600)),
+                  Text('No of Stores',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11 * SizeConfig.heightMultiplier)),
                 ],
               ),
             ),
             Padding(
               padding: EdgeInsets.only(
                   top: 10 * SizeConfig.heightMultiplier,
-                  left: 5 * SizeConfig.widthMultiplier),
+                  left: 10 * SizeConfig.widthMultiplier,
+                  right: 9 * SizeConfig.heightMultiplier),
               child: Row(
                 children: [
                   Expanded(
-                    child: Text('Min-${myCategory.min}',
-                        style: TextStyle(fontWeight: FontWeight.w500)),
+                    child: Text(myCategory.brand_name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 11 * SizeConfig.heightMultiplier)),
                   ),
-                  Text(myCategory.margin,
-                      style: TextStyle(fontWeight: FontWeight.w500)),
+                  Text(myCategory.no_of_Stores.toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 11 * SizeConfig.heightMultiplier)),
                 ],
               ),
             ),

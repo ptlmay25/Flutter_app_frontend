@@ -24,33 +24,33 @@ class MyApp extends StatelessWidget {
     //   ),
     // );
 
-    return LayoutBuilder(builder: (context, constraints) {
-      return OrientationBuilder(
-        builder: (context, orientation) {
-          SizeConfig().init(constraints, orientation);
-          return StreamProvider<User>.value(
-            value: AuthService().user,
-            child: MaterialApp(
-              theme: ThemeData(
-                appBarTheme: AppBarTheme(
-                  elevation: 0.0,
-                ),
-              ),
-              home: Wrapper(),
-              // home: View(mobileNo: '+919737582544',),
-            ),
-          );
-        },
-      );
-    });
     // return LayoutBuilder(builder: (context, constraints) {
-    //   return OrientationBuilder(builder: (context, orientation) {
-    //     SizeConfig().init(constraints, orientation);
-    //     return MaterialApp(
-    //       // home: View(mobileNo: '+918780546954'),
-    //       home: View(mobileNo: '+919737582544')
-    //     );
-    //   });
+    //   return OrientationBuilder(
+    //     builder: (context, orientation) {
+    //       SizeConfig().init(constraints, orientation);
+    //       return StreamProvider<User>.value(
+    //         value: AuthService().user,
+    //         child: MaterialApp(
+    //           theme: ThemeData(
+    //             appBarTheme: AppBarTheme(
+    //               elevation: 0.0,
+    //             ),
+    //           ),
+    //           home: Wrapper(),
+    //           // home: View(mobileNo: '+919737582544',),
+    //         ),
+    //       );
+    //     },
+    //   );
     // });
+    return LayoutBuilder(builder: (context, constraints) {
+      return OrientationBuilder(builder: (context, orientation) {
+        SizeConfig().init(constraints, orientation);
+        return MaterialApp(
+          // home: View(mobileNo: '+918780546954'),
+          home: View(mobileNo: '+919737582544')
+        );
+      });
+    });
   }
 }

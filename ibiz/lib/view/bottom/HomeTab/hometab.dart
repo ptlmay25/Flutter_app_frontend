@@ -25,7 +25,7 @@ class _HometabState extends State<Hometab> {
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
-            Container(height: 1200 * SizeConfig.heightMultiplier),
+            Container(height: 1400 * SizeConfig.heightMultiplier),
             Padding(
               padding: const EdgeInsets.all(0.0),
               child: Column(
@@ -75,7 +75,7 @@ class _HometabState extends State<Hometab> {
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12)),
-                      //height: 280 * SizeConfig.heightMultiplier,
+                      height: 290 * SizeConfig.heightMultiplier,
                       width: 350 * SizeConfig.widthMultiplier,
                       child: Column(children: <Widget>[
                         Padding(
@@ -101,15 +101,18 @@ class _HometabState extends State<Hometab> {
                               trailing: Text(
                                   DateTime.now().toString().substring(0, 11)),
                             )),
+                        SizedBox(height: 35 * SizeConfig.heightMultiplier),
                         FutureBuilder(
                           future: tokenList,
-                          builder: (BuildContext context,AsyncSnapshot snapshot){
-                            if(snapshot.hasData){
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
                               return Chart(tokenList: snapshot.data);
-                            }else{
+                            } else {
                               return CircularProgressIndicator();
                             }
-                          },),
+                          },
+                        ),
                         SizedBox(height: 20 * SizeConfig.heightMultiplier)
                       ]),
                     ),
@@ -173,7 +176,7 @@ class _HometabState extends State<Hometab> {
                               Column(
                                 children: [
                                   Text(
-                                    'TOTAL PROFIT        ',
+                                    'EST. PROFIT           ',
                                     style: TextStyle(
                                         fontSize:
                                             15 * SizeConfig.heightMultiplier,
@@ -208,7 +211,7 @@ class _HometabState extends State<Hometab> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        'PRICE PER TOCKEN',
+                                        'TOCKEN PURCHASE',
                                         style: TextStyle(
                                             fontSize: 15 *
                                                 SizeConfig.heightMultiplier,
@@ -250,7 +253,7 @@ class _HometabState extends State<Hometab> {
                               Column(
                                 children: [
                                   Text(
-                                    'TOTAL RETURN     ',
+                                    'AVG. RETURN        ',
                                     style: TextStyle(
                                         fontSize:
                                             15 * SizeConfig.heightMultiplier,
@@ -373,7 +376,7 @@ class _HometabState extends State<Hometab> {
                   ),
                   Card(
                     child: Container(
-                      height: 411 * SizeConfig.heightMultiplier,
+                      height: 700 * SizeConfig.heightMultiplier,
                       width: 350 * SizeConfig.widthMultiplier,
                       child: Column(children: <Widget>[
                         Align(

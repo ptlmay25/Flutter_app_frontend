@@ -32,16 +32,155 @@ class _AccounttabState extends State<Accounttab> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
+          // Container(
+          //     color: Color.fromARGB(255, 66, 71, 112),
+          //     child: Column(children: <Widget>[
+          //       Padding(
+          //         padding:
+          //             EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
+          //         child: Column(
+          //           children: <Widget>[
+          //             Padding(
+          //               padding: EdgeInsets.only(),
+          //               child: Text(
+          //                 curf.format(userModel.acc_bal),
+          //                 style: TextStyle(
+          //                   color: Colors.white,
+          //                   fontSize: 28,
+          //                   fontFamily: "Roboto",
+          //                   fontWeight: FontWeight.w500,
+          //                 ),
+          //               ),
+          //             ),
+          //             Padding(
+          //               padding: EdgeInsets.only(
+          //                   top: 20 * SizeConfig.heightMultiplier),
+          //               child: Text(
+          //                 "Your Balance",
+          //                 style: TextStyle(
+          //                   color: Colors.white,
+          //                   fontSize: 13,
+          //                   fontFamily: "Roboto",
+          //                   fontWeight: FontWeight.w300,
+          //                 ),
+          //               ),
+          //             ),
+          //             Padding(
+          //               padding: EdgeInsets.only(
+          //                   top: 5 * SizeConfig.heightMultiplier),
+          //               child: Text(
+          //                 DateTime.now().toString().substring(0,16),
+          //                 style: TextStyle(
+          //                   color: Colors.white,
+          //                   fontSize: 13,
+          //                   fontFamily: "Roboto",
+          //                   fontWeight: FontWeight.w300,
+          //                 ),
+          //               ),
+          //             ),
+          //             Padding(
+          //               padding: EdgeInsets.only(
+          //                   left: 58 * SizeConfig.widthMultiplier,
+          //                   top: 26 * SizeConfig.heightMultiplier,
+          //                   bottom: 38 * SizeConfig.heightMultiplier),
+          //               child: Row(
+          //                 children: [
+          //                   ClipRRect(
+          //                     borderRadius: BorderRadius.circular(5),
+          //                     child: Container(
+          //                       height: 40 * SizeConfig.heightMultiplier,
+          //                       width: 120 * SizeConfig.widthMultiplier,
+          //                       child: RaisedButton(
+          //                         onPressed: () {
+          //                           Navigator.of(context).push(
+          //                               MaterialPageRoute(
+          //                                   builder: (context) =>
+          //                                       ChangeNotifierProvider.value(
+          //                                           value: userModel,
+          //                                           child: AddFund(
+          //                                             userModel: userModel,
+          //                                           ))));
+          //                         },
+          //                         color: Color.fromARGB(255, 108, 113, 156),
+          //                         child: Text(
+          //                           'Add Funds',
+          //                           style: TextStyle(
+          //                               color: Colors.white,
+          //                               fontWeight: FontWeight.normal,
+          //                               fontSize:
+          //                                   16 * SizeConfig.heightMultiplier),
+          //                         ),
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   SizedBox(width: 20 * SizeConfig.widthMultiplier),
+          //                   ClipRRect(
+          //                     borderRadius: BorderRadius.circular(5),
+          //                     child: Container(
+          //                       height: 40 * SizeConfig.heightMultiplier,
+          //                       width: 120 * SizeConfig.widthMultiplier,
+          //                       child: RaisedButton(
+          //                         onPressed: () {
+          //                           Navigator.of(context).push(MaterialPageRoute(
+          //                               builder: (context) =>
+          //                                   ChangeNotifierProvider.value(
+          //                                       value: userModel,
+          //                                       child: ChangeNotifierProvider
+          //                                           .value(
+          //                                               value: userModel,
+          //                                               child: Withdraw()))));
+          //                         },
+          //                         color: Color.fromARGB(255, 108, 113, 156),
+          //                         child: Text(
+          //                           'Withdraw',
+          //                           style: TextStyle(
+          //                               color: Colors.white,
+          //                               fontWeight: FontWeight.normal,
+          //                               fontSize:
+          //                                   16 * SizeConfig.heightMultiplier),
+          //                         ),
+          //                       ),
+          //                     ),
+          //                   ),
+          //                 ],
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ])),
           Container(
               color: Color.fromARGB(255, 66, 71, 112),
               child: Column(children: <Widget>[
+                SizedBox(height: 15 * SizeConfig.heightMultiplier),
+                Row(
+                  children: [
+                    SizedBox(width: 20 * SizeConfig.widthMultiplier),
+                    SizedBox(
+                      height: 60 * SizeConfig.heightMultiplier,
+                      width: 60 * SizeConfig.widthMultiplier,
+                      child: CircleAvatar(
+                        backgroundImage:
+                            AssetImage("assets/icons/user_icon.png"),
+                      ),
+                    ),
+                    SizedBox(width: 15 * SizeConfig.widthMultiplier),
+                    Text(
+                      userModel.username,
+                      style: TextStyle(
+                          fontSize: 15 * SizeConfig.heightMultiplier,
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30 * SizeConfig.heightMultiplier),
                 Padding(
                   padding:
-                      EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
+                      EdgeInsets.only(left: 25 * SizeConfig.widthMultiplier),
                   child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(),
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
                         child: Text(
                           curf.format(userModel.acc_bal),
                           style: TextStyle(
@@ -52,103 +191,131 @@ class _AccounttabState extends State<Accounttab> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20 * SizeConfig.heightMultiplier),
-                        child: Text(
-                          "Your Balance",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontFamily: "Roboto",
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 5 * SizeConfig.heightMultiplier),
-                        child: Text(
-                          DateTime.now().toString().substring(0,16),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontFamily: "Roboto",
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 58 * SizeConfig.widthMultiplier,
-                            top: 26 * SizeConfig.heightMultiplier,
-                            bottom: 38 * SizeConfig.heightMultiplier),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(5),
-                              child: Container(
-                                height: 40 * SizeConfig.heightMultiplier,
-                                width: 120 * SizeConfig.widthMultiplier,
-                                child: RaisedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ChangeNotifierProvider.value(
-                                                    value: userModel,
-                                                    child: AddFund(
-                                                      userModel: userModel,
-                                                    ))));
-                                  },
-                                  color: Color.fromARGB(255, 108, 113, 156),
-                                  child: Text(
-                                    'Add Funds',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize:
-                                            16 * SizeConfig.heightMultiplier),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 20 * SizeConfig.widthMultiplier),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(5),
-                              child: Container(
-                                height: 40 * SizeConfig.heightMultiplier,
-                                width: 120 * SizeConfig.widthMultiplier,
-                                child: RaisedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChangeNotifierProvider.value(
-                                                value: userModel,
-                                                child: ChangeNotifierProvider
-                                                    .value(
-                                                        value: userModel,
-                                                        child: Withdraw()))));
-                                  },
-                                  color: Color.fromARGB(255, 108, 113, 156),
-                                  child: Text(
-                                    'Withdraw',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize:
-                                            16 * SizeConfig.heightMultiplier),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
+                SizedBox(height: 10 * SizeConfig.heightMultiplier),
+                Row(
+                  children: [
+                    SizedBox(width: 25 * SizeConfig.widthMultiplier),
+                    Expanded(
+                      child: Column(children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Your Balance",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            DateTime.now().toString().substring(0, 16),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ),
+                      ]),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: 25 * SizeConfig.widthMultiplier),
+                      child: SizedBox(
+                        height: 25 * SizeConfig.heightMultiplier,
+                        width: 40 * SizeConfig.widthMultiplier,
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.logout,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      ChangeNotifierProvider.value(
+                                          value: userModel,
+                                          child: ChangeNotifierProvider.value(
+                                              value: userModel,
+                                              child: Withdraw()))));
+                            }),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 35 * SizeConfig.heightMultiplier),
               ])),
+          SizedBox(height: 20 * SizeConfig.heightMultiplier),
+          Padding(
+            padding: EdgeInsets.only(
+                left: 22 * SizeConfig.widthMultiplier,
+                right: 22 * SizeConfig.widthMultiplier),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 70 * SizeConfig.heightMultiplier,
+                      width: 160 * SizeConfig.widthMultiplier,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all()),
+                      child: Column(children: [
+                        SizedBox(height: 15 * SizeConfig.heightMultiplier),
+                        Text("Total Purchase"),
+                        SizedBox(height: 5 * SizeConfig.heightMultiplier),
+                        Text(curf.format(userModel.acc_bal)),
+                      ]),
+                    ),
+                    SizedBox(width: 15 * SizeConfig.heightMultiplier),
+                    Container(
+                      height: 70 * SizeConfig.heightMultiplier,
+                      width: 160 * SizeConfig.widthMultiplier,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all()),
+                      child: Column(children: [
+                        SizedBox(height: 15 * SizeConfig.heightMultiplier),
+                        Text("Total Sales"),
+                        SizedBox(height: 5 * SizeConfig.heightMultiplier),
+                        Text(curf.format(userModel.acc_bal)),
+                      ]),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20 * SizeConfig.heightMultiplier),
+                Row(
+                  children: [
+                    Container(
+                      height: 70 * SizeConfig.heightMultiplier,
+                      width: 160 * SizeConfig.widthMultiplier,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 255, 212, 31),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(children: [
+                        SizedBox(height: 15 * SizeConfig.heightMultiplier),
+                        Text("Total Profit"),
+                        SizedBox(height: 5 * SizeConfig.heightMultiplier),
+                        Text(curf.format(userModel.acc_bal)),
+                      ]),
+                    ),
+                    Container(
+                      height: 70 * SizeConfig.heightMultiplier,
+                      width: 160 * SizeConfig.widthMultiplier,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(
                 top: 30 * SizeConfig.heightMultiplier,
@@ -221,7 +388,7 @@ class _AccounttabState extends State<Accounttab> {
             ),
           ),
           FutureBuilder(
-            future: TransactionDb().getTransactions(id:userModel.id),
+            future: TransactionDb().getTransactions(id: userModel.id),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 List<Transaction> transactionList = snapshot.data;
@@ -296,19 +463,20 @@ class _AccounttabState extends State<Accounttab> {
             ),
           ),
           Text(
-            getSign(transaction.type) + curf.format(transaction.amount),
-            textAlign: TextAlign.right,
-            style: getStyle(transaction.type)
-          ),
+              getSign(transaction.type) +
+                  curf.format(transaction.amount) +
+                  " INR",
+              textAlign: TextAlign.right,
+              style: getStyle(transaction.type)),
         ],
       ),
     );
   }
 
   String getSign(type) {
-    if (type == 'deposit' || type == 'sell') {
+    if (type == 'Deposit' || type == 'Token Sell') {
       return '+ ';
-    } else if (type == 'purchase' || type == 'withdraw') {
+    } else if (type == 'Token Buy' || type == 'Withdraw') {
       return '- ';
     } else {
       return '';
@@ -316,12 +484,12 @@ class _AccounttabState extends State<Accounttab> {
   }
 
   TextStyle getStyle(type) {
-    if (type == 'deposit' || type == 'sell') {
+    if (type == 'Deposit' || type == 'Token Sell') {
       return TextStyle(
         color: Color(0xff3c8f7c),
         fontSize: 15,
       );
-    } else if (type == 'purchase' || type == 'withdraw') {
+    } else if (type == 'Token Buy' || type == 'Withdraw') {
       return TextStyle(
         color: Colors.red,
         fontSize: 15,

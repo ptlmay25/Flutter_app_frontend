@@ -17,7 +17,7 @@ class _CategoryListState extends State<CategoryList> {
       return Container(child: Text("No Items"));
     } else {
       return GridView.count(
-          childAspectRatio: 3 / 4,
+          childAspectRatio: 165 / 174,
           crossAxisCount: 2,
           children: List.generate(myCategories.length, (index) {
             return CategoryCard(myCategory: myCategories[index]);
