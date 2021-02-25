@@ -3,6 +3,8 @@ import 'package:ibiz/view/bottom/SearchTab/categorylist.dart';
 
 import 'package:ibiz/size_config.dart';
 import 'package:intl/intl.dart';
+import 'package:ibiz/service/database/tokendb.dart';
+import 'package:ibiz/models/token.dart';
 
 class Searchtab extends StatefulWidget {
   @override
@@ -12,6 +14,7 @@ class Searchtab extends StatefulWidget {
 class _SearchtabState extends State<Searchtab> {
   var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
   Widget build(BuildContext context) {
+    Future<List<Token>> tokenList = TokenDb().getToken();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 66, 71, 112),
@@ -19,12 +22,26 @@ class _SearchtabState extends State<Searchtab> {
         title: Align(
           alignment: Alignment.center,
           child: Column(children: <Widget>[
+            FutureBuilder(
+                future: tokenList,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    Token latestToken = snapshot.data[0];
+                    return Text(
+                      curf.format(latestToken.netProfit),
+                      style:
+                          TextStyle(fontSize: 22 * SizeConfig.heightMultiplier),
+                    );
+                  } else {
+                    return Text(
+                      curf.format(0),
+                      style:
+                          TextStyle(fontSize: 22 * SizeConfig.heightMultiplier),
+                    );
+                  }
+                }),
             Text(
-              '₹ 10,00,000.00',
-              style: TextStyle(fontSize: 22 * SizeConfig.heightMultiplier),
-            ),
-            Text(
-              'Last month revenue',
+              'Last month profit',
               style: TextStyle(
                   fontSize: 15 * SizeConfig.heightMultiplier,
                   fontWeight: FontWeight.normal,
@@ -96,7 +113,7 @@ class _SearchtabState extends State<Searchtab> {
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Top Franchises",
+                    "Top Brands",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18 * SizeConfig.heightMultiplier),

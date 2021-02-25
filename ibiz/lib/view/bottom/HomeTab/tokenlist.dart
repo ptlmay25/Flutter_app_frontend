@@ -37,7 +37,7 @@ class _TokenListState extends State<TokenList> {
                     child: ListTile(
                       leading: Text(
                           'Date: ' +
-                              token.headerDate.toString().substring(0, 16),
+                              token.headerDate.toString().substring(0, 10),
                           style: TextStyle(
                               fontSize: 11 * SizeConfig.heightMultiplier)),
                       trailing: Text(curf.format(token.netProfit*userModel.tokens) + ' INR',

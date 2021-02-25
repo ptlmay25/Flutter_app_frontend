@@ -29,9 +29,27 @@ class _SharetabState extends State<Sharetab> {
               ),
             ),
           ),
+          SizedBox(height: 20 * SizeConfig.heightMultiplier),
           Padding(
             padding: EdgeInsets.only(
-              top: 100 * SizeConfig.heightMultiplier,
+                left: 44 * SizeConfig.widthMultiplier,
+                right: 31 * SizeConfig.widthMultiplier),
+            child: Column(
+              children: [
+                Text('The more friends that joins, the more we grow.',
+                    style: TextStyle(
+                        fontSize: 13 * SizeConfig.heightMultiplier,
+                        fontWeight: FontWeight.w300)),
+                Text('The more we grow, the more you earn.',
+                    style: TextStyle(
+                        fontSize: 13 * SizeConfig.heightMultiplier,
+                        fontWeight: FontWeight.w300)),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: 40 * SizeConfig.heightMultiplier,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
@@ -40,7 +58,8 @@ class _SharetabState extends State<Sharetab> {
                 width: 200 * SizeConfig.widthMultiplier,
                 child: RaisedButton(
                   onPressed: () async {
-                    Share.share("Welcome to Firefly Salers' Club: http://saler-club.surge.sh/ ");
+                    Share.share(
+                        "Start a wholesale business from home & earn up to ₹40,000 per month\n\n http://saler-club.surge.sh/ ");
                   },
                   color: Color.fromARGB(255, 66, 71, 112),
                   child: Text(

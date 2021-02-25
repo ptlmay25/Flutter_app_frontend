@@ -173,7 +173,7 @@ class _HometabState extends State<Hometab> {
                               Column(
                                 children: [
                                   Text(
-                                    'TOTAL DIVIDEND   ',
+                                    'TOTAL PROFIT        ',
                                     style: TextStyle(
                                         fontSize:
                                             15 * SizeConfig.heightMultiplier,

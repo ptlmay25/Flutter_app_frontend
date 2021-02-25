@@ -207,10 +207,13 @@ class _PaymentMethodState extends State<PaymentMethod> {
                         UserModel userDataModel = await Userdb()
                             .getUserByMobileNo(widget.userModel.mobileNo);
                         if (userDataModel.acc_bal >= widget.amount) {
-                          bool res = await BuyToken().buyToken(
-                              id: userDataModel.id,
-                              newBal: userDataModel.acc_bal - widget.amount,
-                              newToken: userDataModel.tokens + widget.tokens);
+                          Map data = {
+                            "user_id": userModel.id,
+                            "num_of_tokens": widget.tokens,
+                            "payment_token": ""
+                          };
+                          Map body = {"data": data};
+                          var res = await BuyToken().buyToken(body: body);
                           if (res) {
                             userModel.updateTokenAndBal(
                                 newToken: userModel.tokens + widget.tokens,
@@ -251,12 +254,11 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   void openCheckout(UserModel userModel) async {
     var options = {
-      'key': 'rzp_test_v6Iu0KnIVSKqGC',
+      'key': 'rzp_test_p7u9ArE5Rsyfry',
       'amount': widget.amount * 100,
       'name': 'Firefly',
+      'image':'assets/icons/user_icon.png',
       'description': 'Payment for new Token',
-      'image':
-          'https://firebasestorage.googleapis.com/v0/b/mytestApp.appspot.com/o/images%2FpZm8daajsIS4LvqBYTiWiuLIgmE2?alt=media&token=3kuli4cd-dc45-7845-b87d-5c4acc7da3c2',
       'prefill': {'contact': userModel.mobileNo, 'email': userModel.email},
       'external': {
         'wallets': ['paytm']
@@ -274,10 +276,13 @@ class _PaymentMethodState extends State<PaymentMethod> {
     Fluttertoast.showToast(
         msg: "SUCCESS: " + response.paymentId, timeInSecForIosWeb: 4);
     print('payment done');
-    bool res = await BuyToken().buyToken(
-        id: widget.userModel.id,
-        newBal: widget.userModel.acc_bal,
-        newToken: widget.tokens);
+    Map data = {
+      "user_id": widget.userModel.id,
+      "num_of_tokens": widget.tokens,
+      "payment_token": response.paymentId
+    };
+    Map body = {"data": data};
+    var res = await BuyToken().buyToken(body: body);
     if (res) {
       print("Result:" + res.toString());
       widget.userModel.updateTokenAndBal(
@@ -293,6 +298,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
     Fluttertoast.showToast(
         msg: "ERROR: " + response.code.toString() + " - " + response.message,
         timeInSecForIosWeb: 4);
+    print(response.code.toString());
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
