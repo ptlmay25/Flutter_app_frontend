@@ -478,17 +478,21 @@ class _HometabState extends State<Hometab> {
   }
 
   Future<double> estPurchase(UserModel userModel) async {
-    double est = 1;
-    List<Purchase> purchaseList =
-        await PurchaseDb().getPurchase(id: userModel.id);
-    print("list" + purchaseList.toString());
-    for (Purchase purchase in purchaseList) {
-      print(purchase);
-      if (purchase.user_id == userModel.id) {
-        est += purchase.amount;
+    if (userModel.tokens > 0) {
+      double est = 1;
+      List<Purchase> purchaseList =
+          await PurchaseDb().getPurchase(id: userModel.id);
+      print("list" + purchaseList.toString());
+      for (Purchase purchase in purchaseList) {
+        print(purchase);
+        if (purchase.user_id == userModel.id) {
+          est += purchase.amount;
+        }
       }
+      return est / userModel.tokens;
+    } else {
+      return 0;
     }
-    return est / userModel.tokens;
   }
 
   // showBuyBottomSheet() {
