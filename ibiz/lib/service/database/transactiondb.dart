@@ -4,12 +4,12 @@ import 'package:ibiz/models/transaction.dart';
 import 'package:http/http.dart' as http;
 import 'package:ibiz/service/database/api.dart';
 
-class TokenDb {
-  Future<List<Transaction>> getTransactions() async {
+class TransactionDb {
+  Future<List<Transaction>> getTransactions({id}) async {
     // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
     // final String url = "http://192.168.43.24:5000/api/";
     String url = Api().baseurl;
-    http.Response response = await http.get(url + "transaction");
+    http.Response response = await http.get(url + "transaction/"+id);
 
     List transactionList = json.decode(response.body)['data'];
     // print("tokenResp:"+transactionList[0].toString());

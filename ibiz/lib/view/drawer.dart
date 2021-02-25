@@ -108,8 +108,8 @@ class HomeDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () async {
-                List<WithdrawHistory> data = await WithdrawHistoryDb()
-                    .getWithdrawList(uid: userModel.id);
+                List<WithdrawHistory> data =
+                    await WithdrawHistoryDb().getWithdrawList(id: userModel.id);
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
                         Withdraw_History(userModel: userModel, data: data)));

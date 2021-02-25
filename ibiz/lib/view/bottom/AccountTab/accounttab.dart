@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/transaction.dart';
 import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/transactiondb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/AccountTab/withdraw.dart';
 import 'package:ibiz/view/navbar/withdrawal_history.dart';
@@ -67,7 +69,7 @@ class _AccounttabState extends State<Accounttab> {
                         padding: EdgeInsets.only(
                             top: 5 * SizeConfig.heightMultiplier),
                         child: Text(
-                          "10/10/2020  11:24 AM",
+                          DateTime.now().toString().substring(0,16),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 13,
@@ -218,73 +220,117 @@ class _AccounttabState extends State<Accounttab> {
               ],
             ),
           ),
-          Expanded(
-              child: ListView(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 32 * SizeConfig.heightMultiplier,
-                    right: 21 * SizeConfig.widthMultiplier),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 210,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 23 * SizeConfig.widthMultiplier),
-                                    child: Text(
-                                      "Token sell ",
-                                      style: TextStyle(
-                                        color: Color(0xff151515),
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 23 * SizeConfig.widthMultiplier),
-                                    child: Text(
-                                      "Date: 10/12/2020",
-                                      style: TextStyle(
-                                        color: Color(0xff151515),
-                                        fontSize: 14,
-                                        fontFamily: "Roboto",
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Text(
-                      "+ 10,150 INR",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: Color(0xff3c8f7c),
-                        fontSize: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ))
+          FutureBuilder(
+            future: TransactionDb().getTransactions(id:userModel.id),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                List<Transaction> transactionList = snapshot.data;
+                return Container(
+                  height: 400 * SizeConfig.heightMultiplier,
+                  child: ListView.builder(
+                      itemCount: transactionList.length,
+                      itemBuilder: (context, index) {
+                        return getList(transactionList[index]);
+                      }),
+                );
+              } else {
+                return Text("");
+              }
+            },
+          ),
         ],
       ),
     );
+  }
+
+  Widget getList(Transaction transaction) {
+    var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+    return Padding(
+      padding: EdgeInsets.only(
+          top: 32 * SizeConfig.heightMultiplier,
+          right: 21 * SizeConfig.widthMultiplier),
+      child: Row(
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                children: [
+                  Container(
+                    width: 210,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 23 * SizeConfig.widthMultiplier),
+                          child: Text(
+                            transaction.type,
+                            style: TextStyle(
+                              color: Color(0xff151515),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 23 * SizeConfig.widthMultiplier),
+                          child: Text(
+                            "Date: " +
+                                transaction.date.toString().substring(0, 10),
+                            style: TextStyle(
+                              color: Color(0xff151515),
+                              fontSize: 14,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Text(
+            getSign(transaction.type) + curf.format(transaction.amount),
+            textAlign: TextAlign.right,
+            style: getStyle(transaction.type)
+          ),
+        ],
+      ),
+    );
+  }
+
+  String getSign(type) {
+    if (type == 'deposit' || type == 'sell') {
+      return '+ ';
+    } else if (type == 'purchase' || type == 'withdraw') {
+      return '- ';
+    } else {
+      return '';
+    }
+  }
+
+  TextStyle getStyle(type) {
+    if (type == 'deposit' || type == 'sell') {
+      return TextStyle(
+        color: Color(0xff3c8f7c),
+        fontSize: 15,
+      );
+    } else if (type == 'purchase' || type == 'withdraw') {
+      return TextStyle(
+        color: Colors.red,
+        fontSize: 15,
+      );
+    } else {
+      return TextStyle(
+        color: Color(0xff3c8f7c),
+        fontSize: 15,
+      );
+    }
   }
 }
