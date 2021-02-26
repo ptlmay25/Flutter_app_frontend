@@ -43,9 +43,11 @@ class UserModel with ChangeNotifier {
   // ignore: non_constant_identifier_names
   double acc_bal, total_purchase, total_sell;
 
-  void updateTokenAndBal({newToken, newBal}) {
+  void updateTokenAndBal({newToken, newBal, newPurchase, newSell}) {
     this.tokens = newToken;
     this.acc_bal = newBal;
+    this.total_purchase = newPurchase;
+    this.total_sell = newSell;
     notifyListeners();
     print('TokenUpdated');
   }

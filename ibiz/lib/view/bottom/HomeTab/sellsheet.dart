@@ -130,7 +130,9 @@ class _SellSheetState extends State<SellSheet> {
                     print(res);
                     userModel.updateTokenAndBal(
                         newBal: userModel.acc_bal + _n * widget.tokenPrice,
-                        newToken: userModel.tokens - _n);
+                        newToken: userModel.tokens - _n,
+                        newSell: userModel.total_sell + _n * widget.tokenPrice,
+                        newPurchase: userModel.total_purchase);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CompleteOrder()));
                   }

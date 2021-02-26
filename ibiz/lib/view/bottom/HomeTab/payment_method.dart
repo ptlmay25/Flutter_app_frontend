@@ -217,7 +217,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
                           if (res) {
                             userModel.updateTokenAndBal(
                                 newToken: userModel.tokens + widget.tokens,
-                                newBal: userModel.acc_bal - widget.amount);
+                                newBal: userModel.acc_bal - widget.amount,
+                                newSell: userModel.total_sell,
+                                newPurchase:
+                                    userModel.total_purchase + widget.amount);
                             // Navigator.of(context).push(MaterialPageRoute(
                             //     builder: (context) => CompleteOrder()));
                             setState(() {
@@ -257,7 +260,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
       'key': 'rzp_test_p7u9ArE5Rsyfry',
       'amount': widget.amount * 100,
       'name': 'Firefly',
-      'image':'assets/icons/user_icon.png',
+      'image': 'assets/icons/user_icon.png',
       'description': 'Payment for new Token',
       'prefill': {'contact': userModel.mobileNo, 'email': userModel.email},
       'external': {
@@ -287,7 +290,9 @@ class _PaymentMethodState extends State<PaymentMethod> {
       print("Result:" + res.toString());
       widget.userModel.updateTokenAndBal(
           newToken: widget.userModel.tokens + widget.tokens,
-          newBal: widget.userModel.acc_bal);
+          newBal: widget.userModel.acc_bal,
+          newPurchase: widget.userModel.total_purchase + widget.amount,
+          newSell: widget.userModel.total_sell);
       setState(() {
         paymentDone = true;
       });
