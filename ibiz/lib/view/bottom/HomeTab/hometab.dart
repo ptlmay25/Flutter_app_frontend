@@ -40,12 +40,23 @@ class _HometabState extends State<Hometab> {
                       height: 154,
                       child: Column(children: <Widget>[
                         FutureBuilder(
-                            future: tokenList,
+                            future: Future.wait([estPurchaseAns, tokenList]),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
-                                Token latestToken = snapshot.data[0];
-                                return Text(curf.format(latestToken.tokenPrice),
+                                Token latestToken = snapshot.data[1][0];
+                                double avgTokenPrice = snapshot.data[0];
+                                double estProfit =
+                                    (latestToken.tokenPrice - avgTokenPrice)
+                                            .abs() *
+                                        userModel.tokens;
+                                double tokenPurchase =
+                                    (userModel.total_purchase -
+                                            userModel.total_sell.toDouble())
+                                        .abs();
+                                return Text(
+                                    curf.format(
+                                        (tokenPurchase + estProfit).toDouble()),
                                     style: TextStyle(
                                         fontSize:
                                             30 * SizeConfig.heightMultiplier,
@@ -196,9 +207,12 @@ class _HometabState extends State<Hometab> {
                                             AsyncSnapshot snapshot) {
                                           if (snapshot.hasData) {
                                             Token token = snapshot.data[1][0];
+                                            double avgTokenPrice =
+                                                snapshot.data[0];
                                             return Text(
-                                              curf.format((token.tokenPrice -
-                                                      snapshot.data[0])
+                                              curf.format(((token.tokenPrice -
+                                                          avgTokenPrice) *
+                                                      userModel.tokens)
                                                   .abs()),
                                               style: TextStyle(
                                                   fontSize: 25 *
@@ -234,7 +248,7 @@ class _HometabState extends State<Hometab> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        'TOCKEN PURCHASE',
+                                        'TOKEN PURCHASE',
                                         style: TextStyle(
                                             fontSize: 15 *
                                                 SizeConfig.heightMultiplier,
@@ -245,29 +259,13 @@ class _HometabState extends State<Hometab> {
                                         padding: EdgeInsets.only(
                                             top: 7 *
                                                 SizeConfig.heightMultiplier),
-                                        child: FutureBuilder(
-                                            future: tokenList,
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot snapshot) {
-                                              if (snapshot.hasData) {
-                                                Token latestToken =
-                                                    snapshot.data[0];
-                                                return Text(
-                                                  curf.format(
-                                                      latestToken.tokenPrice),
-                                                  style: TextStyle(
-                                                      fontSize: 25 *
-                                                          SizeConfig
-                                                              .heightMultiplier),
-                                                );
-                                              } else {
-                                                return Text(curf.format(0),
-                                                    style: TextStyle(
-                                                        fontSize: 25 *
-                                                            SizeConfig
-                                                                .heightMultiplier));
-                                              }
-                                            }),
+                                        child: Text(
+                                          curf.format(userModel.total_purchase -
+                                              userModel.total_sell),
+                                          style: TextStyle(
+                                              fontSize: 25 *
+                                                  SizeConfig.heightMultiplier),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -293,14 +291,18 @@ class _HometabState extends State<Hometab> {
                                             AsyncSnapshot snapshot) {
                                           if (snapshot.hasData) {
                                             Token token = snapshot.data[1][0];
+                                            double avgTokenPrice =
+                                                snapshot.data[0];
+                                            double estProfit = (token
+                                                        .tokenPrice -
+                                                    avgTokenPrice.toDouble())
+                                                .abs();
+                                            print(estProfit);
                                             return Text(
-                                              ((token.tokenPrice -
-                                                                  snapshot
-                                                                      .data[0])
-                                                              .abs() /
+                                              ((estProfit * userModel.tokens) /
                                                           100)
-                                                      .toString()
-                                                      .substring(0, 5) +
+                                                      .toDouble()
+                                                      .toString() +
                                                   ' %     ',
                                               style: TextStyle(
                                                   fontSize: 25 *
@@ -353,7 +355,7 @@ class _HometabState extends State<Hometab> {
                                         width: 140 * SizeConfig.widthMultiplier,
                                         child: RaisedButton(
                                           onPressed: () async {
-                                            Token token = snapshot.data[2];
+                                            Token token = snapshot.data[0];
                                             double price = token.tokenPrice;
                                             showBottomSheet(
                                                 context: context,
@@ -478,18 +480,24 @@ class _HometabState extends State<Hometab> {
   }
 
   Future<double> estPurchase(UserModel userModel) async {
-    if (userModel.tokens > 0) {
-      double est = 1;
-      List<Purchase> purchaseList =
-          await PurchaseDb().getPurchase(id: userModel.id);
-      print("list" + purchaseList.toString());
-      for (Purchase purchase in purchaseList) {
-        print(purchase);
-        if (purchase.user_id == userModel.id) {
+    double est = 0;
+    double n = 0;
+    List<Purchase> purchaseList =
+        await PurchaseDb().getPurchase(id: userModel.id);
+    print("list" + purchaseList.length.toString());
+    if (purchaseList.length > 0) {
+      for (var i = 0; i < purchaseList.length; i++) {
+        if (purchaseList[i].user_id == userModel.id) {
+          Purchase purchase = purchaseList[i];
+          //print(purchase.amount);
           est += purchase.amount;
+          n += purchase.num_of_tokens;
         }
       }
-      return est / userModel.tokens;
+    }
+    if (n > 0) {
+      print(est);
+      return (est / n).toDouble();
     } else {
       return 0;
     }

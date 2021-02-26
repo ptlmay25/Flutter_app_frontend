@@ -10,9 +10,9 @@ class WithdrawHistoryDb {
     // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
     // final String url = "http://192.168.43.24:5000/api/";
     String url = Api().baseurl;
-    http.Response response = await http
-        .get(url + "withdrawHistory/view/user/" + id);
-        print(url + "withdrawHistory/view/user/" + id);
+    http.Response response =
+        await http.get(url + "withdrawHistory"); //append viewuser/id
+    print(url + "withdrawHistory/view/user/" + id);
     List list = json.decode(response.body)['data'];
     print(list.length);
 
@@ -22,6 +22,7 @@ class WithdrawHistoryDb {
         // print(index);
         return WithdrawHistory(
             id: list[index]['_id'],
+            user_id: list[index]['user_id'] ?? '',
             BankAccountNumber: list[index]['BankAccountNumber'].toString(),
             IFSC: list[index]['IFSC'],
             UPI: list[index]['UPI'],

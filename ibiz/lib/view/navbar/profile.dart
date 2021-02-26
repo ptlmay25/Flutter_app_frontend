@@ -339,7 +339,7 @@ class _ProfileState extends State<Profile> {
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: DropdownButton(
-                                //hint: Text(userModel.state),
+                                hint: Text(userModel.state),
                                 value: _selectedLocation,
                                 onChanged: (newValue) {
                                   setState(() {

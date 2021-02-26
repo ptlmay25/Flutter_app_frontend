@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/transaction.dart';
 import 'package:ibiz/models/usermodel.dart';
@@ -30,7 +32,7 @@ class _AccounttabState extends State<Accounttab> {
     UserModel userModel = Provider.of<UserModel>(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: ListView(
         children: <Widget>[
           // Container(
           //     color: Color.fromARGB(255, 66, 71, 112),
@@ -195,61 +197,73 @@ class _AccounttabState extends State<Accounttab> {
                   ),
                 ),
                 SizedBox(height: 10 * SizeConfig.heightMultiplier),
-                Row(
-                  children: [
-                    SizedBox(width: 25 * SizeConfig.widthMultiplier),
-                    Expanded(
-                      child: Column(children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Your Balance",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontFamily: "Roboto",
-                              fontWeight: FontWeight.w300,
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 25 * SizeConfig.widthMultiplier,
+                      right: 25 * SizeConfig.widthMultiplier),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Your Balance        ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.w300,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 3 * SizeConfig.heightMultiplier),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            DateTime.now().toString().substring(0, 16),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontFamily: "Roboto",
-                              fontWeight: FontWeight.w300,
+                          SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              DateTime.now().toString().substring(0, 16),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.w300,
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          right: 25 * SizeConfig.widthMultiplier),
-                      child: SizedBox(
-                        height: 25 * SizeConfig.heightMultiplier,
-                        width: 40 * SizeConfig.widthMultiplier,
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.logout,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      ChangeNotifierProvider.value(
-                                          value: userModel,
-                                          child: ChangeNotifierProvider.value(
-                                              value: userModel,
-                                              child: Withdraw()))));
-                            }),
+                        ]),
                       ),
-                    )
-                  ],
+                      FlatButton(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 25 * SizeConfig.heightMultiplier,
+                                width: 40 * SizeConfig.widthMultiplier,
+                                child: Icon(
+                                  Icons.logout,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                              Text(
+                                'withdraw',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12 * SizeConfig.heightMultiplier,
+                                    fontWeight: FontWeight.normal),
+                              )
+                            ],
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    ChangeNotifierProvider.value(
+                                        value: userModel,
+                                        child: ChangeNotifierProvider.value(
+                                            value: userModel,
+                                            child: Withdraw()))));
+                          }),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 35 * SizeConfig.heightMultiplier),
               ])),
@@ -272,7 +286,7 @@ class _AccounttabState extends State<Accounttab> {
                         SizedBox(height: 15 * SizeConfig.heightMultiplier),
                         Text("Total Purchase"),
                         SizedBox(height: 5 * SizeConfig.heightMultiplier),
-                        Text(curf.format(userModel.acc_bal)),
+                        Text(curf.format(userModel.total_purchase)),
                       ]),
                     ),
                     SizedBox(width: 15 * SizeConfig.heightMultiplier),
@@ -286,7 +300,7 @@ class _AccounttabState extends State<Accounttab> {
                         SizedBox(height: 15 * SizeConfig.heightMultiplier),
                         Text("Total Sales"),
                         SizedBox(height: 5 * SizeConfig.heightMultiplier),
-                        Text(curf.format(userModel.acc_bal)),
+                        Text(curf.format(userModel.total_sell)),
                       ]),
                     ),
                   ],
@@ -304,7 +318,10 @@ class _AccounttabState extends State<Accounttab> {
                         SizedBox(height: 15 * SizeConfig.heightMultiplier),
                         Text("Total Profit"),
                         SizedBox(height: 5 * SizeConfig.heightMultiplier),
-                        Text(curf.format(userModel.acc_bal)),
+                        Text(curf.format(
+                            (userModel.total_purchase - userModel.total_sell)
+                                .toDouble()
+                                .abs())),
                       ]),
                     ),
                     Container(
@@ -387,23 +404,26 @@ class _AccounttabState extends State<Accounttab> {
               ],
             ),
           ),
-          FutureBuilder(
-            future: TransactionDb().getTransactions(id: userModel.id),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                List<Transaction> transactionList = snapshot.data;
-                return Container(
-                  height: 400 * SizeConfig.heightMultiplier,
-                  child: ListView.builder(
-                      itemCount: transactionList.length,
-                      itemBuilder: (context, index) {
-                        return getList(transactionList[index]);
-                      }),
-                );
-              } else {
-                return Text("");
-              }
-            },
+          Container(
+            height: 650 * SizeConfig.heightMultiplier,
+            child: FutureBuilder(
+              future: TransactionDb().getTransactions(id: userModel.id),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  List<Transaction> transactionList = snapshot.data;
+                  return Container(
+                    height: 400 * SizeConfig.heightMultiplier,
+                    child: ListView.builder(
+                        itemCount: transactionList.length,
+                        itemBuilder: (context, index) {
+                          return getList(transactionList[index]);
+                        }),
+                  );
+                } else {
+                  return Text("");
+                }
+              },
+            ),
           ),
         ],
       ),

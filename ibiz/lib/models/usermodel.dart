@@ -20,7 +20,9 @@ class UserModel with ChangeNotifier {
       this.zipcode,
       // ignore: non_constant_identifier_names
       this.acc_bal,
-      this.tokens});
+      this.tokens,
+      this.total_purchase,
+      this.total_sell});
   String id,
       username,
       gender,
@@ -39,7 +41,7 @@ class UserModel with ChangeNotifier {
       IFSC;
   int tokens;
   // ignore: non_constant_identifier_names
-  double acc_bal;
+  double acc_bal, total_purchase, total_sell;
 
   void updateTokenAndBal({newToken, newBal}) {
     this.tokens = newToken;

@@ -134,17 +134,18 @@ class _WithdrawState extends State<Withdraw> {
                             fontWeight: FontWeight.w400)),
                   ),
                   TextFormField(
+                    decoration: InputDecoration(hintText: '*optional'),
                     initialValue: userModel.UPI,
                     onSaved: (value) {
                       setState(() {
                         this.UPI = value;
                       });
                     },
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return "field is empty";
-                      }
-                    },
+                    // validator: (value) {
+                    //   if (value.isEmpty) {
+                    //     return "field is empty";
+                    //   }
+                    // },
                   ),
                   SizedBox(height: 40 * SizeConfig.heightMultiplier),
                   Align(
@@ -178,19 +179,25 @@ class _WithdrawState extends State<Withdraw> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                            bool res = await WithdrawRequest().request(
-                                userId: userModel.id,
-                                IFSC: IFSC,
-                                UPI: UPI,
-                                accNo: accNo,
-                                amount: amount);
-                            if (res) {
-                              Fluttertoast.showToast(
-                                  msg: "Request Sent", timeInSecForIosWeb: 4);
-                                  
+                            if (amount <= userModel.acc_bal) {
+                              bool res = await WithdrawRequest().request(
+                                  userId: userModel.id,
+                                  IFSC: IFSC,
+                                  UPI: UPI,
+                                  accNo: accNo,
+                                  amount: amount);
+                              if (res) {
+                                Fluttertoast.showToast(
+                                    msg: "Request Sent", timeInSecForIosWeb: 4);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Internal Error",
+                                    timeInSecForIosWeb: 4);
+                              }
                             }else{
                               Fluttertoast.showToast(
-                                  msg: "Multiple Requests are not allowed\nTry again later", timeInSecForIosWeb: 4);
+                                    msg: "Insufficient Balance",
+                                    timeInSecForIosWeb: 4);
                             }
                           }
                         },

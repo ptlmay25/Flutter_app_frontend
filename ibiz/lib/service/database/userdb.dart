@@ -89,7 +89,7 @@ class Userdb {
   Future<dynamic> getUserByMobileNo(String mobileNo) async {
     http.Response response =
         await http.get(url + "user/viewMobile/" + mobileNo);
-    print("Inside getUserByMobileNo" + response.body);
+    //print("Inside getUserByMobileNo" + response.body);
     if (response.statusCode == 200) {
       List userList = json.decode(response.body)['data'];
       //Map<String, dynamic> data = json.decode(response.body)['data'][0];
@@ -101,22 +101,25 @@ class Userdb {
       Map<String, dynamic> data = userList[0];
       // print("Returning");
       return UserModel(
-          username: data['username'],
-          country: data['country'],
-          IFSC: data['IFSC'],
-          UPI: data['UPI'],
-          bankAccountNo: data['bankAccountNo'],
-          city: data['city'],
-          email: data['email'],
-          gender: data['gender'],
-          homeAddress: data['homeAddress'],
-          id: data['_id'],
-          mobileNo: data['mobileNo'],
-          password: data['password'],
-          state: data['state'],
-          zipcode: data['zipcode'],
-          tokens: data['tokens'],
-          acc_bal: double.parse(data['acc_bal'].toString()));
+          username: data['username'] ?? '',
+          country: data['country'] ?? '',
+          IFSC: data['IFSC'] ?? '',
+          UPI: data['UPI'] ?? '',
+          bankAccountNo: data['bankAccountNo'] ?? '',
+          city: data['city'] ?? '',
+          email: data['email'] ?? '',
+          gender: data['gender'] ?? '',
+          homeAddress: data['homeAddress'] ?? '',
+          id: data['_id'] ?? '',
+          mobileNo: data['mobileNo'] ?? '',
+          password: data['password'] ?? '',
+          state: data['state'] ?? 'Choose State',
+          zipcode: data['zipcode'] ?? '',
+          tokens: data['tokens'] ?? 0.0,
+          acc_bal: double.parse(data['acc_bal'].toString()) ?? 0.0,
+          total_purchase:
+              double.parse(data['total_purchase'].toString()) ?? 0.0,
+          total_sell: double.parse(data['total_sell'].toString()) ?? 0.0);
     } else {
       print("No user found with: " + mobileNo);
       return 0;

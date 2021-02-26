@@ -1,7 +1,7 @@
 import 'package:ibiz/view/bottom/AccountTab/withdraw.dart';
 
 class WithdrawHistory {
-  String id, request_number, name, UPI, BankAccountNumber, IFSC;
+  String id, user_id, request_number, name, UPI, BankAccountNumber, IFSC;
   String date;
   int total_amount;
 
@@ -13,5 +13,6 @@ class WithdrawHistory {
       this.BankAccountNumber,
       this.request_number,
       this.total_amount,
-      this.date});
+      this.date,
+      this.user_id});
 }
