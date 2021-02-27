@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:ibiz/models/purchase.dart';
-import 'package:ibiz/models/transaction.dart';
 import 'package:http/http.dart' as http;
 import 'package:ibiz/service/database/api.dart';
 

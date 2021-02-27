@@ -1,15 +1,15 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/transaction.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/transactiondb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/AccountTab/withdraw.dart';
-import 'package:ibiz/view/navbar/withdrawal_history.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:ibiz/view/bottom/AccountTab/addfund.dart';
+import 'package:ibiz/models/purchase.dart';
+import 'package:ibiz/models/sell.dart';
+import 'package:ibiz/service/database/purchasedb.dart';
+import 'package:ibiz/service/database/selldb.dart';
 
 class Accounttab extends StatefulWidget {
   @override
@@ -30,6 +30,8 @@ class _AccounttabState extends State<Accounttab> {
   Widget build(BuildContext context) {
     var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
     UserModel userModel = Provider.of<UserModel>(context);
+    Future<double> estPurchaseAns = estPurchaseAvg(userModel);
+    Future<List<Sell>> sellList = SellDb().getSell(id: userModel.id);
     return Scaffold(
       backgroundColor: Colors.white,
       body: ListView(
@@ -318,10 +320,29 @@ class _AccounttabState extends State<Accounttab> {
                         SizedBox(height: 15 * SizeConfig.heightMultiplier),
                         Text("Total Profit"),
                         SizedBox(height: 5 * SizeConfig.heightMultiplier),
-                        Text(curf.format(
-                            (userModel.total_purchase - userModel.total_sell)
-                                .toDouble()
-                                .abs())),
+                        FutureBuilder(
+                            future: Future.wait([estPurchaseAns, sellList]),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData) {
+                                double avgPurchasePrice = snapshot.data[0];
+                                //print(snapshot.data[1]);
+                                double avgSellPrice = getAvgSellPrice(
+                                    snapshot.data[1], userModel);
+                                print('$avgSellPrice $avgPurchasePrice');
+                                double noOfTokenSold =
+                                    tokenSold(snapshot.data[1], userModel);
+                                //print(noOfTokenSold);
+                                double avgProfit =
+                                    avgSellPrice - avgPurchasePrice;
+                                //print(avgProfit);
+                                double netProfit = avgProfit * noOfTokenSold;
+                                return Text(
+                                    curf.format(netProfit.abs().toDouble()));
+                              } else {
+                                return Text(curf.format(0));
+                              }
+                            }),
                       ]),
                     ),
                     Container(
@@ -520,5 +541,64 @@ class _AccounttabState extends State<Accounttab> {
         fontSize: 15,
       );
     }
+  }
+
+  Future<double> estPurchaseAvg(UserModel userModel) async {
+    double est = 0;
+    double n = 0;
+    List<Purchase> purchaseList =
+        await PurchaseDb().getPurchase(id: userModel.id);
+    //print("list" + purchaseList.length.toString());
+    if (purchaseList.length > 0) {
+      for (var i = 0; i < purchaseList.length; i++) {
+        if (purchaseList[i].user_id == userModel.id) {
+          Purchase purchase = purchaseList[i];
+          //print(purchase.amount);
+          est += purchase.amount;
+          n += purchase.num_of_tokens;
+        }
+      }
+    }
+    //print(n);
+    if (n > 0) {
+      //print(est);
+      return (est / n).toDouble();
+    } else {
+      return 0;
+    }
+  }
+
+  double getAvgSellPrice(List<Sell> sellList, UserModel userModel) {
+    double est = 0;
+    double n = 0;
+
+    //print("list" + sellList.length.toString());
+    if (sellList.length > 0) {
+      for (var i = 0; i < sellList.length; i++) {
+        if (sellList[i].user_id == userModel.id) {
+          Sell sell = sellList[i];
+          //print(purchase.amount);
+          est += sell.amount;
+          n += sell.num_of_tokens;
+        }
+      }
+    }
+    //print(n);
+    if (n > 0) {
+      //print(est);
+      return (est / n).toDouble();
+    } else {
+      return 0;
+    }
+  }
+
+  double tokenSold(List<Sell> sellList, UserModel userModel) {
+    double n = 0;
+    for (Sell sell in sellList) {
+      if (sell.user_id == userModel.id) {
+        n += sell.num_of_tokens;
+      }
+    }
+    return n;
   }
 }

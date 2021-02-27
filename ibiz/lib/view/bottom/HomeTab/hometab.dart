@@ -23,7 +23,8 @@ class _HometabState extends State<Hometab> {
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
     Future<List<Token>> tokenList = TokenDb().getToken();
-    Future<double> estPurchaseAns = estPurchase(userModel);
+    Future<double> estPurchaseAns = purchasePriceAvg(userModel);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -50,10 +51,10 @@ class _HometabState extends State<Hometab> {
                                     (latestToken.tokenPrice - avgTokenPrice)
                                             .abs() *
                                         userModel.tokens;
+                                //print(estProfit);
                                 double tokenPurchase =
-                                    (userModel.total_purchase -
-                                            userModel.total_sell.toDouble())
-                                        .abs();
+                                    avgTokenPrice * userModel.tokens;
+
                                 return Text(
                                     curf.format(
                                         (tokenPurchase + estProfit).toDouble()),
@@ -259,13 +260,32 @@ class _HometabState extends State<Hometab> {
                                         padding: EdgeInsets.only(
                                             top: 7 *
                                                 SizeConfig.heightMultiplier),
-                                        child: Text(
-                                          curf.format(userModel.total_purchase -
-                                              userModel.total_sell),
-                                          style: TextStyle(
-                                              fontSize: 25 *
-                                                  SizeConfig.heightMultiplier),
-                                        ),
+                                        child: FutureBuilder(
+                                            future: estPurchaseAns,
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snapshot) {
+                                              if (snapshot.hasData) {
+                                                double avgTokenPrice =
+                                                    snapshot.data;
+                                                return Text(
+                                                  curf.format((avgTokenPrice *
+                                                          userModel.tokens)
+                                                      .toDouble()),
+                                                  style: TextStyle(
+                                                      fontSize: 25 *
+                                                          SizeConfig
+                                                              .heightMultiplier),
+                                                );
+                                              } else {
+                                                return Text(
+                                                  curf.format(0),
+                                                  style: TextStyle(
+                                                      fontSize: 25 *
+                                                          SizeConfig
+                                                              .heightMultiplier),
+                                                );
+                                              }
+                                            }),
                                       ),
                                     ],
                                   ),
@@ -297,7 +317,7 @@ class _HometabState extends State<Hometab> {
                                                         .tokenPrice -
                                                     avgTokenPrice.toDouble())
                                                 .abs();
-                                            print(estProfit);
+                                            //print(estProfit);
                                             return Text(
                                               ((estProfit * userModel.tokens) /
                                                           100)
@@ -479,12 +499,12 @@ class _HometabState extends State<Hometab> {
     );
   }
 
-  Future<double> estPurchase(UserModel userModel) async {
+  Future<double> purchasePriceAvg(UserModel userModel) async {
     double est = 0;
     double n = 0;
     List<Purchase> purchaseList =
         await PurchaseDb().getPurchase(id: userModel.id);
-    print("list" + purchaseList.length.toString());
+    //print("list" + purchaseList.length.toString());
     if (purchaseList.length > 0) {
       for (var i = 0; i < purchaseList.length; i++) {
         if (purchaseList[i].user_id == userModel.id) {
@@ -496,7 +516,7 @@ class _HometabState extends State<Hometab> {
       }
     }
     if (n > 0) {
-      print(est);
+      //print(est);
       return (est / n).toDouble();
     } else {
       return 0;

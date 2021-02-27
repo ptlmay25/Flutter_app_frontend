@@ -40,7 +40,8 @@ class _TokenListState extends State<TokenList> {
                               token.headerDate.toString().substring(0, 10),
                           style: TextStyle(
                               fontSize: 11 * SizeConfig.heightMultiplier)),
-                      trailing: Text(curf.format(token.netProfit*userModel.tokens) + ' INR',
+                      trailing: Text(
+                          curf.format(token.netProfit.toDouble()) + ' INR',
                           style: TextStyle(
                               fontSize: 14 * SizeConfig.heightMultiplier,
                               color: Colors.green)),
