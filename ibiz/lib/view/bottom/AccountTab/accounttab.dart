@@ -579,21 +579,39 @@ class _AccounttabState extends State<Accounttab> {
 
   Map<String, double> getPurchaseSellDetails(
       List<Purchase> purchaseList, List<Sell> sellList) {
-    double totalSell = 0, totalPurchase = 0, estPurchase = 0;
+        //here purchase1 means all purchase Operation before Last Sell operation
+        //here purchase2 means all purchase Operation after Last Sell operation 
+    double totalSell = 0, totalPurchase = 0, purchase1 = 0, purchase2 = 0;
+    double sellCount = 0,
+        purchaseCount = 0,
+        purchaseCount1 = 0,
+        purchaseCount2 = 0;
     for (Sell sell in sellList) {
       totalSell += sell.amount;
+      sellCount += sell.num_of_tokens;
     }
     for (Purchase purchase in purchaseList) {
       totalPurchase += purchase.amount;
+      purchaseCount += purchase.num_of_tokens;
       if (purchase.date.isAfter(sellList.last.date)) {
-        estPurchase += purchase.amount;
+        purchase2 += purchase.amount;
+        purchaseCount2 += purchase.num_of_tokens;
+      } else {
+        purchase1 += purchase.amount;
+        purchaseCount1 += purchase.num_of_tokens;
       }
     }
+    // print('${totalSell}');
+    // print('${(purchaseCount - estCount)}');
+    // print('${(totalPurchase - estPurchase)}');
+    // print('${(totalPurchase - estPurchase) / (purchaseCount - estCount)}');
+    //print('${sellCount}');
     return {
       'totalSell': totalSell,
-      'estPurchase': estPurchase,
+      'estPurchase': purchase2 +
+          (purchase1 / purchaseCount1) * (purchaseCount1 - sellCount),
       'totalPurchase': totalPurchase,
-      'netProfit': totalSell - (totalPurchase - estPurchase),
+      'netProfit': totalSell - (purchase1 / purchaseCount1) * sellCount,
     };
   }
 }
