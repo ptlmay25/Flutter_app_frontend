@@ -8,7 +8,8 @@ class SellDb {
     // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
     // final String url = "http://192.168.43.24:5000/api/";
     String url = Api().baseurl;
-    http.Response response = await http.get(url + "sell/"); //id append remains
+
+    http.Response response = await http.get(url + "sell/view/user/" + id);
 
     List sellList = json.decode(response.body)['data'];
     //print("length" + sellList.toString());
@@ -17,9 +18,11 @@ class SellDb {
       return Sell(
           id: sellList[index]['_id'],
           user_id: sellList[index]['user_id'] ?? 0,
-          amount: double.parse((sellList[index]['num_of_tokens'] 
-                   * sellList[index]['token_price']).toString()) ?? 0,
-          date: sellList[index]['date'].toString() ?? '',
+          amount: double.parse((sellList[index]['num_of_tokens'] *
+                      sellList[index]['token_price'])
+                  .toString()) ??
+              0,
+          date: DateTime.parse(sellList[index]['createdAt']),
           num_of_tokens:
               double.parse(sellList[index]['num_of_tokens'].toString()) ?? 0,
           token_price:

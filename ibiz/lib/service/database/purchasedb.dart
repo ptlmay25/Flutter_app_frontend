@@ -9,8 +9,8 @@ class PurchaseDb {
     // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
     // final String url = "http://192.168.43.24:5000/api/";
     String url = Api().baseurl;
-    http.Response response =
-        await http.get(url + "purchase/"); //id append remains
+
+    http.Response response = await http.get(url + "purchase/view/user/" + id);
 
     List purchaseList = json.decode(response.body)['data'];
     //print("length" + purchaseList.toString());
@@ -21,7 +21,7 @@ class PurchaseDb {
           amount: double.parse((purchaseList[index]['num_of_tokens'] *
                   purchaseList[index]['token_price'])
               .toString()),
-          date: purchaseList[index]['date'].toString(),
+          date: DateTime.parse(purchaseList[index]['createdAt']),
           num_of_tokens:
               double.parse(purchaseList[index]['num_of_tokens'].toString()),
           token_price:

@@ -1,5 +1,6 @@
 class Sell {
-  String id, date, user_id;
+  String id, user_id;
+  DateTime date;
   double amount, token_price, num_of_tokens;
   Sell(
       {this.amount,

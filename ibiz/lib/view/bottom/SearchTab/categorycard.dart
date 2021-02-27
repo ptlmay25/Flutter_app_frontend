@@ -31,12 +31,12 @@ class CategoryCard extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                    "Brand Name",
+                    "Name",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 11 * SizeConfig.heightMultiplier),
                   )),
-                  Text('No of Stores',
+                  Text('No of Products',
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 11 * SizeConfig.heightMultiplier)),
@@ -56,7 +56,7 @@ class CategoryCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontSize: 11 * SizeConfig.heightMultiplier)),
                   ),
-                  Text(myCategory.no_of_Stores.toString(),
+                  Text('   '+myCategory.no_of_Stores.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 11 * SizeConfig.heightMultiplier)),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/purchase.dart';
+import 'package:ibiz/models/sell.dart';
 import 'package:ibiz/models/token.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/purchasedb.dart';
+import 'package:ibiz/service/database/selldb.dart';
 import 'package:ibiz/service/database/tokendb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/buysheet.dart';
@@ -23,7 +25,9 @@ class _HometabState extends State<Hometab> {
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
     Future<List<Token>> tokenList = TokenDb().getToken();
-    Future<double> estPurchaseAns = purchasePriceAvg(userModel);
+    Future<List<Purchase>> purchaseList =
+        PurchaseDb().getPurchase(id: userModel.id);
+    Future<List<Sell>> sellList = SellDb().getSell(id: userModel.id);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -41,23 +45,18 @@ class _HometabState extends State<Hometab> {
                       height: 154,
                       child: Column(children: <Widget>[
                         FutureBuilder(
-                            future: Future.wait([estPurchaseAns, tokenList]),
+                            future: Future.wait(
+                                [purchaseList, sellList, tokenList]),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
-                                Token latestToken = snapshot.data[1][0];
-                                double avgTokenPrice = snapshot.data[0];
-                                double estProfit =
-                                    (latestToken.tokenPrice - avgTokenPrice)
-                                            .abs() *
-                                        userModel.tokens;
-                                //print(estProfit);
-                                double tokenPurchase =
-                                    avgTokenPrice * userModel.tokens;
+                                Token latestToken = snapshot.data[2][0];
+                                Map data = getPurchaseSellDetails(
+                                    snapshot.data[0], snapshot.data[1]);
+                                double estPurchase = data['estPurchase'];
 
                                 return Text(
-                                    curf.format(
-                                        (tokenPurchase + estProfit).toDouble()),
+                                    curf.format((estPurchase.toDouble())),
                                     style: TextStyle(
                                         fontSize:
                                             30 * SizeConfig.heightMultiplier,
@@ -155,7 +154,7 @@ class _HometabState extends State<Hometab> {
                         Padding(
                           padding: EdgeInsets.only(
                               left: 25 * SizeConfig.widthMultiplier,
-                              right: 25 * SizeConfig.widthMultiplier,
+                              right: 10 * SizeConfig.widthMultiplier,
                               top: 30 * SizeConfig.heightMultiplier),
                           child: Row(
                             children: [
@@ -164,113 +163,81 @@ class _HometabState extends State<Hometab> {
                                   alignment: Alignment.topLeft,
                                   child: Column(
                                     children: [
-                                      Text(
-                                        'NO OF TOKENS',
-                                        style: TextStyle(
-                                            fontSize: 15 *
-                                                SizeConfig.heightMultiplier,
-                                            color: Color.fromARGB(
-                                                255, 114, 144, 144)),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 7 *
-                                                SizeConfig.heightMultiplier),
+                                      Align(
+                                        alignment: Alignment.topLeft,
                                         child: Text(
-                                          userModel.tokens.toString() +
-                                              '          ',
+                                          'NO OF TOKENS',
                                           style: TextStyle(
-                                              fontSize: 25 *
+                                              fontSize: 15 *
+                                                  SizeConfig.heightMultiplier,
+                                              color: Color.fromARGB(
+                                                  255, 114, 144, 144)),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 7 *
                                                   SizeConfig.heightMultiplier),
+                                          child: Text(
+                                            userModel.tokens.toString(),
+                                            style: TextStyle(
+                                                fontSize: 25 *
+                                                    SizeConfig
+                                                        .heightMultiplier),
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'EST. PROFIT           ',
-                                    style: TextStyle(
-                                        fontSize:
-                                            15 * SizeConfig.heightMultiplier,
-                                        color:
-                                            Color.fromARGB(255, 114, 144, 144)),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 7 * SizeConfig.heightMultiplier),
-                                    child: FutureBuilder(
-                                        future: Future.wait(
-                                            [estPurchaseAns, tokenList]),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot snapshot) {
-                                          if (snapshot.hasData) {
-                                            Token token = snapshot.data[1][0];
-                                            double avgTokenPrice =
-                                                snapshot.data[0];
-                                            return Text(
-                                              curf.format(((token.tokenPrice -
-                                                          avgTokenPrice) *
-                                                      userModel.tokens)
-                                                  .abs()),
-                                              style: TextStyle(
-                                                  fontSize: 25 *
-                                                      SizeConfig
-                                                          .heightMultiplier),
-                                            );
-                                          } else {
-                                            return Text(
-                                              curf.format(0),
-                                              style: TextStyle(
-                                                  fontSize: 25 *
-                                                      SizeConfig
-                                                          .heightMultiplier),
-                                            );
-                                          }
-                                        }),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 25 * SizeConfig.widthMultiplier,
-                              right: 25 * SizeConfig.widthMultiplier,
-                              top: 20 * SizeConfig.heightMultiplier),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'TOKEN PURCHASE',
+                              SizedBox(
+                                width: 140 * SizeConfig.widthMultiplier,
+                                height: 60 * SizeConfig.heightMultiplier,
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'EST. PROFIT',
                                         style: TextStyle(
                                             fontSize: 15 *
                                                 SizeConfig.heightMultiplier,
                                             color: Color.fromARGB(
                                                 255, 114, 144, 144)),
                                       ),
-                                      Padding(
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Padding(
                                         padding: EdgeInsets.only(
                                             top: 7 *
                                                 SizeConfig.heightMultiplier),
                                         child: FutureBuilder(
-                                            future: estPurchaseAns,
+                                            future: Future.wait([
+                                              purchaseList,
+                                              sellList,
+                                              tokenList
+                                            ]),
                                             builder: (BuildContext context,
                                                 AsyncSnapshot snapshot) {
                                               if (snapshot.hasData) {
-                                                double avgTokenPrice =
-                                                    snapshot.data;
+                                                Token token =
+                                                    snapshot.data[2][0];
+                                                Map data =
+                                                    getPurchaseSellDetails(
+                                                        snapshot.data[0],
+                                                        snapshot.data[1]);
+                                                double estPurchase =
+                                                    data['estPurchase'];
+                                                double estProfit =
+                                                    (token.tokenPrice -
+                                                            estPurchase) *
+                                                        userModel.tokens;
                                                 return Text(
-                                                  curf.format((avgTokenPrice *
-                                                          userModel.tokens)
-                                                      .toDouble()),
+                                                  curf.format(estProfit),
                                                   style: TextStyle(
                                                       fontSize: 25 *
                                                           SizeConfig
@@ -287,60 +254,151 @@ class _HometabState extends State<Hometab> {
                                               }
                                             }),
                                       ),
-                                    ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 25 * SizeConfig.widthMultiplier,
+                              right: 10 * SizeConfig.widthMultiplier,
+                              top: 20 * SizeConfig.heightMultiplier),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                    height: 60 * SizeConfig.heightMultiplier,
+                                    //width: 160 * SizeConfig.widthMultiplier,
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            'TOKEN PURCHASE',
+                                            style: TextStyle(
+                                                fontSize: 15 *
+                                                    SizeConfig.heightMultiplier,
+                                                color: Color.fromARGB(
+                                                    255, 114, 144, 144)),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 7 *
+                                                    SizeConfig
+                                                        .heightMultiplier),
+                                            child: FutureBuilder(
+                                                future: Future.wait([
+                                                  purchaseList,
+                                                  sellList,
+                                                ]),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    Map data =
+                                                        getPurchaseSellDetails(
+                                                            snapshot.data[0],
+                                                            snapshot.data[1]);
+                                                    double estPurchase =
+                                                        data['estPurchase'];
+                                                    return Text(
+                                                      curf.format((estPurchase
+                                                          .toDouble())),
+                                                      style: TextStyle(
+                                                          fontSize: 25 *
+                                                              SizeConfig
+                                                                  .heightMultiplier),
+                                                    );
+                                                  } else {
+                                                    return Text(
+                                                      curf.format(0),
+                                                      style: TextStyle(
+                                                          fontSize: 25 *
+                                                              SizeConfig
+                                                                  .heightMultiplier),
+                                                    );
+                                                  }
+                                                }),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'AVG. RETURN        ',
-                                    style: TextStyle(
-                                        fontSize:
-                                            15 * SizeConfig.heightMultiplier,
-                                        color:
-                                            Color.fromARGB(255, 114, 144, 144)),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 7 * SizeConfig.heightMultiplier),
-                                    child: FutureBuilder(
-                                        future: Future.wait(
-                                            [estPurchaseAns, tokenList]),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot snapshot) {
-                                          if (snapshot.hasData) {
-                                            Token token = snapshot.data[1][0];
-                                            double avgTokenPrice =
-                                                snapshot.data[0];
-                                            double estProfit = (token
-                                                        .tokenPrice -
-                                                    avgTokenPrice.toDouble())
-                                                .abs();
-                                            //print(estProfit);
-                                            return Text(
-                                              ((estProfit * userModel.tokens) /
-                                                          100)
-                                                      .toDouble()
-                                                      .toString() +
-                                                  ' %     ',
-                                              style: TextStyle(
-                                                  fontSize: 25 *
-                                                      SizeConfig
-                                                          .heightMultiplier),
-                                            );
-                                          } else {
-                                            return Text(
-                                              curf.format(0),
-                                              style: TextStyle(
-                                                  fontSize: 25 *
-                                                      SizeConfig
-                                                          .heightMultiplier),
-                                            );
-                                          }
-                                        }),
-                                  ),
-                                ],
+                              Container(
+                                width: 140 * SizeConfig.widthMultiplier,
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        'AVG. RETURN',
+                                        style: TextStyle(
+                                            fontSize: 15 *
+                                                SizeConfig.heightMultiplier,
+                                            color: Color.fromARGB(
+                                                255, 114, 144, 144)),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 7 *
+                                                SizeConfig.heightMultiplier),
+                                        child: FutureBuilder(
+                                            future: Future.wait([
+                                              purchaseList,
+                                              sellList,
+                                              tokenList
+                                            ]),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snapshot) {
+                                              if (snapshot.hasData) {
+                                                Token token =
+                                                    snapshot.data[2][0];
+                                                Map data =
+                                                    getPurchaseSellDetails(
+                                                        snapshot.data[0],
+                                                        snapshot.data[1]);
+                                                double estPurchase =
+                                                    data['estPurchase'];
+                                                double estProfit =
+                                                    token.tokenPrice -
+                                                        estPurchase;
+                                                double ret = (estProfit *
+                                                    userModel.tokens /
+                                                    100);
+
+                                                return Text(
+                                                  ret.toStringAsFixed(2) + ' %',
+                                                  style: TextStyle(
+                                                      fontSize: 25 *
+                                                          SizeConfig
+                                                              .heightMultiplier),
+                                                );
+                                              } else {
+                                                return Text(
+                                                  curf.format(0),
+                                                  style: TextStyle(
+                                                      fontSize: 25 *
+                                                          SizeConfig
+                                                              .heightMultiplier),
+                                                );
+                                              }
+                                            }),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -499,28 +557,24 @@ class _HometabState extends State<Hometab> {
     );
   }
 
-  Future<double> purchasePriceAvg(UserModel userModel) async {
-    double est = 0;
-    double n = 0;
-    List<Purchase> purchaseList =
-        await PurchaseDb().getPurchase(id: userModel.id);
-    //print("list" + purchaseList.length.toString());
-    if (purchaseList.length > 0) {
-      for (var i = 0; i < purchaseList.length; i++) {
-        if (purchaseList[i].user_id == userModel.id) {
-          Purchase purchase = purchaseList[i];
-          //print(purchase.amount);
-          est += purchase.amount;
-          n += purchase.num_of_tokens;
-        }
+  Map<String, double> getPurchaseSellDetails(
+      List<Purchase> purchaseList, List<Sell> sellList) {
+    double totalSell = 0, totalPurchase = 0, estPurchase = 0;
+    for (Sell sell in sellList) {
+      totalSell += sell.amount;
+    }
+    for (Purchase purchase in purchaseList) {
+      totalPurchase += purchase.amount;
+      if (purchase.date.isAfter(sellList.last.date)) {
+        estPurchase += purchase.amount;
       }
     }
-    if (n > 0) {
-      //print(est);
-      return (est / n).toDouble();
-    } else {
-      return 0;
-    }
+    return {
+      'totalSell': totalSell,
+      'estPurchase': estPurchase,
+      'totalPurchase': totalPurchase,
+      'netProfit': totalSell - (totalPurchase - estPurchase),
+    };
   }
 
   // showBuyBottomSheet() {

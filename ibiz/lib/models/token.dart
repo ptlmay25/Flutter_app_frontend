@@ -1,25 +1,23 @@
 class Token {
-  int headerProfit,
-      totalRevenue,
+  double totalRevenue,
       oparatingExpenses,
       interest,
-      serviceFee,
       netProfit,
+      split,
       totalTokens,
       dividendPerToken;
-    double tokenPrice;
+  double tokenPrice;
   bool isExpanded;
-  String headerDate;
-  String headerMonthYear;
+  String tokenDate;
+
   Token(
-      {this.tokenPrice,
-      this.headerDate,
-      this.headerMonthYear,
-      this.headerProfit,
+      {this.dividendPerToken,
+      this.split,
+      this.tokenPrice,
+      this.tokenDate,
       this.interest,
       this.netProfit,
       this.oparatingExpenses,
-      this.serviceFee,
       this.totalRevenue,
       this.totalTokens,
       this.isExpanded = false});
