@@ -117,7 +117,7 @@ class _TokenListState extends State<TokenList> {
                   SizedBox(height: 5 * SizeConfig.heightMultiplier),
                   Row(children: [
                     Expanded(child: Text('Dividend per token :')),
-                    Text(curf.format(0))
+                    Text(curf.format(token.dividendPerToken))
                   ]),
                 ]),
               ),

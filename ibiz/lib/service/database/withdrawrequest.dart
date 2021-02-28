@@ -10,6 +10,7 @@ class WithdrawRequest {
   Future<bool> request({userId, name, UPI, accNo, IFSC, amount}) async {
     Map data = {
       "userId": userId,
+      "name":name,
       "UPI": UPI,
       "BankAccountNumber": accNo,
       "IFSC": IFSC,

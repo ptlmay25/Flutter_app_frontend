@@ -10,6 +10,7 @@ import 'package:ibiz/models/purchase.dart';
 import 'package:ibiz/models/sell.dart';
 import 'package:ibiz/service/database/purchasedb.dart';
 import 'package:ibiz/service/database/selldb.dart';
+import 'dart:math';
 
 class Accounttab extends StatefulWidget {
   @override
@@ -17,11 +18,18 @@ class Accounttab extends StatefulWidget {
 }
 
 class _AccounttabState extends State<Accounttab> {
-  String _selectedData;
+  String _selectedData = "All";
+  Map<String, int> days = {
+    "Last 7 days": 7,
+    "Last 30 days": 30,
+    "Last 6 months": 180,
+    "Last year": 365,
+    "All": 10000
+  };
   List<String> _Data = [
     "Last 7 days",
     "Last 30 days",
-    "Last 6 month",
+    "Last 6 months",
     "Last year",
     "All",
   ];
@@ -463,10 +471,13 @@ class _AccounttabState extends State<Accounttab> {
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
                         List<Transaction> transactionList = snapshot.data;
+                        transactionList =
+                            new List.from(transactionList.reversed);
                         return Container(
                           height: 400 * SizeConfig.heightMultiplier,
                           child: ListView.builder(
-                              itemCount: transactionList.length,
+                              itemCount: min(
+                                  transactionList.length, days[_selectedData]),
                               itemBuilder: (context, index) {
                                 return getList(transactionList[index]);
                               }),
@@ -579,8 +590,8 @@ class _AccounttabState extends State<Accounttab> {
 
   Map<String, double> getPurchaseSellDetails(
       List<Purchase> purchaseList, List<Sell> sellList) {
-        //here purchase1 means all purchase Operation before Last Sell operation
-        //here purchase2 means all purchase Operation after Last Sell operation 
+    //here purchase1 means all purchase Operation before Last Sell operation
+    //here purchase2 means all purchase Operation after Last Sell operation
     double totalSell = 0, totalPurchase = 0, purchase1 = 0, purchase2 = 0;
     double sellCount = 0,
         purchaseCount = 0,

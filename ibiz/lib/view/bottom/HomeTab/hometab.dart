@@ -54,9 +54,9 @@ class _HometabState extends State<Hometab> {
                                 Map data = getPurchaseSellDetails(
                                     snapshot.data[0], snapshot.data[1]);
                                 double estPurchase = data['estPurchase'];
-                                double estProfit =
-                                    latestToken.tokenPrice * userModel.tokens -
-                                        estPurchase;
+                                double estProfit = (latestToken.tokenPrice -
+                                        estPurchase / userModel.tokens) *
+                                    userModel.tokens;
                                 return Text(
                                     curf.format(
                                         ((estPurchase + estProfit).toDouble())),
@@ -226,7 +226,8 @@ class _HometabState extends State<Hometab> {
                                             ]),
                                             builder: (BuildContext context,
                                                 AsyncSnapshot snapshot) {
-                                              if (snapshot.hasData) {
+                                              if (snapshot.hasData &&
+                                                  userModel.tokens > 0) {
                                                 Token token =
                                                     snapshot.data[2][0];
                                                 Map data =
@@ -235,12 +236,13 @@ class _HometabState extends State<Hometab> {
                                                         snapshot.data[1]);
                                                 double estPurchase =
                                                     data['estPurchase'];
-                                                double estProfit =
-                                                    (token.tokenPrice -
-                                                            estPurchase) *
-                                                        userModel.tokens;
+                                                double estProfit = (token
+                                                            .tokenPrice -
+                                                        estPurchase /
+                                                            userModel.tokens) *
+                                                    userModel.tokens;
                                                 return Text(
-                                                  curf.format(estProfit),
+                                                  curf.format(estProfit.abs()),
                                                   style: TextStyle(
                                                       fontSize: 25 *
                                                           SizeConfig
@@ -365,7 +367,8 @@ class _HometabState extends State<Hometab> {
                                             ]),
                                             builder: (BuildContext context,
                                                 AsyncSnapshot snapshot) {
-                                              if (snapshot.hasData) {
+                                              if (snapshot.hasData &&
+                                                  userModel.tokens > 0) {
                                                 Token token =
                                                     snapshot.data[2][0];
                                                 Map data =
@@ -374,12 +377,13 @@ class _HometabState extends State<Hometab> {
                                                         snapshot.data[1]);
                                                 double estPurchase =
                                                     data['estPurchase'];
-                                                double estProfit =
-                                                    token.tokenPrice -
-                                                        estPurchase;
-                                                double ret = (estProfit *
-                                                    userModel.tokens /
-                                                    100);
+                                                double estProfit = (token
+                                                            .tokenPrice -
+                                                        estPurchase /
+                                                            userModel.tokens) *
+                                                    userModel.tokens;
+                                                double ret =
+                                                    (estProfit.abs() / 100);
 
                                                 return Text(
                                                   ret.toStringAsFixed(2) + ' %',

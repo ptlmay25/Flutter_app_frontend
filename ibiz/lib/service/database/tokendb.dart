@@ -21,24 +21,25 @@ class TokenDb {
                 DateTime.now().toString(),
             totalRevenue:
                 double.parse(tokenList[index]['total_revenue'].toString()) ?? 0,
-            oparatingExpenses: double.parse(
-                    tokenList[index]['operating_expenses'].toString()) ??
-                0,
+            oparatingExpenses:
+                double.parse(tokenList[index]['operating_expenses'].toString()) ??
+                    0,
             interest:
                 double.parse(tokenList[index]['interest_and_taxes'].toString()) ??
                     0,
             split:
-                double.parse(tokenList[index]['service_fee'].toString()) ?? 0,
+                double.parse(tokenList[index]['split_50_50'].toString()) ?? 0,
             netProfit:
                 double.parse(tokenList[index]['net_profit'].toString()) ?? 0,
-            // dividendPerToken:
-            //     double.parse(tokenList[index]['dividend_per_token'].toString()) ??
-            //         0,
+            dividendPerToken:
+                double.parse(tokenList[index]['dividend_per_token'].toString()) ??
+                    0,
             totalTokens: double.parse(
                     tokenList[index]['total_number_of_tokens'].toString()) ??
                 0,
             tokenPrice:
-                double.parse(tokenList[index]['token_price'].toString()) ?? 0);
+                double.parse(tokenList[index]['token_price'].toStringAsFixed(2)) ??
+                    0);
       });
     } else {
       return List.generate(1, (index) {
