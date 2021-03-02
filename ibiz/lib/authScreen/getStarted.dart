@@ -3,6 +3,7 @@ import 'package:ibiz/authScreen/otpscreen.dart';
 import 'package:ibiz/size_config.dart';
 // import 'package:sms_autofill/sms_autofill.dart';
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
+
 class GetStarted extends StatefulWidget {
   @override
   _GetStartedState createState() => _GetStartedState();
@@ -19,22 +20,23 @@ class _GetStartedState extends State<GetStarted> {
           child: ListView(
         scrollDirection: Axis.vertical,
         children: <Widget>[
+          // Padding(
+          //   padding: EdgeInsets.only(
+          //       left: 20 * SizeConfig.widthMultiplier,
+          //       top: 50 * SizeConfig.heightMultiplier,
+          //       bottom: 20 * SizeConfig.heightMultiplier),
+          //   child: Align(
+          //     alignment: Alignment.topLeft,
+          //     child: IconButton(
+          //         icon: Icon(Icons.keyboard_arrow_left),
+          //         onPressed: () {
+          //           Navigator.pop(context);
+          //         }),
+          //   ),
+          // ), //backButton
           Padding(
             padding: EdgeInsets.only(
-                left: 20 * SizeConfig.widthMultiplier,
-                top: 50 * SizeConfig.heightMultiplier,
-                bottom: 20 * SizeConfig.heightMultiplier),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                  icon: Icon(Icons.keyboard_arrow_left),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-            ),
-          ), //backButton
-          Padding(
-            padding: EdgeInsets.only(
+                top: 70 * SizeConfig.heightMultiplier,
                 left: 33 * SizeConfig.widthMultiplier,
                 right: 182 * SizeConfig.widthMultiplier),
             child: SizedBox(
@@ -104,7 +106,7 @@ class _GetStartedState extends State<GetStarted> {
                                 print("_errorMESSAGEIS" + exception.message);
                               }
                             },
-                            color: Color.fromARGB(255, 66,71,112),
+                            color: Color.fromARGB(255, 66, 71, 112),
                             child: Text(
                               'Next',
                               style: TextStyle(

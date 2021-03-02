@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ibiz/main.dart';
@@ -20,18 +22,34 @@ class _OTPState extends State<OTP> {
   bool codeSent = false;
   final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
+  Timer _timer;
+  int _counter = 60;
   initState() {
     super.initState();
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     print(widget.contact);
     _auth.verifyPhone(widget.contact);
+    _startTimer();
     _listenOtp();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_counter > 0) {
+          _counter--;
+        } else {
+          _timer.cancel();
+        }
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    //SystemChannels.textInput.invokeMethod('TextInput.hide');
     return Scaffold(
+      
       backgroundColor: Colors.white,
       body: SafeArea(
           child: ListView(
@@ -146,22 +164,31 @@ class _OTPState extends State<OTP> {
                         top: 20 * SizeConfig.heightMultiplier,
                       ),
                       child: SizedBox(
-                        child: InkWell(
-                          onTap: () {
-                            _auth.verifyPhone(widget.contact);
-                            print("Resend OTp pressed");
-                          },
-                          child: Text(
-                            "Resend code",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xff151515),
-                              fontSize: 16 * SizeConfig.heightMultiplier,
-                              fontFamily: "Roboto",
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ),
+                        child: (_counter > 0)
+                            ? InkWell(
+                                child: Text("Resend code in " +
+                                    _counter.toString() +
+                                    "sec"))
+                            : InkWell(
+                                onTap: () {
+                                  _auth.verifyPhone(widget.contact);
+                                  print("Resend OTp pressed");
+                                  setState(() {
+                                    _counter = 60;
+                                    _startTimer();
+                                  });
+                                },
+                                child: Text(
+                                  "Resend code",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Color(0xff151515),
+                                    fontSize: 16 * SizeConfig.heightMultiplier,
+                                    fontFamily: "Roboto",
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                              ),
                       ),
                     )
                   ],

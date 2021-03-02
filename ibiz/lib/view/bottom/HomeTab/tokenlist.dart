@@ -29,7 +29,7 @@ class _TokenListState extends State<TokenList> {
         return ExpansionPanel(
             headerBuilder: (BuildContext context, bool isExpanded) {
               return Padding(
-                padding: EdgeInsets.only(left: 0 * SizeConfig.widthMultiplier),
+                padding: EdgeInsets.only(),
                 child: Container(
                   height: 60 * SizeConfig.heightMultiplier,
                   child: Padding(
@@ -54,13 +54,19 @@ class _TokenListState extends State<TokenList> {
                                   fontWeight: FontWeight.w300)),
                         ],
                       ),
-                      trailing: Text(
-                          '+ ' +
-                              curf.format(token.netProfit.toDouble()) +
-                              ' INR',
-                          style: TextStyle(
-                              fontSize: 14 * SizeConfig.heightMultiplier,
-                              color: Colors.green)),
+                      trailing: Column(
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 7 * SizeConfig.heightMultiplier),
+                          Text(
+                              '+ ' +
+                                  curf.format(token.netProfit.toDouble()) +
+                                  ' INR',
+                              style: TextStyle(
+                                  fontSize: 14 * SizeConfig.heightMultiplier,
+                                  color: Colors.green)),
+                        ],
+                      ),
                     ),
                   ),
                 ),

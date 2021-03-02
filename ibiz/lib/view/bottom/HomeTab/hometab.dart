@@ -306,7 +306,8 @@ class _HometabState extends State<Hometab> {
                                                 ]),
                                                 builder: (BuildContext context,
                                                     AsyncSnapshot snapshot) {
-                                                  if (snapshot.hasData) {
+                                                  if (snapshot.hasData &&
+                                                      userModel.tokens > 0) {
                                                     Map data =
                                                         getPurchaseSellDetails(
                                                             snapshot.data[0],
