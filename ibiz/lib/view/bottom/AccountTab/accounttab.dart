@@ -465,7 +465,7 @@ class _AccounttabState extends State<Accounttab> {
                   ),
                 ),
                 Container(
-                  height: 400 * SizeConfig.heightMultiplier,
+                  //height: 400 * SizeConfig.heightMultiplier,
                   child: FutureBuilder(
                     future: TransactionDb().getTransactions(id: userModel.id),
                     builder: (context, AsyncSnapshot snapshot) {
@@ -476,6 +476,8 @@ class _AccounttabState extends State<Accounttab> {
                         return Container(
                           height: 400 * SizeConfig.heightMultiplier,
                           child: ListView.builder(
+                              shrinkWrap: false,
+                              primary: false,
                               itemCount: min(
                                   transactionList.length, days[_selectedData]),
                               itemBuilder: (context, index) {

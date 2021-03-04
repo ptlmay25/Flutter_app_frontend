@@ -22,7 +22,8 @@ class UserModel with ChangeNotifier {
       this.acc_bal,
       this.tokens,
       this.total_purchase,
-      this.total_sell});
+      this.total_sell,
+      this.imageUrl});
   String id,
       username,
       gender,
@@ -38,8 +39,10 @@ class UserModel with ChangeNotifier {
       UPI,
       bankAccountNo,
       // ignore: non_constant_identifier_names
-      IFSC;
+      IFSC,
+      imageUrl;
   int tokens;
+
   // ignore: non_constant_identifier_names
   double acc_bal, total_purchase, total_sell;
 
@@ -67,5 +70,11 @@ class UserModel with ChangeNotifier {
     this.UPI = newUpi;
     this.bankAccountNo = newAccNo;
     this.IFSC = newIfsc;
+    notifyListeners();
+  }
+
+  void updateImage(String url) {
+    this.imageUrl = url;
+    notifyListeners();
   }
 }

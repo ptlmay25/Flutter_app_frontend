@@ -54,7 +54,12 @@ class HomeDrawer extends StatelessWidget {
               leading: SizedBox(
                   height: 20 * SizeConfig.heightMultiplier,
                   width: 20 * SizeConfig.widthMultiplier,
-                  child: Image.asset("assets/icons/user_icon.png")),
+                  child: (userModel.imageUrl != '')
+                      ? CircleAvatar(
+                          backgroundColor: Colors.white,
+                          backgroundImage: NetworkImage(userModel.imageUrl),
+                        )
+                      : Image.asset("assets/icons/user_icon.png")),
               title: Text(
                 "Profile",
                 style: TextStyle(

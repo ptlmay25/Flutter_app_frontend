@@ -1,9 +1,13 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
   // Profile({this.userModel});
@@ -17,6 +21,8 @@ class _ProfileState extends State<Profile> {
   String username, email, homeAddress, city, zipcode;
   String _selectedLocation;
   bool isUpdated = false;
+  File _image;
+  final picker = ImagePicker();
   List<String> _states = [
     "Andhra Pradesh",
     "Arunachal Pradesh",
@@ -52,6 +58,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
+
     // UserModel userModel = widget.userModel;
     return Scaffold(
       appBar: AppBar(
@@ -92,13 +99,9 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.only(
                               bottom: 11 * SizeConfig.heightMultiplier),
                           child: SizedBox(
-                            height: 60 * SizeConfig.heightMultiplier,
-                            width: 60 * SizeConfig.widthMultiplier,
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("assets/icons/user_icon.png"),
-                            ),
-                          ),
+                              height: 60 * SizeConfig.heightMultiplier,
+                              width: 60 * SizeConfig.widthMultiplier,
+                              child: showImage(userModel)),
                         ),
                         Padding(
                           padding: EdgeInsets.only(),
@@ -106,7 +109,9 @@ class _ProfileState extends State<Profile> {
                             height: 20 * SizeConfig.heightMultiplier,
                             width: 100 * SizeConfig.widthMultiplier,
                             child: FlatButton(
-                              onPressed: null,
+                              onPressed: () {
+                                getImage();
+                              },
                               child: Text(
                                 "Edit photo",
                                 textAlign: TextAlign.center,
@@ -405,7 +410,7 @@ class _ProfileState extends State<Profile> {
                                             newCity: city,
                                             newState: newState,
                                             newZipcode: zipcode);
-                                      }else{
+                                      } else {
                                         Fluttertoast.showToast(
                                             msg: "Internal error accoured",
                                             timeInSecForIosWeb: 4);
@@ -456,6 +461,42 @@ class _ProfileState extends State<Profile> {
           ),
         ),
       );
+    }
+  }
+
+  Future getImage() async {
+    final pickedFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        setState(() {
+          _image = File(pickedFile.path);
+        });
+        print(_image.readAsBytes().toString());
+      } else {
+        print('No image selected.');
+        return null;
+      }
+    });
+  }
+
+  Widget showImage(UserModel userModel) {
+    if (userModel.imageUrl != '') {
+      return CircleAvatar(
+        backgroundColor: Colors.white, //child: Image.file(_image)
+        backgroundImage: NetworkImage(userModel.imageUrl),
+      );
+    } else {
+      if (_image == null) {
+        return CircleAvatar(
+          backgroundImage: AssetImage("assets/icons/user_icon.png"),
+        );
+      } else {
+        return CircleAvatar(
+          backgroundColor: Colors.white, //child: Image.file(_image)
+          backgroundImage: FileImage(_image),
+        );
+      }
     }
   }
 }

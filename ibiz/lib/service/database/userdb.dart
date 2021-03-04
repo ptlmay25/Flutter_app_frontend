@@ -116,6 +116,7 @@ class Userdb {
           state: data['state'] ?? 'Choose State',
           zipcode: data['zipcode'] ?? '',
           tokens: data['tokens'] ?? 0.0,
+          imageUrl: data['userImg'] ?? '',
           acc_bal: double.parse(data['acc_bal'].toString()) ?? 0.0,
           total_purchase:
               double.parse(data['total_purchase'].toString()) ?? 0.0,

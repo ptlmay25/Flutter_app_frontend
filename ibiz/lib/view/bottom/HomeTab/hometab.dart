@@ -11,6 +11,7 @@ import 'package:ibiz/view/bottom/HomeTab/buysheet.dart';
 import 'package:ibiz/view/bottom/HomeTab/chart.dart';
 import 'package:ibiz/view/bottom/HomeTab/tokenlist.dart';
 import 'package:ibiz/view/bottom/HomeTab/sellsheet.dart';
+import 'package:ibiz/view/bottom/HomeTab/tokentile.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -540,13 +541,9 @@ class _HometabState extends State<Hometab> {
                                       value: userModel,
                                       child: Container(
                                           child: SingleChildScrollView(
-                                              child: Column(
-                                        children: [
-                                          TokenList(data: snapshot.data),
-                                          SizedBox(
-                                              height: 200 *
-                                                  SizeConfig.heightMultiplier)
-                                        ],
+                                              child: Container(
+                                        height: 630,
+                                        child: TokenTile(data: snapshot.data),
                                       ))));
                                 } else {
                                   return CircularProgressIndicator();
