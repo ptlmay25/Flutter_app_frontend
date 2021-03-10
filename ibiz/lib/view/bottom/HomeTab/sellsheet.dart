@@ -45,10 +45,10 @@ class _SellSheetState extends State<SellSheet> {
           ),
           SizedBox(height: 5 * SizeConfig.widthMultiplier),
           Text(
-            'Price per unit: ₹ ${widget.tokenPrice}',
+            'Total Available Tokens ',
             style: TextStyle(
-                fontSize: 15 * SizeConfig.heightMultiplier,
-                fontWeight: FontWeight.w300),
+                fontSize: 13 * SizeConfig.heightMultiplier,
+                fontWeight: FontWeight.normal),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -57,7 +57,7 @@ class _SellSheetState extends State<SellSheet> {
             child: Row(
               children: [
                 Text(
-                  'unit: ',
+                  'Token: ',
                   style: TextStyle(
                       fontSize: 14 * SizeConfig.heightMultiplier,
                       fontWeight: FontWeight.normal),
@@ -151,7 +151,19 @@ class _SellSheetState extends State<SellSheet> {
             ),
           ),
           SizedBox(height: 25 * SizeConfig.heightMultiplier),
-          Text('Total: ₹ ${_n * widget.tokenPrice}'),
+          Text(
+            'Price per token: ₹ ${widget.tokenPrice}',
+            style: TextStyle(
+                fontSize: 13 * SizeConfig.heightMultiplier,
+                fontWeight: FontWeight.normal),
+          ),
+          SizedBox(height: 25 * SizeConfig.heightMultiplier),
+          Text(
+            'Total sell:  ( ₹ ${_n * widget.tokenPrice} )',
+            style: TextStyle(
+                fontSize: 15 * SizeConfig.heightMultiplier,
+                fontWeight: FontWeight.normal),
+          ),
         ]),
       ),
     );

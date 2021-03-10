@@ -45,7 +45,7 @@ class _BuySheetState extends State<BuySheet> {
           ),
           SizedBox(height: 5 * SizeConfig.widthMultiplier),
           Text(
-            'Price per unit',
+            'Price per Token',
             style: TextStyle(
                 fontSize: 15 * SizeConfig.heightMultiplier,
                 fontWeight: FontWeight.w300),
@@ -57,7 +57,7 @@ class _BuySheetState extends State<BuySheet> {
             child: Row(
               children: [
                 Text(
-                  'unit: ',
+                  'Token: ',
                   style: TextStyle(
                       fontSize: 14 * SizeConfig.heightMultiplier,
                       fontWeight: FontWeight.normal),

@@ -174,7 +174,7 @@ class _HometabState extends State<Hometab> {
                                           Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
-                                              'NO OF unitS',
+                                              'NO OF TOKENS',
                                               style: TextStyle(
                                                   fontSize: 15 *
                                                       SizeConfig
@@ -295,7 +295,7 @@ class _HometabState extends State<Hometab> {
                                             Align(
                                               alignment: Alignment.topLeft,
                                               child: Text(
-                                                'unit PURCHASE',
+                                                'TOTAL PURCHASE',
                                                 style: TextStyle(
                                                     fontSize: 15 *
                                                         SizeConfig
