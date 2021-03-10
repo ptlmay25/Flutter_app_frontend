@@ -1,40 +1,39 @@
 {
-    "project_info": {
-        "project_number": "10377304959",
-        "project_id": "ibiz-88aac",
-        "storage_bucket": "ibiz-88aac.appspot.com"
-    },
-    "client": [{
-        "client_info": {
-            "mobilesdk_app_id": "1:10377304959:android:2b92a808ba5286d62d184a",
-            "android_client_info": {
-                "package_name": "com.firefly.ibiz"
-            }
-        },
-        "oauth_client": [{
-                "client_id": "10377304959-e22toon63h1jphgltc15p1aflt86r27o.apps.googleusercontent.com",
-                "client_type": 1,
-                "android_info": {
-                    "package_name": "com.example.ibiz",
-                    "certificate_hash": "1ec1ef7ec86bb03a61764a99f6a172ba5ac7070b"
-                }
-            },
-            {
-                "client_id": "10377304959-i898lfumqt9rvvo82jlarl9u2rlj9lke.apps.googleusercontent.com",
-                "client_type": 3
-            }
-        ],
-        "api_key": [{
-            "current_key": "AIzaSyBrgZEoSXiXHEfARos4U1hK_0oa-8o0pu0"
-        }],
-        "services": {
-            "appinvite_service": {
-                "other_platform_oauth_client": [{
-                    "client_id": "10377304959-i898lfumqt9rvvo82jlarl9u2rlj9lke.apps.googleusercontent.com",
-                    "client_type": 3
-                }]
-            }
+  "project_info": {
+    "project_number": "298566181044",
+    "project_id": "salersclub",
+    "storage_bucket": "salersclub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298566181044:android:e25aa8dcdb300a7e0cf7e1",
+        "android_client_info": {
+          "package_name": "com.firefly.ibiz"
         }
-    }],
-    "configuration_version": "1"
+      },
+      "oauth_client": [
+        {
+          "client_id": "298566181044-tav2k5g5gris26kggi097v9n8vuajq2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrDWs1FcOwtIu3rWPbwtYECN9WhLJLOus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298566181044-tav2k5g5gris26kggi097v9n8vuajq2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
 }

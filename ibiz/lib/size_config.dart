@@ -43,7 +43,8 @@ class SizeConfig {
     textMultiplier = _blockHeight / 8.34909090909091;
     imageSizeMultiplier = _blockWidth / 3.9272727272727277;
     heightMultiplier = _blockHeight / 8.34909090909091;
-    widthMultiplier = _blockWidth / 3.9272727272727277;
+    //widthMultiplier = _blockWidth / 3.9272727272727277;
+    widthMultiplier = 1;
     print("Block Width" + _blockWidth.toString());
     print("Block Height" + _blockHeight.toString());
   }
