@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/payment_method.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BuySheet extends StatefulWidget {
@@ -14,6 +15,7 @@ class BuySheet extends StatefulWidget {
 }
 
 class _BuySheetState extends State<BuySheet> {
+  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
   int _n = 1;
 
   @override
@@ -38,12 +40,12 @@ class _BuySheetState extends State<BuySheet> {
             ),
           ),
           Text(
-            widget.tokenPrice.toString(),
-            style: TextStyle(fontSize: 50 * SizeConfig.heightMultiplier),
+            curf.format(widget.tokenPrice),
+            style: TextStyle(fontSize: 45 * SizeConfig.heightMultiplier),
           ),
           SizedBox(height: 5 * SizeConfig.widthMultiplier),
           Text(
-            'Price per Token',
+            'Price per unit',
             style: TextStyle(
                 fontSize: 15 * SizeConfig.heightMultiplier,
                 fontWeight: FontWeight.w300),
@@ -51,11 +53,11 @@ class _BuySheetState extends State<BuySheet> {
           Padding(
             padding: EdgeInsets.only(
                 top: 45 * SizeConfig.heightMultiplier,
-                left: 98 * SizeConfig.widthMultiplier),
+                left: 115 * SizeConfig.widthMultiplier),
             child: Row(
               children: [
                 Text(
-                  'Token: ',
+                  'unit: ',
                   style: TextStyle(
                       fontSize: 14 * SizeConfig.heightMultiplier,
                       fontWeight: FontWeight.normal),

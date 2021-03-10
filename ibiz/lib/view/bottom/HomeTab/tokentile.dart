@@ -20,8 +20,9 @@ class _TokenTileState extends State<TokenTile> {
     return Padding(
       padding: EdgeInsets.only(top: 30 * SizeConfig.heightMultiplier),
       child: ListView.builder(
-        shrinkWrap: false,
-        primary: false,
+        physics: ScrollPhysics(),
+        //primary: true,
+        shrinkWrap: true,
         itemCount: widget.data.length,
         itemBuilder: (context, index) {
           Token token = widget.data[index];
@@ -101,7 +102,7 @@ class _TokenTileState extends State<TokenTile> {
                     const Divider(color: Colors.grey, height: 2, thickness: 2),
                     SizedBox(height: 5 * SizeConfig.heightMultiplier),
                     Row(children: [
-                      Expanded(child: Text('Dividend per token :')),
+                      Expanded(child: Text('Dividend per unit :')),
                       Text(curf.format(token.dividendPerToken))
                     ]),
                   ],

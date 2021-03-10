@@ -8,7 +8,7 @@
         "client_info": {
             "mobilesdk_app_id": "1:10377304959:android:2b92a808ba5286d62d184a",
             "android_client_info": {
-                "package_name": "com.example.ibiz"
+                "package_name": "com.firefly.ibiz"
             }
         },
         "oauth_client": [{

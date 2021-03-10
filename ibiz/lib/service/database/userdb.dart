@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:ibiz/models/usermodel.dart';
@@ -124,6 +125,30 @@ class Userdb {
     } else {
       print("No user found with: " + mobileNo);
       return 0;
+    }
+  }
+
+  Future uploadImg({uid, fileBuffer}) async {
+    print(fileBuffer);
+
+    Map file = {"mimetype": 'image', "buffer": fileBuffer};
+
+    Map body = {
+      "user_id": uid,
+      "file": file,
+    };
+    print(body);
+    var response = await http.post(url + "fileupload/upload",
+        headers: <String, String>{
+          'Content-Type': 'application/json; chRarset=UTF-8',
+        },
+        body: json.encode(body));
+    if (response.statusCode == 200) {
+      print(response.body);
+      return true;
+    } else {
+      print(response.body);
+      return false;
     }
   }
 }

@@ -18,20 +18,20 @@ class Accounttab extends StatefulWidget {
 }
 
 class _AccounttabState extends State<Accounttab> {
-  String _selectedData = "All";
+  String _selectedData = "\t\tAll";
   Map<String, int> days = {
-    "Last 7 days": 7,
-    "Last 30 days": 30,
-    "Last 6 months": 180,
-    "Last year": 365,
-    "All": 10000
+    "\t\tLast 7 days": 7,
+    "\t\tLast 30 days": 30,
+    "\t\tLast 6 months": 180,
+    "\t\tLast year": 365,
+    "\t\tAll": 10000
   };
   List<String> _Data = [
-    "Last 7 days",
-    "Last 30 days",
-    "Last 6 months",
-    "Last year",
-    "All",
+    "\t\tLast 7 days",
+    "\t\tLast 30 days",
+    "\t\tLast 6 months",
+    "\t\tLast year",
+    "\t\tAll",
   ];
 
   @override
@@ -473,19 +473,23 @@ class _AccounttabState extends State<Accounttab> {
                         List<Transaction> transactionList = snapshot.data;
                         transactionList =
                             new List.from(transactionList.reversed);
-                        return Container(
-                          height: 400 * SizeConfig.heightMultiplier,
-                          child: ListView.builder(
-                              shrinkWrap: false,
-                              primary: false,
-                              itemCount: min(
-                                  transactionList.length, days[_selectedData]),
-                              itemBuilder: (context, index) {
-                                return getList(transactionList[index]);
-                              }),
+                        return SingleChildScrollView(
+                          physics: ScrollPhysics(),
+                          child: Column(
+                            children: [
+                              ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: min(transactionList.length,
+                                      days[_selectedData]),
+                                  itemBuilder: (context, index) {
+                                    return getList(transactionList[index]);
+                                  }),
+                            ],
+                          ),
                         );
                       } else {
-                        return Text("");
+                        return Center(child: Text("No Transaction"));
                       }
                     },
                   ),

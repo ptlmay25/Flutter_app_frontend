@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -110,7 +112,7 @@ class _ProfileState extends State<Profile> {
                             width: 100 * SizeConfig.widthMultiplier,
                             child: FlatButton(
                               onPressed: () {
-                                getImage();
+                                getImage(userModel);
                               },
                               child: Text(
                                 "Edit photo",
@@ -464,15 +466,23 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future getImage() async {
-    final pickedFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+  Future getImage(UserModel userModel) async {
+    File pickedFile = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 10);
 
     setState(() {
       if (pickedFile != null) {
+        print(pickedFile.lengthSync());
         setState(() {
-          _image = File(pickedFile.path);
+          _image = pickedFile;
         });
-        print(_image.readAsBytes().toString());
+        if (pickedFile.lengthSync() > 3 * 1024 * 1024) {
+          print("Large File");
+        } else {
+          var res = Userdb().uploadImg(
+              uid: userModel.id,
+              fileBuffer: base64Encode(pickedFile.readAsBytesSync()));
+        }
       } else {
         print('No image selected.');
         return null;

@@ -145,8 +145,9 @@ class _AddFundState extends State<AddFund> {
   }
 
   void openCheckout(UserModel userModel) async {
+    // 'key': 'rzp_test_v6Iu0KnIVSKqGC'
     var options = {
-      'key': 'rzp_test_v6Iu0KnIVSKqGC',
+      'key': 'rzp_test_aOOyFwuSsDtgxf',
       'amount': amount * 100,
       'name': 'Firefly',
       'description': 'Payment for new Token',

@@ -5,6 +5,7 @@ import 'package:ibiz/size_config.dart';
 import 'package:ibiz/service/database/selltoken.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SellSheet extends StatefulWidget {
@@ -15,6 +16,7 @@ class SellSheet extends StatefulWidget {
 }
 
 class _SellSheetState extends State<SellSheet> {
+  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
   int _n = 1;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class _SellSheetState extends State<SellSheet> {
           ),
           SizedBox(height: 5 * SizeConfig.widthMultiplier),
           Text(
-            'Price per Token: ${widget.tokenPrice}',
+            'Price per unit: ₹ ${widget.tokenPrice}',
             style: TextStyle(
                 fontSize: 15 * SizeConfig.heightMultiplier,
                 fontWeight: FontWeight.w300),
@@ -51,11 +53,11 @@ class _SellSheetState extends State<SellSheet> {
           Padding(
             padding: EdgeInsets.only(
                 top: 45 * SizeConfig.heightMultiplier,
-                left: 98 * SizeConfig.widthMultiplier),
+                left: 115 * SizeConfig.widthMultiplier),
             child: Row(
               children: [
                 Text(
-                  'Token: ',
+                  'unit: ',
                   style: TextStyle(
                       fontSize: 14 * SizeConfig.heightMultiplier,
                       fontWeight: FontWeight.normal),
