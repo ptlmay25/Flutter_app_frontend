@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ibiz/models/mycategory.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,9 @@ class CategoryCard extends StatelessWidget {
                   bottom: 3 * SizeConfig.heightMultiplier),
               child: SizedBox(
                   height: 114 * SizeConfig.heightMultiplier,
-                  child: Image.asset(myCategory.imageUrl)),
+                  child: Image(
+                    image: NetworkImage(myCategory.imageUrl),
+                  )),
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -31,7 +35,7 @@ class CategoryCard extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                    "Name",
+                    "Brand",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 11 * SizeConfig.heightMultiplier),
@@ -56,7 +60,7 @@ class CategoryCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontSize: 11 * SizeConfig.heightMultiplier)),
                   ),
-                  Text('   '+myCategory.no_of_Stores.toString(),
+                  Text('   ' + myCategory.no_of_products.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 11 * SizeConfig.heightMultiplier)),

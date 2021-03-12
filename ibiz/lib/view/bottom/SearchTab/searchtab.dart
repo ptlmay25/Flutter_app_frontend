@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ibiz/models/mycategory.dart';
+import 'package:ibiz/service/database/mycategorydb.dart';
+import 'package:ibiz/service/database/retailerdb.dart';
 import 'package:ibiz/view/bottom/SearchTab/categorylist.dart';
 
 import 'package:ibiz/size_config.dart';
@@ -15,6 +18,7 @@ class _SearchtabState extends State<Searchtab> {
   var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
   Widget build(BuildContext context) {
     Future<List<Token>> tokenList = TokenDb().getToken();
+    Future<List<MyCategory>> categories = MyCategoryDb().getBrand();
     return Scaffold(
       body: Column(
         children: [
@@ -84,21 +88,39 @@ class _SearchtabState extends State<Searchtab> {
                       right: 36 * SizeConfig.widthMultiplier),
                   child: Row(
                     children: [
-                      Expanded(
-                          child: Text(
-                        "125",
-                        style: TextStyle(
-                            fontSize: 16 * SizeConfig.heightMultiplier,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white),
-                      )),
-                      Text(
-                        '4,250',
-                        style: TextStyle(
-                            fontSize: 16 * SizeConfig.heightMultiplier,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white),
-                      )
+                      FutureBuilder(
+                        future: categories,
+                        builder: (context, AsyncSnapshot snapshot) {
+                          int n = 0;
+                          if (snapshot.hasData) {
+                            List<MyCategory> c = snapshot.data;
+                            n = c.length;
+                          }
+                          return Expanded(
+                              child: Text(
+                            n.toString(),
+                            style: TextStyle(
+                                fontSize: 16 * SizeConfig.heightMultiplier,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white),
+                          ));
+                        },
+                      ),
+                      FutureBuilder(
+                          future: RetailerDb().getStores(),
+                          builder: (context, snapshot) {
+                            int n = 0;
+                            if (snapshot.hasData) {
+                              n = snapshot.data;
+                            }
+                            return Text(
+                              n.toString(),
+                              style: TextStyle(
+                                  fontSize: 16 * SizeConfig.heightMultiplier,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.white),
+                            );
+                          })
                     ],
                   ),
                 ),
@@ -126,8 +148,18 @@ class _SearchtabState extends State<Searchtab> {
                         )),
                   ),
                   Container(
-                      height: 450, 
-                      child: CategoryList())
+                      height: 450,
+                      child: FutureBuilder(
+                        future: categories,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            List<MyCategory> c = snapshot.data;
+                            return CategoryList(categories: c);
+                          } else {
+                            return Container(child: Text("No Items"));
+                          }
+                        },
+                      ))
                 ],
               ),
             ),
