@@ -56,6 +56,7 @@ class _ProfileState extends State<Profile> {
     "Uttarakhand",
     "West Bengal"
   ];
+  File pickedFile;
 
   @override
   Widget build(BuildContext context) {
@@ -111,8 +112,12 @@ class _ProfileState extends State<Profile> {
                             height: 20 * SizeConfig.heightMultiplier,
                             width: 100 * SizeConfig.widthMultiplier,
                             child: FlatButton(
-                              onPressed: () {
-                                getImage(userModel);
+                              onPressed: () async {
+                                bool res = await getImage(userModel);
+                                if (res == true) {
+                                  userModel.updateImage(
+                                      'http://157.245.107.251/' + userModel.id);
+                                }
                               },
                               child: Text(
                                 "Edit photo",
@@ -466,28 +471,33 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future getImage(UserModel userModel) async {
-    File pickedFile = await ImagePicker.pickImage(
+  Future<bool> getImage(UserModel userModel) async {
+    pickedFile = await ImagePicker.pickImage(
         source: ImageSource.gallery, imageQuality: 10);
 
-    setState(() {
-      if (pickedFile != null) {
-        print(pickedFile.lengthSync());
-        setState(() {
-          _image = pickedFile;
-        });
-        if (pickedFile.lengthSync() > 3 * 1024 * 1024) {
-          print("Large File");
-        } else {
-          var res = Userdb().uploadImg(
-              uid: userModel.id,
-              fileBuffer: base64Encode(pickedFile.readAsBytesSync()));
-        }
-      } else {
-        print('No image selected.');
+    if (pickedFile != null) {
+      setState(() {
+        _image = pickedFile;
+      });
+      print(pickedFile.lengthSync());
+
+      if (pickedFile.lengthSync() > 3 * 1024 * 1024) {
+        print("Large File");
         return null;
+      } else {
+        bool res =
+            await Userdb().uploadImg(uid: userModel.id, file: pickedFile);
+
+        if (res != null) {
+          return true;
+        } else {
+          return false;
+        }
       }
-    });
+    } else {
+      print('No image selected.');
+      return null;
+    }
   }
 
   Widget showImage(UserModel userModel) {

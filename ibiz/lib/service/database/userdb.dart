@@ -2,8 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/api.dart';
+import 'package:async/async.dart';
+import 'package:dio/dio.dart';
 
 class Userdb {
   // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
@@ -117,7 +121,9 @@ class Userdb {
           state: data['state'] ?? 'Choose State',
           zipcode: data['zipcode'] ?? '',
           tokens: data['tokens'] ?? 0.0,
-          imageUrl: data['userImg'] ?? '',
+          imageUrl: (data['userImg'] != null)
+              ? '157.245.107.251' + data['userImg']
+              : '',
           acc_bal: double.parse(data['acc_bal'].toString()) ?? 0.0,
           total_purchase:
               double.parse(data['total_purchase'].toString()) ?? 0.0,
@@ -128,26 +134,24 @@ class Userdb {
     }
   }
 
-  Future uploadImg({uid, fileBuffer}) async {
-    print(fileBuffer);
+  Future<bool> uploadImg({uid, file}) async {
+    File image = file;
 
-    Map file = {"mimetype": 'image', "buffer": fileBuffer};
+    var stream = new http.ByteStream(DelegatingStream.typed(image.openRead()));
+    var length = await image.length();
 
-    Map body = {
-      "user_id": uid,
-      "file": file,
-    };
-    print(body);
-    var response = await http.post(url + "fileupload/upload",
-        headers: <String, String>{
-          'Content-Type': 'application/json; chRarset=UTF-8',
-        },
-        body: json.encode(body));
+    var uri = Uri.parse(url + 'fileupload/upload/' + uid);
+
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(image.path),
+        contentType: new MediaType('image', ''));
+
+    request.files.add(multipartFile);
+    var response = await request.send();
     if (response.statusCode == 200) {
-      print(response.body);
       return true;
     } else {
-      print(response.body);
       return false;
     }
   }

@@ -59,9 +59,11 @@ class _HometabState extends State<Hometab> {
                                     double estProfit = (latestToken.tokenPrice -
                                             estPurchase / userModel.tokens) *
                                         userModel.tokens;
-                                    return Text(
-                                        curf.format(((estPurchase + estProfit)
-                                            .toDouble())),
+                                    double n = 0;
+                                    if (!(estProfit + estPurchase).isNaN) {
+                                      n = estProfit + estPurchase;
+                                    }
+                                    return Text(curf.format(((n).toDouble())),
                                         style: TextStyle(
                                             fontSize: 30 *
                                                 SizeConfig.heightMultiplier,

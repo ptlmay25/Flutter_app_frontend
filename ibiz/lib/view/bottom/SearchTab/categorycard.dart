@@ -21,10 +21,13 @@ class CategoryCard extends StatelessWidget {
                   top: 3 * SizeConfig.heightMultiplier,
                   bottom: 3 * SizeConfig.heightMultiplier),
               child: SizedBox(
-                  height: 114 * SizeConfig.heightMultiplier,
-                  child: Image(
-                    image: NetworkImage(myCategory.imageUrl),
-                  )),
+                height: 114 * SizeConfig.heightMultiplier,
+                child: Image(
+                  image: NetworkImage(myCategory.imageUrl),
+                  // image: NetworkImage(
+                  //     "http://chemindigest.com/wp-content/uploads/2020/11/Crude-Refining-Capacity-to-Climb-80-by-2025PM-Modi.jpg"),
+                ),
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(

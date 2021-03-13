@@ -76,5 +76,6 @@ class UserModel with ChangeNotifier {
   void updateImage(String url) {
     this.imageUrl = url;
     notifyListeners();
+    print('profile Updated to: '+url);
   }
 }

@@ -37,6 +37,7 @@ dependencies:
   share: ^0.6.5+4
   fl_chart: ^0.12.3
   image_picker: any
+  dio: ^3.0.10
 
 
 

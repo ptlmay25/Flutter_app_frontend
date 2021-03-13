@@ -38,6 +38,7 @@ class _AccounttabState extends State<Accounttab> {
   Widget build(BuildContext context) {
     var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
     UserModel userModel = Provider.of<UserModel>(context);
+
     Future<List<Purchase>> purchaseList =
         PurchaseDb().getPurchase(id: userModel.id);
     Future<List<Sell>> sellList = SellDb().getSell(id: userModel.id);
@@ -53,13 +54,17 @@ class _AccounttabState extends State<Accounttab> {
                   children: [
                     SizedBox(width: 20 * SizeConfig.widthMultiplier),
                     SizedBox(
-                      height: 60 * SizeConfig.heightMultiplier,
-                      width: 60 * SizeConfig.widthMultiplier,
-                      child: CircleAvatar(
-                        backgroundImage:
-                            AssetImage("assets/icons/user_icon.png"),
-                      ),
-                    ),
+                        height: 60 * SizeConfig.heightMultiplier,
+                        width: 60 * SizeConfig.widthMultiplier,
+                        child: (userModel.imageUrl != '')
+                            ? CircleAvatar(
+                                backgroundColor: Colors.white,
+                                backgroundImage:
+                                    NetworkImage(userModel.imageUrl),
+                              )
+                            : CircleAvatar(
+                                backgroundImage:
+                                    AssetImage("assets/icons/user_icon.png"))),
                     SizedBox(width: 15 * SizeConfig.widthMultiplier),
                     Text(
                       userModel.username,

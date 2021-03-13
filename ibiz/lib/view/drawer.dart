@@ -28,7 +28,14 @@ class HomeDrawer extends StatelessWidget {
               leading: SizedBox(
                   height: 50 * SizeConfig.heightMultiplier,
                   width: 50 * SizeConfig.widthMultiplier,
-                  child: Image.asset("assets/icons/menubar_profile_pic.png")),
+                  child: (userModel.imageUrl != '')
+                      ? CircleAvatar(
+                          backgroundColor: Colors.white,
+                          backgroundImage: NetworkImage(userModel.imageUrl),
+                        )
+                      : CircleAvatar(
+                          backgroundImage:
+                              AssetImage("assets/icons/user_icon.png"))),
               title: Padding(
                 padding: EdgeInsets.only(left: 13 * SizeConfig.widthMultiplier),
                 child: SizedBox(
@@ -54,12 +61,7 @@ class HomeDrawer extends StatelessWidget {
               leading: SizedBox(
                   height: 20 * SizeConfig.heightMultiplier,
                   width: 20 * SizeConfig.widthMultiplier,
-                  child: (userModel.imageUrl != '')
-                      ? CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage: NetworkImage(userModel.imageUrl),
-                        )
-                      : Image.asset("assets/icons/user_icon.png")),
+                  child: Image.asset("assets/icons/user_icon.png")),
               title: Text(
                 "Profile",
                 style: TextStyle(

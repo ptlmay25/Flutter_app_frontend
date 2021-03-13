@@ -59,7 +59,7 @@ class _SharetabState extends State<Sharetab> {
                 child: RaisedButton(
                   onPressed: () async {
                     Share.share(
-                        "Start a wholesale business from home & earn up to ₹40,000 per month\n\n http://saler-club.surge.sh/ ");
+                        "Start a wholesale business from home & earn up to ₹30,000 per month\n\n salersclub.com ");
                   },
                   color: Color.fromARGB(255, 66, 71, 112),
                   child: Text(

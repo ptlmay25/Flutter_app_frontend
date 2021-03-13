@@ -19,9 +19,8 @@ class MyCategoryDb {
           //id: brandList[index]['_id'],
           brand_name: brandList[index]['brandName'] ?? '',
           no_of_products: brandList[index]["noOfProduct"] ?? 0,
-          imageUrl: 'http://tranquil-river-00045.herokuapp.com' +
-                  brandList[index]['brandImg'] ??
-              '');
+          imageUrl:
+              'http://157.245.107.251' + brandList[index]['brandImg'] ?? '');
     });
   }
   // MyCategory c1 = MyCategory(

@@ -41,14 +41,21 @@ class _TokenTileState extends State<TokenTile> {
                         fontWeight: FontWeight.w300)),
               ],
             ),
-            trailing: Column(
-              // crossAxisAlignment: CrossAxisAlignment.center,
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                SizedBox(height: 7 * SizeConfig.heightMultiplier),
                 Text('+ ' + curf.format(token.netProfit.toDouble()) + ' INR',
                     style: TextStyle(
                         fontSize: 14 * SizeConfig.heightMultiplier,
                         color: Colors.green)),
+                SizedBox(height: 16 * SizeConfig.heightMultiplier),
+              ],
+            ),
+            trailing: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 6 * SizeConfig.heightMultiplier),
+                Icon(Icons.keyboard_arrow_down),
               ],
             ),
             children: [
