@@ -116,7 +116,7 @@ class _ProfileState extends State<Profile> {
                                 bool res = await getImage(userModel);
                                 if (res == true) {
                                   userModel.updateImage(
-                                      'http://157.245.107.251/' + userModel.id);
+                                      'http://157.245.107.251/static/uploads/' + userModel.id);
                                 }
                               },
                               child: Text(

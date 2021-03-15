@@ -149,6 +149,10 @@ class Userdb {
 
     request.files.add(multipartFile);
     var response = await request.send();
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+    });
+    print(response.statusCode);
     if (response.statusCode == 200) {
       return true;
     } else {

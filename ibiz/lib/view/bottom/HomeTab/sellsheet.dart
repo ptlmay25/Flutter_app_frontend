@@ -22,7 +22,7 @@ class _SellSheetState extends State<SellSheet> {
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
