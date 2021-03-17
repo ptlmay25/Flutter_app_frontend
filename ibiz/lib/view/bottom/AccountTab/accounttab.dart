@@ -381,8 +381,12 @@ class _AccounttabState extends State<Accounttab> {
                                               snapshot.data[0],
                                               snapshot.data[1]);
                                       print(data);
-                                      return Text(curf.format(
-                                          data['netProfit'].abs().toDouble()));
+                                      double profit =
+                                          data['netProfit'].abs().toDouble();
+                                      if (data['netProfit'].isNaN) {
+                                        profit = 0;
+                                      }
+                                      return Text(curf.format(profit));
                                     } else {
                                       return Text(curf.format(0));
                                     }
