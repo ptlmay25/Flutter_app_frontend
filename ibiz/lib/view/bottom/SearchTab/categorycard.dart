@@ -23,7 +23,9 @@ class CategoryCard extends StatelessWidget {
               child: SizedBox(
                 height: 114 * SizeConfig.heightMultiplier,
                 child: Image(
-                  image: NetworkImage(myCategory.imageUrl),
+                  image: NetworkImage(
+                      'https://firefly-admin-nodejs-nob8m.ondigitalocean.app' +
+                          myCategory.imageUrl),
                   // image: NetworkImage(
                   //     "http://chemindigest.com/wp-content/uploads/2020/11/Crude-Refining-Capacity-to-Climb-80-by-2025PM-Modi.jpg"),
                 ),

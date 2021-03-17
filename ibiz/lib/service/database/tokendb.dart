@@ -52,7 +52,7 @@ class TokenDb {
             netProfit: 0,
             dividendPerToken: 0,
             totalTokens: 0,
-            tokenPrice: double.parse("1000".toString()));
+            tokenPrice: double.parse("100".toString()));
       });
     }
   }

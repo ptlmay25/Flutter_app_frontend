@@ -7,6 +7,7 @@ import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SellSheet extends StatefulWidget {
   final double tokenPrice;
@@ -102,7 +103,8 @@ class _SellSheetState extends State<SellSheet> {
                             child: RaisedButton(
                               onPressed: () async {
                                 setState(() {
-                                  if (_n != userModel.tokens) _n++;
+                                  if (_n != userModel.tokens &&
+                                      userModel.tokens > 0) _n++;
                                 });
                               },
                               color: Color.fromARGB(255, 235, 235, 235),
@@ -125,6 +127,12 @@ class _SellSheetState extends State<SellSheet> {
               width: 240 * SizeConfig.widthMultiplier,
               child: RaisedButton(
                 onPressed: () async {
+                  if (_n > userModel.tokens) {
+                    print('*');
+                    Fluttertoast.showToast(
+                        msg: "Insufficient tokens", timeInSecForIosWeb: 4);
+                    return;
+                  }
                   Map data = {"user_id": userModel.id, "num_of_tokens": _n};
                   Map body = {"data": data};
                   var res = await SellToken().sell(body: body);

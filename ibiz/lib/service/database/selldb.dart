@@ -14,6 +14,15 @@ class SellDb {
     List sellList = json.decode(response.body)['data'];
     //print("length" + sellList.toString());
 
+    if (sellList.length == 0) {
+      return List.generate(1, (index) {
+        return Sell(
+          amount: 0,
+          num_of_tokens: 0,
+          date: DateTime.parse(DateTime.now().toString()),
+        );
+      });
+    }
     return List.generate(sellList.length, (index) {
       return Sell(
           id: sellList[index]['_id'],

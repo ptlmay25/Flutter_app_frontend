@@ -407,6 +407,8 @@ class _HometabState extends State<Hometab> {
                                                         userModel.tokens;
                                                     double ret =
                                                         (estProfit.abs() / 100);
+                                                    print("ret:" +
+                                                        ret.toString());
 
                                                     return Text(
                                                       ret.toStringAsFixed(2) +
@@ -418,7 +420,7 @@ class _HometabState extends State<Hometab> {
                                                     );
                                                   } else {
                                                     return Text(
-                                                      curf.format(0),
+                                                      '0.00 %',
                                                       style: TextStyle(
                                                           fontSize: 25 *
                                                               SizeConfig
@@ -618,8 +620,10 @@ class _HometabState extends State<Hometab> {
     //print('${sellCount}');
     return {
       'totalSell': totalSell,
-      'estPurchase': purchase2 +
-          (purchase1 / purchaseCount1) * (purchaseCount1 - sellCount),
+      'estPurchase': (purchaseCount1 == 0)
+          ? 0
+          : purchase2 +
+              (purchase1 / purchaseCount1) * (purchaseCount1 - sellCount),
       'totalPurchase': totalPurchase,
       'netProfit': totalSell - (purchase1 / purchaseCount1) * sellCount,
     };
