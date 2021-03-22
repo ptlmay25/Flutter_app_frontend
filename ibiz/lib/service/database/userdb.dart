@@ -124,7 +124,7 @@ class Userdb {
           zipcode: data['zipcode'] ?? '',
           tokens: data['tokens'] ?? 0.0,
           imageUrl: (data['userImg'] != null)
-              ? 'https://firefly-admin-nodejs-nob8m.ondigitalocean.app' + data['userImg']
+              ? 'https://firefly-admin-nodejs-nob8m.ondigitalocean.app/app/' + data['userImg']
               : '',
           acc_bal: double.parse(data['acc_bal'].toString()) ?? 0.0,
           total_purchase:

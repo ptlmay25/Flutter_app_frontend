@@ -116,7 +116,7 @@ class _ProfileState extends State<Profile> {
                                 bool res = await getImage(userModel);
                                 if (res == true) {
                                   userModel.updateImage(
-                                      'https://firefly-admin-nodejs-nob8m.ondigitalocean.app/static/uploads/' +
+                                      'https://firefly-admin-nodejs-nob8m.ondigitalocean.app/app/static/uploads/' +
                                           userModel.id);
                                 }
                               },

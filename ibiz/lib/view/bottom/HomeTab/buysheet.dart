@@ -102,7 +102,7 @@ class _BuySheetState extends State<BuySheet> {
                             child: RaisedButton(
                               onPressed: () async {
                                 setState(() {
-                                  if (_n != 20) _n++;
+                                  if (_n != 50) _n++;
                                 });
                               },
                               color: Color.fromARGB(255, 235, 235, 235),
