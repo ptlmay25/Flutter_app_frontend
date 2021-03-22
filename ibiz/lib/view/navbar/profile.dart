@@ -11,6 +11,7 @@ import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Profile extends StatefulWidget {
   // Profile({this.userModel});
@@ -114,11 +115,12 @@ class _ProfileState extends State<Profile> {
                             width: 100 * SizeConfig.widthMultiplier,
                             child: FlatButton(
                               onPressed: () async {
-                                bool res = await getImage(userModel);
-                                if (res == true) {
-                                  userModel.updateImage(Api().baseurl +
-                                      'app/static/uploads/' +
-                                      userModel.id);
+                                String res = await getImage(userModel);
+                                if (res != null) {
+                                  userModel.updateImage(
+                                      res + '?' + DateTime.now().toString());
+                                  print(res);
+                                  Userdb().updateImageUrl(res, userModel.id);
                                 }
                               },
                               child: Text(
@@ -473,7 +475,8 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future<bool> getImage(UserModel userModel) async {
+  Future<String> getImage(UserModel userModel) async {
+    final _storage = FirebaseStorage.instance;
     pickedFile = await ImagePicker.pickImage(
         source: ImageSource.gallery, imageQuality: 10);
 
@@ -487,14 +490,21 @@ class _ProfileState extends State<Profile> {
         print("Large File");
         return null;
       } else {
-        bool res =
-            await Userdb().uploadImg(uid: userModel.id, file: pickedFile);
+        // bool res =
+        //     await Userdb().uploadImg(uid: userModel.id, file: pickedFile);
+        // if (res != null) {
+        //   return true;
+        // } else {
+        //   return false;
+        // }
 
-        if (res != null) {
-          return true;
-        } else {
-          return false;
-        }
+        var snapshot = await _storage
+            .ref()
+            .child('user/' + userModel.id)
+            .putFile(pickedFile)
+            .onComplete;
+        var downloadUrl = await snapshot.ref.getDownloadURL();
+        return downloadUrl;
       }
     } else {
       print('No image selected.');
@@ -507,6 +517,7 @@ class _ProfileState extends State<Profile> {
       return CircleAvatar(
         backgroundColor: Colors.white, //child: Image.file(_image)
         backgroundImage: NetworkImage(userModel.imageUrl),
+        // child: Image.network(userModel.imageUrl),
       );
     } else {
       if (_image == null) {

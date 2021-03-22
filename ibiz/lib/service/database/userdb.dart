@@ -7,12 +7,12 @@ import 'package:http_parser/http_parser.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/api.dart';
 import 'package:async/async.dart';
-import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart';
 
 class Userdb {
   // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
   // final String url = "http://192.168.43.24:5000/api/";
-  String url = Api().baseurl+'app/api/';
+  String url = Api().baseurl + 'app/api/';
   Future getUsers() async {
     http.Response response = await http.get(url + "user");
     print(response.body);
@@ -123,9 +123,7 @@ class Userdb {
           state: data['state'] ?? 'Choose State',
           zipcode: data['zipcode'] ?? '',
           tokens: data['tokens'] ?? 0.0,
-          imageUrl: (data['userImg'] != null)
-              ? Api().baseurl + 'app' + data['userImg']
-              : '',
+          imageUrl: (data['userImg'] != null) ? data['userImg'] : '',
           acc_bal: double.parse(data['acc_bal'].toString()) ?? 0.0,
           total_purchase:
               double.parse(data['total_purchase'].toString()) ?? 0.0,
@@ -133,6 +131,27 @@ class Userdb {
     } else {
       print("No user found with: " + mobileNo);
       return 0;
+    }
+  }
+
+  Future<bool> updateImageUrl(String imgUrl, String id) async {
+    Map data = {
+      'userImg': imgUrl,
+    };
+    print(data);
+    print(url + "user/update/" + id);
+    var response = await http.put(url + "user/update/" + id,
+        body: json.encode(data),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    if (response.statusCode == 200) {
+      print("URL Updated");
+      return true;
+    } else {
+      print(response.body);
+      print("Failure");
+      return false;
     }
   }
 

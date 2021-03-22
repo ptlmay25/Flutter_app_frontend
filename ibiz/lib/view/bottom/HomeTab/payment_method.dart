@@ -260,7 +260,6 @@ class _PaymentMethodState extends State<PaymentMethod> {
       'key': 'rzp_live_7Y8zmN1s4WEkLo',
       'amount': widget.amount * 100,
       'name': 'Saler\'s club',
-      'image': 'assets/icons/user_icon.png',
       'description': 'Payment for new Token',
       'prefill': {'contact': userModel.mobileNo, 'email': userModel.email},
       'external': {
