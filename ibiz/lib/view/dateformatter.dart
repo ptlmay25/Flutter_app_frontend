@@ -18,6 +18,9 @@ class DateFormatter {
       h = (date.hour.toInt() - 12).toString();
     } else if (date.hour == 0) {
       unit = 'AM';
+    } else {
+      unit = 'AM';
+      h = date.hour.toString();
     }
     return h + ':' + date.minute.toString() + ' ' + unit;
   }

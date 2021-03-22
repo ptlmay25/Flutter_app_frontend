@@ -1,13 +1,11 @@
 import 'dart:ui';
-
-import 'package:ibiz/models/mycategory.dart';
-import 'package:ibiz/service/database/api.dart';
+import 'package:ibiz/models/retailer.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:flutter/material.dart';
 
-class CategoryCard extends StatelessWidget {
-  final MyCategory myCategory;
-  CategoryCard({this.myCategory});
+class RetailerCard extends StatelessWidget {
+  final Retailer retailer;
+  RetailerCard({this.retailer});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,9 +22,7 @@ class CategoryCard extends StatelessWidget {
               child: SizedBox(
                 height: 114 * SizeConfig.heightMultiplier,
                 child: Image(
-                  image: NetworkImage(myCategory.imageUrl),
-                  // image: NetworkImage(
-                  //     "http://chemindigest.com/wp-content/uploads/2020/11/Crude-Refining-Capacity-to-Climb-80-by-2025PM-Modi.jpg"),
+                  image: NetworkImage(retailer.imageUrl),
                 ),
               ),
             ),
@@ -39,12 +35,12 @@ class CategoryCard extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                    "Brand",
+                    "Name",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 11 * SizeConfig.heightMultiplier),
                   )),
-                  Text('No of Products',
+                  Text('No of Srores',
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 11 * SizeConfig.heightMultiplier)),
@@ -59,12 +55,12 @@ class CategoryCard extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(myCategory.brand_name,
+                    child: Text(retailer.name,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 11 * SizeConfig.heightMultiplier)),
                   ),
-                  Text('   ' + myCategory.no_of_products.toString(),
+                  Text('   ' + retailer.no_of_stores.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 11 * SizeConfig.heightMultiplier)),

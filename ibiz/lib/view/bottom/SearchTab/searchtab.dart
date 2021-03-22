@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/mycategory.dart';
+import 'package:ibiz/models/retailer.dart';
 import 'package:ibiz/service/database/mycategorydb.dart';
 import 'package:ibiz/service/database/retailerdb.dart';
 import 'package:ibiz/view/bottom/SearchTab/categorylist.dart';
 
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/view/bottom/SearchTab/retailerlist.dart';
 import 'package:intl/intl.dart';
 import 'package:ibiz/service/database/tokendb.dart';
 import 'package:ibiz/models/token.dart';
@@ -15,10 +17,12 @@ class Searchtab extends StatefulWidget {
 }
 
 class _SearchtabState extends State<Searchtab> {
+  bool flag = false; //0 for brands, 1 for retailer
   var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
   Widget build(BuildContext context) {
     Future<List<Token>> tokenList = TokenDb().getToken();
     Future<List<MyCategory>> categories = MyCategoryDb().getBrand();
+    Future<List<Retailer>> retailers = RetailerDb().getStores();
     return Scaffold(
       body: Column(
         children: [
@@ -137,32 +141,105 @@ class _SearchtabState extends State<Searchtab> {
                   right: 15 * SizeConfig.widthMultiplier),
               child: Column(
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 40 * SizeConfig.heightMultiplier,
-                        bottom: 20 * SizeConfig.heightMultiplier),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Top Brands",
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18 * SizeConfig.heightMultiplier),
-                        )),
+                  SizedBox(height: 20 * SizeConfig.heightMultiplier),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: (flag)
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 17, 205, 144),
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                  color: (flag)
+                                      ? Colors.black
+                                      : Color.fromARGB(255, 17, 205, 144))),
+                          height: 40 * SizeConfig.heightMultiplier,
+                          width: 150 * SizeConfig.widthMultiplier,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: InkWell(
+                              onTap: () async {
+                                setState(() {
+                                  flag = !flag;
+                                });
+                              },
+                              child: Text(
+                                'Top Brands',
+                                style: TextStyle(
+                                    color:
+                                        (!flag) ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13 * SizeConfig.heightMultiplier),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 25 * SizeConfig.widthMultiplier),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: (!flag)
+                              ? Colors.white
+                              : Color.fromARGB(255, 17, 205, 144),
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                              color: (!flag)
+                                  ? Colors.black
+                                  : Color.fromARGB(255, 17, 205, 144)),
+                        ),
+                        height: 40 * SizeConfig.heightMultiplier,
+                        width: 150 * SizeConfig.widthMultiplier,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: InkWell(
+                            onTap: () async {
+                              setState(() {
+                                flag = !flag;
+                              });
+                            },
+                            child: Text(
+                              'Retail stores',
+                              style: TextStyle(
+                                  color: (flag) ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 13 * SizeConfig.heightMultiplier),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 25 * SizeConfig.heightMultiplier),
                   Container(
                       height: 450,
-                      child: FutureBuilder(
-                        future: categories,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<MyCategory> c = snapshot.data;
-                            return CategoryList(categories: c);
-                          } else {
-                            return Container(child: Text("No Items"));
-                          }
-                        },
-                      ))
+                      child: (!flag)
+                          ? FutureBuilder(
+                              future: categories,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  List<MyCategory> c = snapshot.data;
+                                  return (c.length>0)
+                                      ? CategoryList(categories: c)
+                                      : Container(child: Text("No Brands"));
+                                } else {
+                                  return Container(child: Text("Loading..."));
+                                }
+                              },
+                            )
+                          : FutureBuilder(
+                              future: retailers,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  List<Retailer> r = snapshot.data;
+                                  return (r.length>0)?RetailerList(retailers: r):Container(child: Text("No Stores"));
+                                } else {
+                                  return Container(child: Text("Loading..."));
+                                }
+                              },
+                            ))
                 ],
               ),
             ),
