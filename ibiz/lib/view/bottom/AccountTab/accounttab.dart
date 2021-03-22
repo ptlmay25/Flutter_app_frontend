@@ -4,6 +4,7 @@ import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/transactiondb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/AccountTab/withdraw.dart';
+import 'package:ibiz/view/dateformatter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ibiz/models/purchase.dart';
@@ -120,7 +121,9 @@ class _AccounttabState extends State<Accounttab> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              DateTime.now().toString().substring(0, 16),
+                              DateFormatter().format(DateTime.now()) +
+                                  '\t\t' +
+                                  DateFormatter().timeFormatter(DateTime.now()),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 13,

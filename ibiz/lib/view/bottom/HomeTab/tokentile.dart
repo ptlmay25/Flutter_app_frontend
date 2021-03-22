@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/token.dart';
-import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/view/dateformatter.dart';
 import 'package:ibiz/view/datemap.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class TokenTile extends StatefulWidget {
   TokenTile({this.data});
@@ -28,18 +27,21 @@ class _TokenTileState extends State<TokenTile> {
           Token token = widget.data[index];
           DateTime date = DateTime.parse(token.tokenDate);
           return ExpansionTile(
-            leading: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(DateMap().getMonth(date) + ' ' + date.year.toString(),
-                    style: TextStyle(
-                        fontSize: 14 * SizeConfig.heightMultiplier,
-                        fontWeight: FontWeight.normal)),
-                Text('Date: ' + token.tokenDate.toString().substring(0, 10),
-                    style: TextStyle(
-                        fontSize: 11 * SizeConfig.heightMultiplier,
-                        fontWeight: FontWeight.w300)),
-              ],
+            leading: Padding(
+              padding: EdgeInsets.only(top: 5 * SizeConfig.heightMultiplier),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(DateMap().getMonth(date) + ' ' + date.year.toString(),
+                      style: TextStyle(
+                          fontSize: 14 * SizeConfig.heightMultiplier,
+                          fontWeight: FontWeight.normal)),
+                  Text('Date: ' + DateFormatter().format(date),
+                      style: TextStyle(
+                          fontSize: 11 * SizeConfig.heightMultiplier,
+                          fontWeight: FontWeight.w300)),
+                ],
+              ),
             ),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -48,7 +50,7 @@ class _TokenTileState extends State<TokenTile> {
                     style: TextStyle(
                         fontSize: 14 * SizeConfig.heightMultiplier,
                         color: Colors.green)),
-                SizedBox(height: 16 * SizeConfig.heightMultiplier),
+                SizedBox(height: 11 * SizeConfig.heightMultiplier),
               ],
             ),
             trailing: Column(

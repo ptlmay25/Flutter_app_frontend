@@ -11,6 +11,7 @@ import 'package:ibiz/view/bottom/HomeTab/buysheet.dart';
 import 'package:ibiz/view/bottom/HomeTab/chart.dart';
 import 'package:ibiz/view/bottom/HomeTab/sellsheet.dart';
 import 'package:ibiz/view/bottom/HomeTab/tokentile.dart';
+import 'package:ibiz/view/dateformatter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -120,9 +121,8 @@ class _HometabState extends State<Hometab> {
                                                   color: Colors.green));
                                         }
                                       }),
-                                  trailing: Text(DateTime.now()
-                                      .toString()
-                                      .substring(0, 11)),
+                                  trailing: Text(
+                                      DateFormatter().format(DateTime.now())),
                                 )),
                             SizedBox(height: 35 * SizeConfig.heightMultiplier),
                             FutureBuilder(

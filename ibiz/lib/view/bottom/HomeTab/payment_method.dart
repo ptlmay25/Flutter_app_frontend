@@ -239,7 +239,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                     },
                     color: Color.fromRGBO(255, 212, 31, 1),
                     child: Text(
-                      'Place Order',
+                      'Buy Token',
                       style: TextStyle(
                           color: Color.fromRGBO(21, 21, 21, 1),
                           fontWeight: FontWeight.normal,
@@ -259,7 +259,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
     var options = {
       'key': 'rzp_live_7Y8zmN1s4WEkLo',
       'amount': widget.amount * 100,
-      'name': 'Firefly',
+      'name': 'Saler\'s club',
       'image': 'assets/icons/user_icon.png',
       'description': 'Payment for new Token',
       'prefill': {'contact': userModel.mobileNo, 'email': userModel.email},
