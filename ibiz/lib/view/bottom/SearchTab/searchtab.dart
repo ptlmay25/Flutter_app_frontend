@@ -107,14 +107,17 @@ class _SearchtabState extends State<Searchtab> {
                         },
                       ),
                       FutureBuilder(
-                          future: RetailerDb().getStores(),
+                          future: categories,
                           builder: (context, snapshot) {
-                            int n = 0;
+                            double n = 0;
                             if (snapshot.hasData) {
-                              n = snapshot.data;
+                              List<MyCategory> categories = snapshot.data;
+                              for (MyCategory c in categories) {
+                                n += c.no_of_products;
+                              }
                             }
                             return Text(
-                              n.toString(),
+                              n.toInt().toString(),
                               style: TextStyle(
                                   fontSize: 16 * SizeConfig.heightMultiplier,
                                   fontWeight: FontWeight.normal,

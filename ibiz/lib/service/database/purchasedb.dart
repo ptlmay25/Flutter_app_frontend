@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:ibiz/service/database/api.dart';
 
 class PurchaseDb {
+  String url = Api().baseurl + 'app/api/';
   Future<List<Purchase>> getPurchase({id}) async {
     // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
     // final String url = "http://192.168.43.24:5000/api/";
-    String url = Api().baseurl;
 
     http.Response response = await http.get(url + "purchase/view/user/" + id);
 

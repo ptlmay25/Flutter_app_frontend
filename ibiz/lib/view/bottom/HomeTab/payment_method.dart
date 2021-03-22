@@ -257,7 +257,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   void openCheckout(UserModel userModel) async {
     var options = {
-      'key': 'rzp_test_aOOyFwuSsDtgxf',
+      'key': 'rzp_live_7Y8zmN1s4WEkLo',
       'amount': widget.amount * 100,
       'name': 'Firefly',
       'image': 'assets/icons/user_icon.png',

@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:ibiz/service/database/api.dart';
 
 class RetailerDb {
+  String url = Api().baseurl + 'app/api/';
   Future<int> getStores() async {
-    String url = Api().baseurl;
     http.Response response = await http.get(url + "retailer");
 
     List retailerList = json.decode(response.body)['data'];

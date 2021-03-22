@@ -6,11 +6,11 @@ import 'package:ibiz/service/database/api.dart';
 class WithdrawRequest {
   // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
   // final String url = "http://192.168.43.24:5000/api/";
-  String url = Api().baseurl;
+  String url = Api().baseurl + 'app/api/';
   Future<bool> request({userId, name, UPI, accNo, IFSC, amount}) async {
     Map data = {
       "userId": userId,
-      "name":name,
+      "name": name,
       "UPI": UPI,
       "BankAccountNumber": accNo,
       "IFSC": IFSC,

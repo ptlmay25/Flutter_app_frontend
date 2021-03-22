@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:ibiz/models/mycategory.dart';
+import 'package:ibiz/service/database/api.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +24,8 @@ class CategoryCard extends StatelessWidget {
               child: SizedBox(
                 height: 114 * SizeConfig.heightMultiplier,
                 child: Image(
-                  image: NetworkImage(
-                      'https://firefly-admin-nodejs-nob8m.ondigitalocean.app/app' +
-                          myCategory.imageUrl),
+                  image:
+                      NetworkImage(Api().baseurl + 'app' + myCategory.imageUrl),
                   // image: NetworkImage(
                   //     "http://chemindigest.com/wp-content/uploads/2020/11/Crude-Refining-Capacity-to-Climb-80-by-2025PM-Modi.jpg"),
                 ),
@@ -45,7 +45,7 @@ class CategoryCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         fontSize: 11 * SizeConfig.heightMultiplier),
                   )),
-                  Text('No of Products',
+                  Text('No of Stores',
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 11 * SizeConfig.heightMultiplier)),

@@ -5,9 +5,8 @@ import 'package:ibiz/service/database/api.dart';
 import 'package:http/http.dart' as http;
 
 class MyCategoryDb {
+  String url = Api().baseurl + 'app/api/';
   Future<List<MyCategory>> getBrand() async {
-    String url = Api().baseurl;
-
     http.Response response = await http.get(url + "brand");
 
     List brandList = json.decode(response.body)['data'];

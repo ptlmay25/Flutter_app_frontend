@@ -4,10 +4,10 @@ import 'package:ibiz/service/database/api.dart';
 import 'package:ibiz/models/sell.dart';
 
 class SellDb {
+  String url = Api().baseurl + 'app/api/';
   Future<List<Sell>> getSell({id}) async {
     // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
     // final String url = "http://192.168.43.24:5000/api/";
-    String url = Api().baseurl;
 
     http.Response response = await http.get(url + "sell/view/user/" + id);
 

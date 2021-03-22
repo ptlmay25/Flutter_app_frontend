@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SellToken {
-  String url = Api().baseurl;
+  String url = Api().baseurl+'app/api/';
 
   Future<bool> sell({body}) async {
     print(body.toString());

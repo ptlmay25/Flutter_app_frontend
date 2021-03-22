@@ -6,7 +6,7 @@ import 'package:ibiz/service/database/api.dart';
 class ContactUsDb {
   // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
   // final String url = "http://192.168.43.24:5000/api/";
-  String url = Api().baseurl;
+  String url = Api().baseurl+'app/api/';
   Future<bool> contact({userId, accNo, name, email, message}) async {
     Map data = {
       "userId": userId,

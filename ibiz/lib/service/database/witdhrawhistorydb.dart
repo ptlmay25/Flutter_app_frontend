@@ -5,11 +5,12 @@ import 'package:http/http.dart' as http;
 import 'package:ibiz/service/database/api.dart';
 
 class WithdrawHistoryDb {
+  String url = Api().baseurl + 'app/api/';
   Future<List<WithdrawHistory>> getWithdrawList({id}) async {
     print(id);
     // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
     // final String url = "http://192.168.43.24:5000/api/";
-    String url = Api().baseurl;
+
     http.Response response =
         await http.get(url + "withdrawHistory"); //append viewuser/id
     print(url + "withdrawHistory/view/user/" + id);

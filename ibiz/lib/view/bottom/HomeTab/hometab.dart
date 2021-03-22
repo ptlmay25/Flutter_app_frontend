@@ -407,8 +407,8 @@ class _HometabState extends State<Hometab> {
                                                         userModel.tokens;
                                                     double ret =
                                                         (estProfit.abs() / 100);
-                                                    print("ret:" +
-                                                        ret.toString());
+                                                    // print("ret:" +
+                                                    //     ret.toString());
 
                                                     return Text(
                                                       ret.toStringAsFixed(2) +

@@ -5,7 +5,7 @@ import 'package:ibiz/service/database/api.dart';
 
 class AddFundDB {
   // String url = "https://tranquil-river-00045.herokuapp.com/api/";
-  String url = Api().baseurl;
+  String url = Api().baseurl+'app/api/';
   Future<bool> add({body}) async {
     print(body.toString());
 

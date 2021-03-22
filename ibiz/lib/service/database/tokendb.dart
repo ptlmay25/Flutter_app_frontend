@@ -5,10 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:ibiz/service/database/api.dart';
 
 class TokenDb {
+  String url = Api().baseurl + 'app/api/';
   Future<List<Token>> getToken() async {
     // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
     // final String url = "http://192.168.43.24:5000/api/";
-    String url = Api().baseurl;
+
     http.Response response = await http.get(url + "token");
 
     List tokenList = json.decode(response.body)['data'];
@@ -17,7 +18,7 @@ class TokenDb {
     if (tokenList.length > 0) {
       return List.generate(tokenList.length, (index) {
         return Token(
-            tokenDate: tokenList[index]['createdAt'].toString() ??
+            tokenDate: tokenList[index]['upload_date'].toString() ??
                 DateTime.now().toString(),
             totalRevenue:
                 double.parse(tokenList[index]['total_revenue'].toString()) ?? 0,
@@ -42,6 +43,8 @@ class TokenDb {
                     0);
       });
     } else {
+      double latestTokenPrice = await getLatestTokenPrice();
+      // print(latestTokenPrice);
       return List.generate(1, (index) {
         return Token(
             tokenDate: DateTime.now().toString(),
@@ -52,8 +55,20 @@ class TokenDb {
             netProfit: 0,
             dividendPerToken: 0,
             totalTokens: 0,
-            tokenPrice: double.parse("100".toString()));
+            tokenPrice: latestTokenPrice);
       });
+    }
+  }
+
+  Future<double> getLatestTokenPrice() async {
+    http.Response response = await http.get(url + "token/getLatestTokenPrice");
+    // print(json.decode(response.body)['data']);
+    if (response.statusCode == 200) {
+      Map map = json.decode(response.body)['data'];
+      // print(map['token_price']);
+      return double.parse(map['token_price'].toString() ?? '1000');
+    } else {
+      return 1000;
     }
   }
 }

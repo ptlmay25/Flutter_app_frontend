@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/api.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:provider/provider.dart';
@@ -115,9 +116,9 @@ class _ProfileState extends State<Profile> {
                               onPressed: () async {
                                 bool res = await getImage(userModel);
                                 if (res == true) {
-                                  userModel.updateImage(
-                                      'https://firefly-admin-nodejs-nob8m.ondigitalocean.app/app/static/uploads/' +
-                                          userModel.id);
+                                  userModel.updateImage(Api().baseurl +
+                                      'app/static/uploads/' +
+                                      userModel.id);
                                 }
                               },
                               child: Text(

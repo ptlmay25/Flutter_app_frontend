@@ -59,7 +59,7 @@ class _SharetabState extends State<Sharetab> {
                 child: RaisedButton(
                   onPressed: () async {
                     Share.share(
-                        "Start a wholesale business from home & earn up to ₹30,000 per month\n\n salersclub.com ");
+                        "Start your own franchise business from home with Saler's club and earn up to ₹30,000/- a month.\nJoin saler's club today\nhttps://play.google.com/store/apps/details?id=com.firefly.ibiz");
                   },
                   color: Color.fromARGB(255, 66, 71, 112),
                   child: Text(

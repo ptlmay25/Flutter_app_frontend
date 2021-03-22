@@ -4,7 +4,7 @@ import 'dart:convert';
 
 class BuyToken {
   // String url = "https://tranquil-river-00045.herokuapp.com/api/";
-  String url = Api().baseurl;
+  String url = Api().baseurl+'app/api/';
   Future<bool> buyToken({body}) async {
     print(body.toString());
 

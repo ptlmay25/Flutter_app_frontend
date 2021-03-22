@@ -12,7 +12,7 @@ import 'package:dio/dio.dart';
 class Userdb {
   // final String url = "https://tranquil-river-00045.herokuapp.com/api/";
   // final String url = "http://192.168.43.24:5000/api/";
-  String url = Api().baseurl;
+  String url = Api().baseurl+'app/api/';
   Future getUsers() async {
     http.Response response = await http.get(url + "user");
     print(response.body);
@@ -124,7 +124,7 @@ class Userdb {
           zipcode: data['zipcode'] ?? '',
           tokens: data['tokens'] ?? 0.0,
           imageUrl: (data['userImg'] != null)
-              ? 'https://firefly-admin-nodejs-nob8m.ondigitalocean.app/app/' + data['userImg']
+              ? Api().baseurl + 'app' + data['userImg']
               : '',
           acc_bal: double.parse(data['acc_bal'].toString()) ?? 0.0,
           total_purchase:
