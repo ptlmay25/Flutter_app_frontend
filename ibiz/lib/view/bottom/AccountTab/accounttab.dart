@@ -11,7 +11,6 @@ import 'package:ibiz/models/purchase.dart';
 import 'package:ibiz/models/sell.dart';
 import 'package:ibiz/service/database/purchasedb.dart';
 import 'package:ibiz/service/database/selldb.dart';
-import 'dart:math';
 
 class Accounttab extends StatefulWidget {
   @override
@@ -27,7 +26,7 @@ class _AccounttabState extends State<Accounttab> {
     "\t\tLast year": 365,
     "\t\tAll": 10000
   };
-  List<String> _Data = [
+  List<String> _data = [
     "\t\tLast 7 days",
     "\t\tLast 30 days",
     "\t\tLast 6 months",
@@ -455,7 +454,7 @@ class _AccounttabState extends State<Accounttab> {
                                 _selectedData = newValue;
                               });
                             },
-                            items: _Data.map((data) {
+                            items: _data.map((data) {
                               return DropdownMenuItem(
                                 child: new Text(
                                   data,
@@ -485,6 +484,23 @@ class _AccounttabState extends State<Accounttab> {
                         List<Transaction> transactionList = snapshot.data;
                         transactionList =
                             new List.from(transactionList.reversed);
+                        transactionList = transactionList.where((element) {
+                          DateTime trasactionDate =
+                              DateTime.parse(element.date);
+                          // print(trasactionDate);
+                          int difference =
+                              DateTime.now().difference(trasactionDate).inDays;
+                          // int difference = 5;
+                          // print(difference);
+                          // print(_selectedData);
+                          if (_selectedData == '\t\tAll') {
+                            return true;
+                          }
+                          if (difference <= days[_selectedData]) {
+                            return true;
+                          }
+                          return false;
+                        }).toList();
                         return SingleChildScrollView(
                           physics: ScrollPhysics(),
                           child: Column(
@@ -492,8 +508,7 @@ class _AccounttabState extends State<Accounttab> {
                               ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                  itemCount: min(transactionList.length,
-                                      days[_selectedData]),
+                                  itemCount: transactionList.length,
                                   itemBuilder: (context, index) {
                                     return getList(transactionList[index]);
                                   }),

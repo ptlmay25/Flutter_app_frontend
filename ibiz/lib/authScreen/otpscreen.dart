@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:ibiz/main.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/size_config.dart';
-// import 'package:sms_autofill/sms_autofill.dart';
-import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+// import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 
 class OTP extends StatefulWidget {
   final String contact;
@@ -23,7 +23,7 @@ class _OTPState extends State<OTP> {
   final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   Timer _timer;
-  int _counter = 60;
+  ValueNotifier<int> _counter = ValueNotifier<int>(60);
   initState() {
     super.initState();
     SystemChannels.textInput.invokeMethod('TextInput.hide');
@@ -35,13 +35,11 @@ class _OTPState extends State<OTP> {
 
   void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_counter > 0) {
-          _counter--;
-        } else {
-          _timer.cancel();
-        }
-      });
+      if (_counter.value > 0) {
+        _counter.value -= 1;
+      } else {
+        _timer.cancel();
+      }
     });
   }
 
@@ -49,7 +47,6 @@ class _OTPState extends State<OTP> {
   Widget build(BuildContext context) {
     //SystemChannels.textInput.invokeMethod('TextInput.hide');
     return Scaffold(
-      
       backgroundColor: Colors.white,
       body: SafeArea(
           child: ListView(
@@ -103,21 +100,27 @@ class _OTPState extends State<OTP> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 80 * SizeConfig.heightMultiplier,
-                          left: 5 * SizeConfig.widthMultiplier,
-                          right: 5 * SizeConfig.widthMultiplier),
-                      child: TextFieldPin(
-                        codeLength: 6,
-                        // onCodeChanged: (val) {
-                        //   this.smsCode = val;
-                        //   print(val);
-                        // }
-                        onOtpCallback: (code, isAutofill) {
-                          this.smsCode = code;
-                        },
-                      ),
-                    ),
+                        padding: EdgeInsets.only(
+                            bottom: 80 * SizeConfig.heightMultiplier,
+                            left: 48 * SizeConfig.widthMultiplier,
+                            right: 48 * SizeConfig.widthMultiplier),
+                        // child: TextFieldPin(
+                        //   codeLength: 6,
+                        //   // onCodeChanged: (val) {
+                        //   //   this.smsCode = val;
+                        //   //   print(val);
+                        //   // }
+                        //   onOtpCallback: (code, isAutofill) {
+                        //     this.smsCode = code;
+                        //   },
+                        // ),
+                        child: PinFieldAutoFill(
+                          codeLength: 6,
+                          onCodeSubmitted: (val) {
+                            this.smsCode = val;
+                            print(val);
+                          },
+                        )),
                     Padding(
                         padding: EdgeInsets.only(
                             left: 88 * SizeConfig.widthMultiplier,
@@ -164,17 +167,23 @@ class _OTPState extends State<OTP> {
                         top: 20 * SizeConfig.heightMultiplier,
                       ),
                       child: SizedBox(
-                        child: (_counter > 0)
-                            ? InkWell(
-                                child: Text("Resend code in " +
-                                    _counter.toString() +
-                                    "sec"))
+                        child: (_counter.value > 0)
+                            ? ValueListenableBuilder(
+                                builder: (BuildContext context, int value,
+                                    Widget child) {
+                                  return InkWell(
+                                      child: Text("Resend code in " +
+                                          _counter.value.toString() +
+                                          "sec"));
+                                },
+                                valueListenable: _counter,
+                              )
                             : InkWell(
                                 onTap: () {
                                   _auth.verifyPhone(widget.contact);
                                   print("Resend OTp pressed");
                                   setState(() {
-                                    _counter = 60;
+                                    _counter.value = 60;
                                     _startTimer();
                                   });
                                 },
@@ -230,19 +239,7 @@ class _OTPState extends State<OTP> {
   // }
 
   void _listenOtp() async {
-    // await SmsAutoFill().listenForCode;
+    await SmsAutoFill().listenForCode;
     print("Listining");
   }
-
-  // Future<void> login(_phoneAuthCredential) async {
-  //   /// This method is used to login the user
-  //   /// `AuthCredential`(`_phoneAuthCredential`) is needed for the signIn method
-  //   /// After the signIn method from `AuthResult` we can get `FirebaserUser`(`_firebaseUser`)
-
-  //   await FirebaseAuth.instance
-  //       .signInWithCredential(_phoneAuthCredential)
-  //       .then((AuthResult authRes) {
-  //     print(authRes.user.toString());
-  //   });
-  // }
 }

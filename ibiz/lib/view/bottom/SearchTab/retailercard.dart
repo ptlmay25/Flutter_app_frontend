@@ -21,7 +21,8 @@ class RetailerCard extends StatelessWidget {
                   bottom: 3 * SizeConfig.heightMultiplier),
               child: SizedBox(
                 height: 114 * SizeConfig.heightMultiplier,
-                child: Image(
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/images/default.png'),
                   image: NetworkImage(retailer.imageUrl),
                 ),
               ),

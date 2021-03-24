@@ -111,13 +111,13 @@ class _SearchtabState extends State<Searchtab> {
                         },
                       ),
                       FutureBuilder(
-                          future: categories,
+                          future: retailers,
                           builder: (context, snapshot) {
                             double n = 0;
                             if (snapshot.hasData) {
-                              List<MyCategory> categories = snapshot.data;
-                              for (MyCategory c in categories) {
-                                n += c.no_of_products;
+                              List<Retailer> retailers = snapshot.data;
+                              for (Retailer r in retailers) {
+                                n += r.no_of_stores;
                               }
                             }
                             return Text(
@@ -221,7 +221,7 @@ class _SearchtabState extends State<Searchtab> {
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   List<MyCategory> c = snapshot.data;
-                                  return (c.length>0)
+                                  return (c.length > 0)
                                       ? CategoryList(categories: c)
                                       : Container(child: Text("No Brands"));
                                 } else {
@@ -234,7 +234,9 @@ class _SearchtabState extends State<Searchtab> {
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   List<Retailer> r = snapshot.data;
-                                  return (r.length>0)?RetailerList(retailers: r):Container(child: Text("No Stores"));
+                                  return (r.length > 0)
+                                      ? RetailerList(retailers: r)
+                                      : Container(child: Text("No Stores"));
                                 } else {
                                   return Container(child: Text("Loading..."));
                                 }

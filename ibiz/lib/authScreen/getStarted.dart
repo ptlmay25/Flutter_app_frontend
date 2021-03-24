@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/authScreen/otpscreen.dart';
 import 'package:ibiz/size_config.dart';
-// import 'package:sms_autofill/sms_autofill.dart';
-import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+// import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 
 class GetStarted extends StatefulWidget {
   @override
@@ -94,8 +94,8 @@ class _GetStartedState extends State<GetStarted> {
                               try {
                                 if (_formkey.currentState.validate()) {
                                   final signCode =
-                                      // await SmsAutoFill().getAppSignature;
-                                      await SmsRetrieved.getAppSignature();
+                                      await SmsAutoFill().getAppSignature;
+                                      // await SmsRetrieved.getAppSignature();
                                   print(signCode);
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => OTP(
