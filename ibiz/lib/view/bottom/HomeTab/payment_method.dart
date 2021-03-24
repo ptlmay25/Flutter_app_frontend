@@ -37,7 +37,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
     _razorpay.clear();
   }
 
-  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
   int b = 0;
   String paymentMethodUsed;
 

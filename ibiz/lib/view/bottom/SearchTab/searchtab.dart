@@ -18,7 +18,7 @@ class Searchtab extends StatefulWidget {
 
 class _SearchtabState extends State<Searchtab> {
   bool flag = false; //0 for brands, 1 for retailer
-  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
   Widget build(BuildContext context) {
     Future<List<Token>> tokenList = TokenDb().getToken();
     Future<List<MyCategory>> categories = MyCategoryDb().getBrand();

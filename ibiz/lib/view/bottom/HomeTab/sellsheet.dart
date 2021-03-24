@@ -17,7 +17,7 @@ class SellSheet extends StatefulWidget {
 }
 
 class _SellSheetState extends State<SellSheet> {
-  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
   int _n = 1;
   @override
   Widget build(BuildContext context) {

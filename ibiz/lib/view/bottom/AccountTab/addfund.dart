@@ -37,7 +37,7 @@ class _AddFundState extends State<AddFund> {
 
   @override
   Widget build(BuildContext context) {
-    var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+    var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
     UserModel userModel = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(

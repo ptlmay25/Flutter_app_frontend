@@ -15,7 +15,7 @@ class BuySheet extends StatefulWidget {
 }
 
 class _BuySheetState extends State<BuySheet> {
-  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
   int _n = 1;
 
   @override

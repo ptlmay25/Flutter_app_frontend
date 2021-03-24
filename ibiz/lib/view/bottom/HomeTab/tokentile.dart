@@ -13,7 +13,7 @@ class TokenTile extends StatefulWidget {
 }
 
 class _TokenTileState extends State<TokenTile> {
-  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
   @override
   Widget build(BuildContext context) {
     return Padding(

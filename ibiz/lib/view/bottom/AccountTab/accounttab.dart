@@ -36,7 +36,7 @@ class _AccounttabState extends State<Accounttab> {
 
   @override
   Widget build(BuildContext context) {
-    var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+    var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
     UserModel userModel = Provider.of<UserModel>(context);
 
     Future<List<Purchase>> purchaseList =
@@ -530,7 +530,7 @@ class _AccounttabState extends State<Accounttab> {
   }
 
   Widget getList(Transaction transaction) {
-    var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+    var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
     return Padding(
       padding: EdgeInsets.only(
           top: 32 * SizeConfig.heightMultiplier,

@@ -15,7 +15,7 @@ class Withdraw extends StatefulWidget {
 
 class _WithdrawState extends State<Withdraw> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
   String name, accNo, IFSC, UPI;
   int amount;
   @override

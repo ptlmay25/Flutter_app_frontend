@@ -16,7 +16,7 @@ class Withdraw_History extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Withdraw_HistoryState extends State<Withdraw_History> {
-  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
   var datef = new DateFormat('yyyy-MM-dd');
   @override
   Widget build(BuildContext context) {

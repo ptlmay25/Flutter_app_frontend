@@ -21,7 +21,7 @@ class Hometab extends StatefulWidget {
 }
 
 class _HometabState extends State<Hometab> {
-  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
   @override
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
@@ -61,28 +61,57 @@ class _HometabState extends State<Hometab> {
                                             estPurchase / userModel.tokens) *
                                         userModel.tokens;
                                     double n = 0;
+                                    double inc = userModel.tokens *
+                                        latestToken.dividendPerToken;
                                     if (!(estProfit + estPurchase).isNaN) {
                                       n = estProfit + estPurchase;
                                     }
-                                    return Text(curf.format(((n).toDouble())),
-                                        style: TextStyle(
-                                            fontSize: 30 *
-                                                SizeConfig.heightMultiplier,
-                                            fontFamily: "Roboto",
-                                            color: Colors.white));
+                                    return Column(
+                                      children: [
+                                        Text(curf.format(((n).toDouble())),
+                                            style: TextStyle(
+                                                fontSize: 30 *
+                                                    SizeConfig.heightMultiplier,
+                                                fontFamily: "Roboto",
+                                                color: Colors.white)),
+                                        SizedBox(
+                                            height: 4 *
+                                                SizeConfig.heightMultiplier),
+                                        Text(
+                                            '+ ' +
+                                                inc.toStringAsFixed(2) +
+                                                '   Last month dividend',
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 255, 212, 31),
+                                                fontSize: 16 *
+                                                    SizeConfig
+                                                        .heightMultiplier))
+                                      ],
+                                    );
                                   } else {
-                                    return Text(curf.format(0),
-                                        style: TextStyle(
-                                            fontSize: 30 *
-                                                SizeConfig.heightMultiplier,
-                                            fontFamily: "Roboto",
-                                            color: Colors.white));
+                                    return Column(
+                                      children: [
+                                        Text(curf.format(0),
+                                            style: TextStyle(
+                                                fontSize: 30 *
+                                                    SizeConfig.heightMultiplier,
+                                                fontFamily: "Roboto",
+                                                color: Colors.white)),
+                                        SizedBox(
+                                            height: 4 *
+                                                SizeConfig.heightMultiplier),
+                                        Text('+0.00   Last month dividend',
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 255, 212, 31),
+                                                fontSize: 16 *
+                                                    SizeConfig
+                                                        .heightMultiplier))
+                                      ],
+                                    );
                                   }
                                 }),
-                            Text('+15.00 (0.1%) This month',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 255, 212, 31),
-                                    fontSize: 16 * SizeConfig.heightMultiplier))
                           ]),
                           color: Color.fromARGB(255, 66, 71, 112)),
                     ],

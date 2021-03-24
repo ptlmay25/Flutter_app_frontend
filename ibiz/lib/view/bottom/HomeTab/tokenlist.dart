@@ -14,7 +14,7 @@ class TokenList extends StatefulWidget {
 }
 
 class _TokenListState extends State<TokenList> {
-  var curf = new NumberFormat.currency(locale: "en_us", symbol: "₹ ");
+  var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
 
   Widget _buildTokenList(UserModel userModel) {
     var _data = widget.data;
