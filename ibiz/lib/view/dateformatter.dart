@@ -1,6 +1,6 @@
 class DateFormatter {
   String format(DateTime date) {
-    return date.day.toString() +
+    return getMonth(date.day) +
         '/' +
         getMonth(date.month) +
         '/' +
