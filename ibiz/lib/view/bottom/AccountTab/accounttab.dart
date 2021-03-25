@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ibiz/models/transaction.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/transactiondb.dart';
+import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/AccountTab/withdraw.dart';
 import 'package:ibiz/view/dateformatter.dart';
@@ -11,6 +12,7 @@ import 'package:ibiz/models/purchase.dart';
 import 'package:ibiz/models/sell.dart';
 import 'package:ibiz/service/database/purchasedb.dart';
 import 'package:ibiz/service/database/selldb.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Accounttab extends StatefulWidget {
   @override
@@ -18,6 +20,25 @@ class Accounttab extends StatefulWidget {
 }
 
 class _AccounttabState extends State<Accounttab> {
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    setState(() {});
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+
+    setState(() {});
+    _refreshController.loadComplete();
+  }
+
   String _selectedData = "\t\tAll";
   Map<String, int> days = {
     "\t\tLast 7 days": 7,
@@ -44,420 +65,438 @@ class _AccounttabState extends State<Accounttab> {
     Future<List<Sell>> sellList = SellDb().getSell(id: userModel.id);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Container(
-              color: Color.fromARGB(255, 66, 71, 112),
-              child: Column(children: <Widget>[
-                SizedBox(height: 15 * SizeConfig.heightMultiplier),
-                Row(
-                  children: [
-                    SizedBox(width: 20 * SizeConfig.widthMultiplier),
-                    SizedBox(
-                        height: 60 * SizeConfig.heightMultiplier,
-                        width: 60 * SizeConfig.widthMultiplier,
-                        child: (userModel.imageUrl != '')
-                            ? CircleAvatar(
-                                backgroundColor: Colors.white,
-                                backgroundImage:
-                                    NetworkImage(userModel.imageUrl),
-                              )
-                            : CircleAvatar(
-                                backgroundImage:
-                                    AssetImage("assets/icons/user_icon.png"))),
-                    SizedBox(width: 15 * SizeConfig.widthMultiplier),
-                    Text(
-                      userModel.username,
-                      style: TextStyle(
-                          fontSize: 15 * SizeConfig.heightMultiplier,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30 * SizeConfig.heightMultiplier),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 25 * SizeConfig.widthMultiplier),
-                  child: Column(
+      body: SmartRefresher(
+        enablePullDown: true,
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: Column(
+          children: [
+            Container(
+                color: Color.fromARGB(255, 66, 71, 112),
+                child: Column(children: <Widget>[
+                  SizedBox(height: 15 * SizeConfig.heightMultiplier),
+                  Row(
                     children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          curf.format(userModel.acc_bal),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontFamily: "Roboto",
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                      SizedBox(width: 20 * SizeConfig.widthMultiplier),
+                      SizedBox(
+                          height: 60 * SizeConfig.heightMultiplier,
+                          width: 60 * SizeConfig.widthMultiplier,
+                          child: (userModel.imageUrl != '')
+                              ? CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  backgroundImage:
+                                      NetworkImage(userModel.imageUrl),
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                      "assets/icons/user_icon.png"))),
+                      SizedBox(width: 15 * SizeConfig.widthMultiplier),
+                      Text(
+                        userModel.username,
+                        style: TextStyle(
+                            fontSize: 15 * SizeConfig.heightMultiplier,
+                            color: Colors.white),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(height: 10 * SizeConfig.heightMultiplier),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 25 * SizeConfig.widthMultiplier,
-                      right: 25 * SizeConfig.widthMultiplier),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Your Balance        ",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 3 * SizeConfig.heightMultiplier),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              DateFormatter().format(DateTime.now()) +
-                                  '\t\t' +
-                                  DateFormatter().timeFormatter(DateTime.now()),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ),
-                        ]),
-                      ),
-                      FlatButton(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 25 * SizeConfig.heightMultiplier,
-                                width: 40 * SizeConfig.widthMultiplier,
-                                child: Icon(
-                                  Icons.logout,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(height: 3 * SizeConfig.heightMultiplier),
-                              Text(
-                                'withdraw',
-                                style: TextStyle(
+                  SizedBox(height: 30 * SizeConfig.heightMultiplier),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: 25 * SizeConfig.widthMultiplier),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: FutureBuilder(
+                              future: Userdb()
+                                  .getUserByMobileNo(userModel.mobileNo),
+                              builder: (context, snapShot) {
+                                double userBalance = 0;
+                                if (snapShot.hasData) {
+                                  UserModel dynamicUserModel = snapShot.data;
+                                  userBalance = dynamicUserModel.acc_bal;
+                                  print(userModel.acc_bal);
+                                }
+                                return Text(
+                                  // curf.format(userModel.acc_bal),
+                                  curf.format(userBalance),
+                                  style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12 * SizeConfig.heightMultiplier,
-                                    fontWeight: FontWeight.normal),
-                              )
-                            ],
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    ChangeNotifierProvider.value(
-                                        value: userModel,
-                                        child: ChangeNotifierProvider.value(
-                                            value: userModel,
-                                            child: Withdraw()))));
-                          }),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 35 * SizeConfig.heightMultiplier),
-              ])),
-          // Container(
-          //     color: Color.fromARGB(255, 66, 71, 112),
-          //     child: Column(children: <Widget>[
-          //       Padding(
-          //         padding:
-          //             EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
-          //         child: Column(
-          //           children: <Widget>[
-          //             Padding(
-          //               padding: EdgeInsets.only(),
-          //               child: Text(
-          //                 curf.format(userModel.acc_bal),
-          //                 style: TextStyle(
-          //                   color: Colors.white,
-          //                   fontSize: 28,
-          //                   fontFamily: "Roboto",
-          //                   fontWeight: FontWeight.w500,
-          //                 ),
-          //               ),
-          //             ),
-          //             Padding(
-          //               padding: EdgeInsets.only(
-          //                   top: 20 * SizeConfig.heightMultiplier),
-          //               child: Text(
-          //                 "Your Balance",
-          //                 style: TextStyle(
-          //                   color: Colors.white,
-          //                   fontSize: 13,
-          //                   fontFamily: "Roboto",
-          //                   fontWeight: FontWeight.w300,
-          //                 ),
-          //               ),
-          //             ),
-          //             Padding(
-          //               padding: EdgeInsets.only(
-          //                   top: 5 * SizeConfig.heightMultiplier),
-          //               child: Text(
-          //                 DateTime.now().toString().substring(0,16),
-          //                 style: TextStyle(
-          //                   color: Colors.white,
-          //                   fontSize: 13,
-          //                   fontFamily: "Roboto",
-          //                   fontWeight: FontWeight.w300,
-          //                 ),
-          //               ),
-          //             ),
-          //             Padding(
-          //               padding: EdgeInsets.only(
-          //                   left: 58 * SizeConfig.widthMultiplier,
-          //                   top: 26 * SizeConfig.heightMultiplier,
-          //                   bottom: 38 * SizeConfig.heightMultiplier),
-          //               child: Row(
-          //                 children: [
-          //                   ClipRRect(
-          //                     borderRadius: BorderRadius.circular(5),
-          //                     child: Container(
-          //                       height: 40 * SizeConfig.heightMultiplier,
-          //                       width: 120 * SizeConfig.widthMultiplier,
-          //                       child: RaisedButton(
-          //                         onPressed: () {
-          //                           Navigator.of(context).push(
-          //                               MaterialPageRoute(
-          //                                   builder: (context) =>
-          //                                       ChangeNotifierProvider.value(
-          //                                           value: userModel,
-          //                                           child: AddFund(
-          //                                             userModel: userModel,
-          //                                           ))));
-          //                         },
-          //                         color: Color.fromARGB(255, 108, 113, 156),
-          //                         child: Text(
-          //                           'Add Funds',
-          //                           style: TextStyle(
-          //                               color: Colors.white,
-          //                               fontWeight: FontWeight.normal,
-          //                               fontSize:
-          //                                   16 * SizeConfig.heightMultiplier),
-          //                         ),
-          //                       ),
-          //                     ),
-          //                   ),
-          //                   SizedBox(width: 20 * SizeConfig.widthMultiplier),
-          //                   ClipRRect(
-          //                     borderRadius: BorderRadius.circular(5),
-          //                     child: Container(
-          //                       height: 40 * SizeConfig.heightMultiplier,
-          //                       width: 120 * SizeConfig.widthMultiplier,
-          //                       child: RaisedButton(
-          //                         onPressed: () {
-          //                           Navigator.of(context).push(MaterialPageRoute(
-          //                               builder: (context) =>
-          //                                   ChangeNotifierProvider.value(
-          //                                       value: userModel,
-          //                                       child: ChangeNotifierProvider
-          //                                           .value(
-          //                                               value: userModel,
-          //                                               child: Withdraw()))));
-          //                         },
-          //                         color: Color.fromARGB(255, 108, 113, 156),
-          //                         child: Text(
-          //                           'Withdraw',
-          //                           style: TextStyle(
-          //                               color: Colors.white,
-          //                               fontWeight: FontWeight.normal,
-          //                               fontSize:
-          //                                   16 * SizeConfig.heightMultiplier),
-          //                         ),
-          //                       ),
-          //                     ),
-          //                   ),
-          //                 ],
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ])),
-          Container(
-            height: 450 * SizeConfig.heightMultiplier,
-            child: ListView(
-              children: <Widget>[
-                SizedBox(height: 20 * SizeConfig.heightMultiplier),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 22 * SizeConfig.widthMultiplier,
-                      right: 22 * SizeConfig.widthMultiplier),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: 70 * SizeConfig.heightMultiplier,
-                            width: 160 * SizeConfig.widthMultiplier,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all()),
-                            child: Column(children: [
-                              SizedBox(
-                                  height: 15 * SizeConfig.heightMultiplier),
-                              Text("Total Purchase"),
-                              SizedBox(height: 5 * SizeConfig.heightMultiplier),
-                              FutureBuilder(
-                                  future: Future.wait([purchaseList, sellList]),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snapshot) {
-                                    if (snapshot.hasData) {
-                                      Map<String, double> data =
-                                          getPurchaseSellDetails(
-                                              snapshot.data[0],
-                                              snapshot.data[1]);
-                                      return Text(curf.format(
-                                          data['totalPurchase']
-                                              .abs()
-                                              .toDouble()));
-                                    } else {
-                                      return Text(curf.format(0));
-                                    }
-                                  }),
-                            ]),
-                          ),
-                          SizedBox(width: 15 * SizeConfig.heightMultiplier),
-                          Container(
-                            height: 70 * SizeConfig.heightMultiplier,
-                            width: 160 * SizeConfig.widthMultiplier,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all()),
-                            child: Column(children: [
-                              SizedBox(
-                                  height: 15 * SizeConfig.heightMultiplier),
-                              Text("Total Sales"),
-                              SizedBox(height: 5 * SizeConfig.heightMultiplier),
-                              FutureBuilder(
-                                  future: Future.wait([purchaseList, sellList]),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snapshot) {
-                                    if (snapshot.hasData) {
-                                      Map<String, double> data =
-                                          getPurchaseSellDetails(
-                                              snapshot.data[0],
-                                              snapshot.data[1]);
-                                      return Text(curf.format(
-                                          data['totalSell'].abs().toDouble()));
-                                    } else {
-                                      return Text(curf.format(0));
-                                    }
-                                  }),
-                            ]),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20 * SizeConfig.heightMultiplier),
-                      Row(
-                        children: [
-                          Container(
-                            height: 70 * SizeConfig.heightMultiplier,
-                            width: 160 * SizeConfig.widthMultiplier,
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 255, 212, 31),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Column(children: [
-                              SizedBox(
-                                  height: 15 * SizeConfig.heightMultiplier),
-                              Text("Total Profit"),
-                              SizedBox(height: 5 * SizeConfig.heightMultiplier),
-                              FutureBuilder(
-                                  future: Future.wait([purchaseList, sellList]),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snapshot) {
-                                    if (snapshot.hasData) {
-                                      Map<String, double> data =
-                                          getPurchaseSellDetails(
-                                              snapshot.data[0],
-                                              snapshot.data[1]);
-                                      print(data);
-                                      double profit =
-                                          data['netProfit'].abs().toDouble();
-                                      if (data['netProfit'].isNaN) {
-                                        profit = 0;
-                                      }
-                                      return Text(curf.format(profit));
-                                    } else {
-                                      return Text(curf.format(0));
-                                    }
-                                  }),
-                            ]),
-                          ),
-                          Container(
-                            height: 70 * SizeConfig.heightMultiplier,
-                            width: 160 * SizeConfig.widthMultiplier,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: 30 * SizeConfig.heightMultiplier,
-                      left: 22 * SizeConfig.widthMultiplier),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          "Transaction",
-                          style: TextStyle(
-                            color: Color(0xff151515),
-                            fontSize: 18,
-                          ),
+                                    fontSize: 28,
+                                    fontFamily: "Roboto",
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                );
+                              }),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: 21 * SizeConfig.widthMultiplier),
-                        child: Container(
-                          height: 30 * SizeConfig.heightMultiplier,
-                          width: 107 * SizeConfig.widthMultiplier,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: Color(0xff151515),
-                              width: 0.50,
-                            ),
-                            color: Colors.white,
-                          ),
-                          child: DropdownButton(
-                            underline: Container(color: Colors.transparent),
-                            hint: Align(
-                              alignment: Alignment.center,
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10 * SizeConfig.heightMultiplier),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 25 * SizeConfig.widthMultiplier,
+                        right: 25 * SizeConfig.widthMultiplier),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(children: [
+                            Align(
+                              alignment: Alignment.topLeft,
                               child: Text(
-                                "   Last 7 days",
-                                textAlign: TextAlign.center,
+                                "Your Balance        ",
                                 style: TextStyle(
-                                  color: Color(0xff151515),
-                                  fontSize: 12,
+                                  color: Colors.white,
+                                  fontSize: 13,
                                   fontFamily: "Roboto",
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
                             ),
-                            value: _selectedData,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _selectedData = newValue;
-                              });
-                            },
-                            items: _data.map((data) {
-                              return DropdownMenuItem(
-                                child: new Text(
-                                  data,
+                            SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                DateFormatter().format(DateTime.now()) +
+                                    '\t\t' +
+                                    DateFormatter()
+                                        .timeFormatter(DateTime.now()),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontFamily: "Roboto",
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
+                          ]),
+                        ),
+                        FlatButton(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 25 * SizeConfig.heightMultiplier,
+                                  width: 40 * SizeConfig.widthMultiplier,
+                                  child: Icon(
+                                    Icons.logout,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                    height: 3 * SizeConfig.heightMultiplier),
+                                Text(
+                                  'withdraw',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          12 * SizeConfig.heightMultiplier,
+                                      fontWeight: FontWeight.normal),
+                                )
+                              ],
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      ChangeNotifierProvider.value(
+                                          value: userModel,
+                                          child: ChangeNotifierProvider.value(
+                                              value: userModel,
+                                              child: Withdraw()))));
+                            }),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 35 * SizeConfig.heightMultiplier),
+                ])),
+            // Container(
+            //     color: Color.fromARGB(255, 66, 71, 112),
+            //     child: Column(children: <Widget>[
+            //       Padding(
+            //         padding:
+            //             EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
+            //         child: Column(
+            //           children: <Widget>[
+            //             Padding(
+            //               padding: EdgeInsets.only(),
+            //               child: Text(
+            //                 curf.format(userModel.acc_bal),
+            //                 style: TextStyle(
+            //                   color: Colors.white,
+            //                   fontSize: 28,
+            //                   fontFamily: "Roboto",
+            //                   fontWeight: FontWeight.w500,
+            //                 ),
+            //               ),
+            //             ),
+            //             Padding(
+            //               padding: EdgeInsets.only(
+            //                   top: 20 * SizeConfig.heightMultiplier),
+            //               child: Text(
+            //                 "Your Balance",
+            //                 style: TextStyle(
+            //                   color: Colors.white,
+            //                   fontSize: 13,
+            //                   fontFamily: "Roboto",
+            //                   fontWeight: FontWeight.w300,
+            //                 ),
+            //               ),
+            //             ),
+            //             Padding(
+            //               padding: EdgeInsets.only(
+            //                   top: 5 * SizeConfig.heightMultiplier),
+            //               child: Text(
+            //                 DateTime.now().toString().substring(0,16),
+            //                 style: TextStyle(
+            //                   color: Colors.white,
+            //                   fontSize: 13,
+            //                   fontFamily: "Roboto",
+            //                   fontWeight: FontWeight.w300,
+            //                 ),
+            //               ),
+            //             ),
+            //             Padding(
+            //               padding: EdgeInsets.only(
+            //                   left: 58 * SizeConfig.widthMultiplier,
+            //                   top: 26 * SizeConfig.heightMultiplier,
+            //                   bottom: 38 * SizeConfig.heightMultiplier),
+            //               child: Row(
+            //                 children: [
+            //                   ClipRRect(
+            //                     borderRadius: BorderRadius.circular(5),
+            //                     child: Container(
+            //                       height: 40 * SizeConfig.heightMultiplier,
+            //                       width: 120 * SizeConfig.widthMultiplier,
+            //                       child: RaisedButton(
+            //                         onPressed: () {
+            //                           Navigator.of(context).push(
+            //                               MaterialPageRoute(
+            //                                   builder: (context) =>
+            //                                       ChangeNotifierProvider.value(
+            //                                           value: userModel,
+            //                                           child: AddFund(
+            //                                             userModel: userModel,
+            //                                           ))));
+            //                         },
+            //                         color: Color.fromARGB(255, 108, 113, 156),
+            //                         child: Text(
+            //                           'Add Funds',
+            //                           style: TextStyle(
+            //                               color: Colors.white,
+            //                               fontWeight: FontWeight.normal,
+            //                               fontSize:
+            //                                   16 * SizeConfig.heightMultiplier),
+            //                         ),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                   SizedBox(width: 20 * SizeConfig.widthMultiplier),
+            //                   ClipRRect(
+            //                     borderRadius: BorderRadius.circular(5),
+            //                     child: Container(
+            //                       height: 40 * SizeConfig.heightMultiplier,
+            //                       width: 120 * SizeConfig.widthMultiplier,
+            //                       child: RaisedButton(
+            //                         onPressed: () {
+            //                           Navigator.of(context).push(MaterialPageRoute(
+            //                               builder: (context) =>
+            //                                   ChangeNotifierProvider.value(
+            //                                       value: userModel,
+            //                                       child: ChangeNotifierProvider
+            //                                           .value(
+            //                                               value: userModel,
+            //                                               child: Withdraw()))));
+            //                         },
+            //                         color: Color.fromARGB(255, 108, 113, 156),
+            //                         child: Text(
+            //                           'Withdraw',
+            //                           style: TextStyle(
+            //                               color: Colors.white,
+            //                               fontWeight: FontWeight.normal,
+            //                               fontSize:
+            //                                   16 * SizeConfig.heightMultiplier),
+            //                         ),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ])),
+            Container(
+              height: 450 * SizeConfig.heightMultiplier,
+              child: ListView(
+                children: <Widget>[
+                  SizedBox(height: 20 * SizeConfig.heightMultiplier),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 22 * SizeConfig.widthMultiplier,
+                        right: 22 * SizeConfig.widthMultiplier),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: 70 * SizeConfig.heightMultiplier,
+                              width: 160 * SizeConfig.widthMultiplier,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all()),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: 15 * SizeConfig.widthMultiplier),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                          height:
+                                              20 * SizeConfig.heightMultiplier),
+                                      Text("Total Purchase"),
+                                      SizedBox(
+                                          height:
+                                              5 * SizeConfig.heightMultiplier),
+                                      FutureBuilder(
+                                          future: Future.wait(
+                                              [purchaseList, sellList]),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot snapshot) {
+                                            if (snapshot.hasData) {
+                                              Map<String, double> data =
+                                                  getPurchaseSellDetails(
+                                                      snapshot.data[0],
+                                                      snapshot.data[1]);
+                                              return Text(curf.format(
+                                                  data['totalPurchase']
+                                                      .abs()
+                                                      .toDouble()));
+                                            } else {
+                                              return Text(curf.format(0));
+                                            }
+                                          }),
+                                    ]),
+                              ),
+                            ),
+                            SizedBox(width: 15 * SizeConfig.heightMultiplier),
+                            Container(
+                              height: 70 * SizeConfig.heightMultiplier,
+                              width: 160 * SizeConfig.widthMultiplier,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all()),
+                              child: Column(children: [
+                                SizedBox(
+                                    height: 15 * SizeConfig.heightMultiplier),
+                                Text("Total Sales"),
+                                SizedBox(
+                                    height: 5 * SizeConfig.heightMultiplier),
+                                FutureBuilder(
+                                    future:
+                                        Future.wait([purchaseList, sellList]),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.hasData) {
+                                        Map<String, double> data =
+                                            getPurchaseSellDetails(
+                                                snapshot.data[0],
+                                                snapshot.data[1]);
+                                        return Text(curf.format(
+                                            data['totalSell']
+                                                .abs()
+                                                .toDouble()));
+                                      } else {
+                                        return Text(curf.format(0));
+                                      }
+                                    }),
+                              ]),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20 * SizeConfig.heightMultiplier),
+                        Row(
+                          children: [
+                            Container(
+                              height: 70 * SizeConfig.heightMultiplier,
+                              width: 160 * SizeConfig.widthMultiplier,
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 212, 31),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(children: [
+                                SizedBox(
+                                    height: 15 * SizeConfig.heightMultiplier),
+                                Text("Total Profit"),
+                                SizedBox(
+                                    height: 5 * SizeConfig.heightMultiplier),
+                                FutureBuilder(
+                                    future:
+                                        Future.wait([purchaseList, sellList]),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.hasData) {
+                                        Map<String, double> data =
+                                            getPurchaseSellDetails(
+                                                snapshot.data[0],
+                                                snapshot.data[1]);
+                                        print(data);
+                                        double profit =
+                                            data['netProfit'].abs().toDouble();
+                                        if (data['netProfit'].isNaN) {
+                                          profit = 0;
+                                        }
+                                        return Text(curf.format(profit));
+                                      } else {
+                                        return Text(curf.format(0));
+                                      }
+                                    }),
+                              ]),
+                            ),
+                            Container(
+                              height: 70 * SizeConfig.heightMultiplier,
+                              width: 160 * SizeConfig.widthMultiplier,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 30 * SizeConfig.heightMultiplier,
+                        left: 22 * SizeConfig.widthMultiplier),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            "Transaction",
+                            style: TextStyle(
+                              color: Color(0xff151515),
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: 21 * SizeConfig.widthMultiplier),
+                          child: Container(
+                            height: 30 * SizeConfig.heightMultiplier,
+                            width: 107 * SizeConfig.widthMultiplier,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: Color(0xff151515),
+                                width: 0.50,
+                              ),
+                              color: Colors.white,
+                            ),
+                            child: DropdownButton(
+                              underline: Container(color: Colors.transparent),
+                              hint: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "   Last 7 days",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Color(0xff151515),
@@ -466,65 +505,86 @@ class _AccounttabState extends State<Accounttab> {
                                     fontWeight: FontWeight.w300,
                                   ),
                                 ),
-                                value: data,
-                              );
-                            }).toList(),
+                              ),
+                              value: _selectedData,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _selectedData = newValue;
+                                });
+                              },
+                              items: _data.map((data) {
+                                return DropdownMenuItem(
+                                  child: new Text(
+                                    data,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xff151515),
+                                      fontSize: 12,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                  value: data,
+                                );
+                              }).toList(),
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  //height: 400 * SizeConfig.heightMultiplier,
-                  child: FutureBuilder(
-                    future: TransactionDb().getTransactions(id: userModel.id),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        List<Transaction> transactionList = snapshot.data;
-                        transactionList =
-                            new List.from(transactionList.reversed);
-                        transactionList = transactionList.where((element) {
-                          DateTime trasactionDate =
-                              DateTime.parse(element.date);
-                          // print(trasactionDate);
-                          int difference =
-                              DateTime.now().difference(trasactionDate).inDays;
-                          // int difference = 5;
-                          // print(difference);
-                          // print(_selectedData);
-                          if (_selectedData == '\t\tAll') {
-                            return true;
-                          }
-                          if (difference <= days[_selectedData]) {
-                            return true;
-                          }
-                          return false;
-                        }).toList();
-                        return SingleChildScrollView(
-                          physics: ScrollPhysics(),
-                          child: Column(
-                            children: [
-                              ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: transactionList.length,
-                                  itemBuilder: (context, index) {
-                                    return getList(transactionList[index]);
-                                  }),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return Center(child: Text("No Transaction"));
-                      }
-                    },
+                  Container(
+                    //height: 400 * SizeConfig.heightMultiplier,
+                    child: FutureBuilder(
+                      future: TransactionDb().getTransactions(id: userModel.id),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          List<Transaction> transactionList = snapshot.data;
+                          transactionList =
+                              new List.from(transactionList.reversed);
+                          transactionList = transactionList.where((element) {
+                            DateTime trasactionDate =
+                                DateTime.parse(element.date);
+                            // print(trasactionDate);
+                            int difference = DateTime.now()
+                                .difference(trasactionDate)
+                                .inDays;
+                            // int difference = 5;
+                            // print(difference);
+                            // print(_selectedData);
+                            if (_selectedData == '\t\tAll') {
+                              return true;
+                            }
+                            if (difference <= days[_selectedData]) {
+                              return true;
+                            }
+                            return false;
+                          }).toList();
+                          return SingleChildScrollView(
+                            physics: ScrollPhysics(),
+                            child: Column(
+                              children: [
+                                ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: transactionList.length,
+                                    itemBuilder: (context, index) {
+                                      return getList(transactionList[index]);
+                                    }),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Center(child: Text("Loading..."));
+                        }
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

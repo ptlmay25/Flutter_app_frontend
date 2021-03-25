@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:lottie/lottie.dart';
 
 class CompleteOrder extends StatefulWidget {
+  final String message;
+  final bool flag;
+  CompleteOrder({this.message, this.flag});
   @override
   _CompleteOrderState createState() => _CompleteOrderState();
 }
@@ -21,16 +25,19 @@ class _CompleteOrderState extends State<CompleteOrder> {
                 left: 138 * SizeConfig.widthMultiplier,
                 right: 137 * SizeConfig.widthMultiplier,
                 top: 116 * SizeConfig.heightMultiplier),
-            child: Image.asset(
-              "assets/images/Vector.png",
-              width: 100,
-              height: 100,
+            child: Column(
+              children: [
+                Lottie.asset('assets/check_mark.json', repeat: false),
+              ],
             ),
+          ),
+          SizedBox(
+            height: 50 * SizeConfig.heightMultiplier,
           ),
           Padding(
             padding: EdgeInsets.only(top: 19 * SizeConfig.heightMultiplier),
             child: Text(
-              "Your order is complete",
+              widget.message,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color.fromRGBO(21, 21, 21, 1),
@@ -40,9 +47,11 @@ class _CompleteOrderState extends State<CompleteOrder> {
               ),
             ),
           ),
+          SizedBox(
+            height: 50 * SizeConfig.heightMultiplier,
+          ),
           Padding(
             padding: EdgeInsets.only(
-                top: (50) * SizeConfig.heightMultiplier,
                 left: (48) * SizeConfig.widthMultiplier,
                 right: (47) * SizeConfig.widthMultiplier),
             child: ClipRRect(
@@ -67,7 +76,23 @@ class _CompleteOrderState extends State<CompleteOrder> {
                 ),
               ),
             ),
-          )
+          ),
+          (widget.flag)
+              ? Padding(
+                  padding: EdgeInsets.only(
+                    right: 20 * SizeConfig.widthMultiplier,
+                    left: 28 * SizeConfig.widthMultiplier,
+                    top: 245 * SizeConfig.heightMultiplier,
+                  ),
+                  child: Container(
+                    child: Text(
+                      'Note:- After requesting a withdraw. It takes up to 24 hours to process the amount. Once the request is processed, The amount will be credited to your given bank account number.',
+                      style:
+                          TextStyle(fontSize: 11 * SizeConfig.heightMultiplier),
+                    ),
+                  ),
+                )
+              : Container()
         ],
       ),
     );

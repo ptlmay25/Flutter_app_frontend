@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/usermodel.dart';
+import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/payment_method.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +10,8 @@ import 'package:provider/provider.dart';
 
 class BuySheet extends StatefulWidget {
   final double tokenPrice;
-  BuySheet({this.tokenPrice});
+  final UserModel userModel;
+  BuySheet({this.tokenPrice, this.userModel});
   @override
   _BuySheetState createState() => _BuySheetState();
 }
@@ -20,7 +22,8 @@ class _BuySheetState extends State<BuySheet> {
 
   @override
   Widget build(BuildContext context) {
-    UserModel userModel = Provider.of<UserModel>(context);
+    // UserModel userModel = Provider.of<UserModel>(context);
+    UserModel userModel = widget.userModel;
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
       child: Container(

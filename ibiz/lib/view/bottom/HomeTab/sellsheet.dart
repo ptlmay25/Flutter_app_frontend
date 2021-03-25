@@ -11,7 +11,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class SellSheet extends StatefulWidget {
   final double tokenPrice;
-  SellSheet({this.tokenPrice});
+  final UserModel userModel;
+  SellSheet({this.tokenPrice, this.userModel});
   @override
   _SellSheetState createState() => _SellSheetState();
 }
@@ -21,7 +22,8 @@ class _SellSheetState extends State<SellSheet> {
   int _n = 1;
   @override
   Widget build(BuildContext context) {
-    UserModel userModel = Provider.of<UserModel>(context);
+    // UserModel userModel = Provider.of<UserModel>(context);
+    UserModel userModel = widget.userModel;
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
       child: Container(
@@ -144,7 +146,10 @@ class _SellSheetState extends State<SellSheet> {
                         newSell: userModel.total_sell + _n * widget.tokenPrice,
                         newPurchase: userModel.total_purchase);
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CompleteOrder()));
+                        builder: (context) => CompleteOrder(
+                              message: 'Your order is complete',
+                              flag: false,
+                            )));
                   }
                 },
                 color: Color.fromARGB(255, 66, 71, 112),

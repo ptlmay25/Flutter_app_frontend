@@ -28,24 +28,19 @@ class _Withdraw_HistoryState extends State<Withdraw_History> {
           //scrollDirection: Axis.vertical,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 25 * SizeConfig.heightMultiplier),
-              child: Container(
-                  height: 40 * SizeConfig.heightMultiplier,
-                  width: 320 * SizeConfig.heightMultiplier,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(
-                      color: Color(0xff909090),
-                      width: 0.50,
-                    ),
-                  ),
-                  child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "Search",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                          )))),
-            ),
+                padding: EdgeInsets.only(
+                    top: 25 * SizeConfig.heightMultiplier,
+                    right: 28 * SizeConfig.widthMultiplier,
+                    left: 28 * SizeConfig.widthMultiplier),
+                child: TextField(
+                    cursorHeight: 5,
+                    decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(15),
+                        hintText: "Search",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                        )))),
             Padding(
               padding: EdgeInsets.only(
                   left: 25 * SizeConfig.widthMultiplier,

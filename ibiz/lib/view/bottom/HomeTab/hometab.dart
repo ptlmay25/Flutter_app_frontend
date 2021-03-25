@@ -6,6 +6,7 @@ import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/purchasedb.dart';
 import 'package:ibiz/service/database/selldb.dart';
 import 'package:ibiz/service/database/tokendb.dart';
+import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/buysheet.dart';
 import 'package:ibiz/view/bottom/HomeTab/chart.dart';
@@ -25,6 +26,8 @@ class _HometabState extends State<Hometab> {
   @override
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
+    Future<dynamic> dynamicUserModel =
+        Userdb().getUserByMobileNo(userModel.mobileNo);
     Future<List<Token>> tokenList = TokenDb().getToken();
     Future<List<Purchase>> purchaseList =
         PurchaseDb().getPurchase(id: userModel.id);
@@ -198,108 +201,109 @@ class _HometabState extends State<Hometab> {
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              'NO OF TOKENS',
-                                              style: TextStyle(
-                                                  fontSize: 15 *
-                                                      SizeConfig
-                                                          .heightMultiplier,
-                                                  color: Color.fromARGB(
-                                                      255, 114, 144, 144)),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 7 *
-                                                      SizeConfig
-                                                          .heightMultiplier),
-                                              child: Text(
-                                                userModel.tokens.toString(),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'NO OF TOKENS',
+                                          style: TextStyle(
+                                              fontSize: 15 *
+                                                  SizeConfig.heightMultiplier,
+                                              color: Color.fromARGB(
+                                                  255, 114, 144, 144)),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 7 *
+                                                  SizeConfig.heightMultiplier),
+                                          child: FutureBuilder(
+                                            future: dynamicUserModel,
+                                            builder: (context, snapShot) {
+                                              int tokens = 0;
+                                              if (snapShot.hasData) {
+                                                UserModel snapUserModel =
+                                                    snapShot.data;
+                                                tokens = snapUserModel.tokens;
+                                              }
+                                              return Text(
+                                                tokens.toString(),
                                                 style: TextStyle(
-                                                    fontSize: 25 *
+                                                    fontSize: 18 *
                                                         SizeConfig
                                                             .heightMultiplier),
-                                              ),
-                                            ),
+                                              );
+                                            },
                                           ),
-                                        ],
-                                      ),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 140 * SizeConfig.widthMultiplier,
-                                    height: 60 * SizeConfig.heightMultiplier,
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 25 * SizeConfig.widthMultiplier),
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            'EST. PROFIT',
-                                            style: TextStyle(
-                                                fontSize: 15 *
-                                                    SizeConfig.heightMultiplier,
-                                                color: Color.fromARGB(
-                                                    255, 114, 144, 144)),
-                                          ),
+                                        Text(
+                                          'EST. PROFIT',
+                                          style: TextStyle(
+                                              fontSize: 15 *
+                                                  SizeConfig.heightMultiplier,
+                                              color: Color.fromARGB(
+                                                  255, 114, 144, 144)),
                                         ),
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 7 *
-                                                    SizeConfig
-                                                        .heightMultiplier),
-                                            child: FutureBuilder(
-                                                future: Future.wait([
-                                                  purchaseList,
-                                                  sellList,
-                                                  tokenList
-                                                ]),
-                                                builder: (BuildContext context,
-                                                    AsyncSnapshot snapshot) {
-                                                  if (snapshot.hasData &&
-                                                      userModel.tokens > 0) {
-                                                    Token token =
-                                                        snapshot.data[2][0];
-                                                    Map data =
-                                                        getPurchaseSellDetails(
-                                                            snapshot.data[0],
-                                                            snapshot.data[1]);
-                                                    double estPurchase =
-                                                        data['estPurchase'];
-                                                    double estProfit = (token
-                                                                .tokenPrice -
-                                                            estPurchase /
-                                                                userModel
-                                                                    .tokens) *
-                                                        userModel.tokens;
-                                                    return Text(
-                                                      curf.format(
-                                                          estProfit.abs()),
-                                                      style: TextStyle(
-                                                          fontSize: 25 *
-                                                              SizeConfig
-                                                                  .heightMultiplier),
-                                                    );
-                                                  } else {
-                                                    return Text(
-                                                      curf.format(0),
-                                                      style: TextStyle(
-                                                          fontSize: 25 *
-                                                              SizeConfig
-                                                                  .heightMultiplier),
-                                                    );
-                                                  }
-                                                }),
-                                          ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 7 *
+                                                  SizeConfig.heightMultiplier),
+                                          child: FutureBuilder(
+                                              future: Future.wait([
+                                                purchaseList,
+                                                sellList,
+                                                tokenList,
+                                                dynamicUserModel
+                                              ]),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot snapshot) {
+                                                if (snapshot.hasData) {
+                                                  UserModel userModel =
+                                                      snapshot.data[3];
+                                                  Token token =
+                                                      snapshot.data[2][0];
+                                                  Map data =
+                                                      getPurchaseSellDetails(
+                                                          snapshot.data[0],
+                                                          snapshot.data[1]);
+                                                  double estPurchase =
+                                                      data['estPurchase'];
+                                                  double estProfit =
+                                                      (token.tokenPrice -
+                                                              estPurchase /
+                                                                  userModel
+                                                                      .tokens) *
+                                                          userModel.tokens;
+                                                  double val = (estProfit.isNaN)
+                                                      ? 0
+                                                      : estProfit;
+                                                  return Text(
+                                                    curf.format(val.abs()),
+                                                    style: TextStyle(
+                                                        fontSize: 18 *
+                                                            SizeConfig
+                                                                .heightMultiplier),
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    curf.format(0),
+                                                    style: TextStyle(
+                                                        fontSize: 18 *
+                                                            SizeConfig
+                                                                .heightMultiplier),
+                                                  );
+                                                }
+                                              }),
                                         ),
                                       ],
                                     ),
@@ -315,82 +319,65 @@ class _HometabState extends State<Hometab> {
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        height:
-                                            60 * SizeConfig.heightMultiplier,
-                                        //width: 160 * SizeConfig.widthMultiplier,
-                                        child: Column(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Text(
-                                                'TOTAL PURCHASE',
-                                                style: TextStyle(
-                                                    fontSize: 15 *
-                                                        SizeConfig
-                                                            .heightMultiplier,
-                                                    color: Color.fromARGB(
-                                                        255, 114, 144, 144)),
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: 7 *
-                                                        SizeConfig
-                                                            .heightMultiplier),
-                                                child: FutureBuilder(
-                                                    future: Future.wait([
-                                                      purchaseList,
-                                                      sellList,
-                                                    ]),
-                                                    builder:
-                                                        (BuildContext context,
-                                                            AsyncSnapshot
-                                                                snapshot) {
-                                                      if (snapshot.hasData &&
-                                                          userModel.tokens >
-                                                              0) {
-                                                        Map data =
-                                                            getPurchaseSellDetails(
-                                                                snapshot
-                                                                    .data[0],
-                                                                snapshot
-                                                                    .data[1]);
-                                                        double estPurchase =
-                                                            data['estPurchase'];
-                                                        return Text(
-                                                          curf.format(
-                                                              (estPurchase
-                                                                  .toDouble())),
-                                                          style: TextStyle(
-                                                              fontSize: 25 *
-                                                                  SizeConfig
-                                                                      .heightMultiplier),
-                                                        );
-                                                      } else {
-                                                        return Text(
-                                                          curf.format(0),
-                                                          style: TextStyle(
-                                                              fontSize: 25 *
-                                                                  SizeConfig
-                                                                      .heightMultiplier),
-                                                        );
-                                                      }
-                                                    }),
-                                              ),
-                                            ),
-                                          ],
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'TOTAL PURCHASE',
+                                          style: TextStyle(
+                                              fontSize: 15 *
+                                                  SizeConfig.heightMultiplier,
+                                              color: Color.fromARGB(
+                                                  255, 114, 144, 144)),
                                         ),
-                                      ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 7 *
+                                                  SizeConfig.heightMultiplier),
+                                          child: FutureBuilder(
+                                              future: Future.wait([
+                                                purchaseList,
+                                                sellList,
+                                              ]),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot snapshot) {
+                                                if (snapshot.hasData &&
+                                                    userModel.tokens > 0) {
+                                                  Map data =
+                                                      getPurchaseSellDetails(
+                                                          snapshot.data[0],
+                                                          snapshot.data[1]);
+                                                  double estPurchase =
+                                                      data['estPurchase'];
+                                                  return Text(
+                                                    curf.format((estPurchase
+                                                        .toDouble())),
+                                                    style: TextStyle(
+                                                        fontSize: 18 *
+                                                            SizeConfig
+                                                                .heightMultiplier),
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    curf.format(0),
+                                                    style: TextStyle(
+                                                        fontSize: 18 *
+                                                            SizeConfig
+                                                                .heightMultiplier),
+                                                  );
+                                                }
+                                              }),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Container(
-                                    width: 140 * SizeConfig.widthMultiplier,
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 25 * SizeConfig.widthMultiplier),
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
                                         Align(
                                           alignment: Alignment.topLeft,
@@ -414,12 +401,15 @@ class _HometabState extends State<Hometab> {
                                                 future: Future.wait([
                                                   purchaseList,
                                                   sellList,
-                                                  tokenList
+                                                  tokenList,
+                                                  dynamicUserModel
                                                 ]),
                                                 builder: (BuildContext context,
                                                     AsyncSnapshot snapshot) {
                                                   if (snapshot.hasData &&
                                                       userModel.tokens > 0) {
+                                                    UserModel userModel =
+                                                        snapshot.data[3];
                                                     Token token =
                                                         snapshot.data[2][0];
                                                     Map data =
@@ -435,7 +425,10 @@ class _HometabState extends State<Hometab> {
                                                                     .tokens) *
                                                         userModel.tokens;
                                                     double ret =
-                                                        (estProfit.abs() / 100);
+                                                        (estProfit.isNaN)
+                                                            ? 0
+                                                            : (estProfit.abs() /
+                                                                100);
                                                     // print("ret:" +
                                                     //     ret.toString());
 
@@ -443,7 +436,7 @@ class _HometabState extends State<Hometab> {
                                                       ret.toStringAsFixed(2) +
                                                           ' %',
                                                       style: TextStyle(
-                                                          fontSize: 25 *
+                                                          fontSize: 18 *
                                                               SizeConfig
                                                                   .heightMultiplier),
                                                     );
@@ -451,7 +444,7 @@ class _HometabState extends State<Hometab> {
                                                     return Text(
                                                       '0.00 %',
                                                       style: TextStyle(
-                                                          fontSize: 25 *
+                                                          fontSize: 18 *
                                                               SizeConfig
                                                                   .heightMultiplier),
                                                     );
@@ -469,10 +462,11 @@ class _HometabState extends State<Hometab> {
                         ),
                       ),
                       FutureBuilder(
-                        future: tokenList,
+                        future: Future.wait([tokenList, dynamicUserModel]),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
+                            UserModel snapUserModel = snapshot.data[1];
                             return Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(13)),
@@ -501,13 +495,17 @@ class _HometabState extends State<Hometab> {
                                                 SizeConfig.widthMultiplier,
                                             child: RaisedButton(
                                               onPressed: () async {
-                                                Token token = snapshot.data[0];
+                                                Token token =
+                                                    snapshot.data[0][0];
                                                 double price = token.tokenPrice;
+
                                                 showBottomSheet(
                                                     context: context,
                                                     builder: (context) {
                                                       return BuySheet(
-                                                          tokenPrice: price);
+                                                          tokenPrice: price,
+                                                          userModel:
+                                                              snapUserModel);
                                                     });
                                               },
                                               color: Color.fromARGB(
@@ -542,13 +540,18 @@ class _HometabState extends State<Hometab> {
                                                 SizeConfig.widthMultiplier,
                                             child: RaisedButton(
                                               onPressed: () async {
-                                                Token token = snapshot.data[0];
+                                                Token token =
+                                                    snapshot.data[0][0];
+
                                                 double price = token.tokenPrice;
                                                 showBottomSheet(
                                                     context: context,
                                                     builder: (context) {
                                                       return SellSheet(
-                                                          tokenPrice: price);
+                                                        tokenPrice: price,
+                                                        userModel:
+                                                            snapUserModel,
+                                                      );
                                                     });
                                               },
                                               color: Color.fromARGB(

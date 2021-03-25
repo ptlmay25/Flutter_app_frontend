@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/withdrawrequest.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:ibiz/view/navbar/withdrawal_history.dart';
+import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -187,6 +187,12 @@ class _WithdrawState extends State<Withdraw> {
                                   accNo: accNo,
                                   amount: amount);
                               if (res) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CompleteOrder(
+                                          message:
+                                              'Your withdrawal request has\n been submitted',
+                                          flag: true,
+                                        )));
                                 Fluttertoast.showToast(
                                     msg: "Request Sent", timeInSecForIosWeb: 4);
                               } else {
@@ -194,10 +200,10 @@ class _WithdrawState extends State<Withdraw> {
                                     msg: "Internal Error",
                                     timeInSecForIosWeb: 4);
                               }
-                            }else{
+                            } else {
                               Fluttertoast.showToast(
-                                    msg: "Insufficient Balance",
-                                    timeInSecForIosWeb: 4);
+                                  msg: "Insufficient Balance",
+                                  timeInSecForIosWeb: 4);
                             }
                           }
                         },

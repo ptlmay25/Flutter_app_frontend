@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
 import 'package:ibiz/view/view.dart';
 import 'package:ibiz/view/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -47,8 +48,12 @@ class MyApp extends StatelessWidget {
     //   return OrientationBuilder(builder: (context, orientation) {
     //     SizeConfig().init(constraints, orientation);
     //     return MaterialApp(
-    //       home: View(mobileNo: '+918780546954'),
+    //       // home: View(mobileNo: '+918780546954'),
     //       // home: View(mobileNo: '+919737582544')
+    //       home: CompleteOrder(
+    //         message: 'Your withdrawal request has\n been submitted',
+    //         flag: true,
+    //       ),
     //     );
     //   });
     // });

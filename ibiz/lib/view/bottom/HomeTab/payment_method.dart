@@ -59,9 +59,13 @@ class _PaymentMethodState extends State<PaymentMethod> {
   @override
   Widget build(BuildContext context) {
     if (paymentDone == true) {
-      return CompleteOrder();
+      return CompleteOrder(
+        message: 'Your order is complete',
+        flag: false,
+      );
     } else {
-      UserModel userModel = Provider.of<UserModel>(context);
+      // UserModel userModel = Provider.of<UserModel>(context);
+      UserModel userModel = widget.userModel;
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 66, 71, 112),
