@@ -22,12 +22,22 @@ class Accounttab extends StatefulWidget {
 class _AccounttabState extends State<Accounttab> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  RefreshController _refreshController2 =
+      RefreshController(initialRefresh: false);
   void _onRefresh() async {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     setState(() {});
     _refreshController.refreshCompleted();
+  }
+
+  void _onRefresh2() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    setState(() {});
+    _refreshController2.refreshCompleted();
   }
 
   void _onLoading() async {
@@ -59,7 +69,7 @@ class _AccounttabState extends State<Accounttab> {
   Widget build(BuildContext context) {
     var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
     UserModel userModel = Provider.of<UserModel>(context);
-
+    Future user = Userdb().getUserByMobileNo(userModel.mobileNo);
     Future<List<Purchase>> purchaseList =
         PurchaseDb().getPurchase(id: userModel.id);
     Future<List<Sell>> sellList = SellDb().getSell(id: userModel.id);
@@ -109,8 +119,7 @@ class _AccounttabState extends State<Accounttab> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: FutureBuilder(
-                              future: Userdb()
-                                  .getUserByMobileNo(userModel.mobileNo),
+                              future: user,
                               builder: (context, snapShot) {
                                 double userBalance = 0;
                                 if (snapShot.hasData) {
@@ -172,37 +181,48 @@ class _AccounttabState extends State<Accounttab> {
                             ),
                           ]),
                         ),
-                        FlatButton(
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 25 * SizeConfig.heightMultiplier,
-                                  width: 40 * SizeConfig.widthMultiplier,
-                                  child: Icon(
-                                    Icons.logout,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                    height: 3 * SizeConfig.heightMultiplier),
-                                Text(
-                                  'withdraw',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize:
-                                          12 * SizeConfig.heightMultiplier,
-                                      fontWeight: FontWeight.normal),
-                                )
-                              ],
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      ChangeNotifierProvider.value(
-                                          value: userModel,
-                                          child: ChangeNotifierProvider.value(
-                                              value: userModel,
-                                              child: Withdraw()))));
+                        FutureBuilder(
+                            future: user,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                UserModel dynamicUserModel = snapshot.data;
+                                return FlatButton(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height:
+                                              25 * SizeConfig.heightMultiplier,
+                                          width:
+                                              40 * SizeConfig.widthMultiplier,
+                                          child: Icon(
+                                            Icons.logout,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height: 3 *
+                                                SizeConfig.heightMultiplier),
+                                        Text(
+                                          'withdraw',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12 *
+                                                  SizeConfig.heightMultiplier,
+                                              fontWeight: FontWeight.normal),
+                                        )
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChangeNotifierProvider.value(
+                                                      value: dynamicUserModel,
+                                                      child: Withdraw())));
+                                    });
+                              } else {
+                                return Container();
+                              }
                             }),
                       ],
                     ),
@@ -328,194 +348,201 @@ class _AccounttabState extends State<Accounttab> {
             //     ])),
             Container(
               height: 450 * SizeConfig.heightMultiplier,
-              child: ListView(
-                children: <Widget>[
-                  SizedBox(height: 20 * SizeConfig.heightMultiplier),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 22 * SizeConfig.widthMultiplier,
-                        right: 22 * SizeConfig.widthMultiplier),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 70 * SizeConfig.heightMultiplier,
-                              width: 160 * SizeConfig.widthMultiplier,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all()),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 15 * SizeConfig.widthMultiplier),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                          height:
-                                              20 * SizeConfig.heightMultiplier),
-                                      Text("Total Purchase"),
-                                      SizedBox(
-                                          height:
-                                              5 * SizeConfig.heightMultiplier),
-                                      FutureBuilder(
-                                          future: Future.wait(
-                                              [purchaseList, sellList]),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot snapshot) {
-                                            if (snapshot.hasData) {
-                                              Map<String, double> data =
-                                                  getPurchaseSellDetails(
-                                                      snapshot.data[0],
-                                                      snapshot.data[1]);
-                                              return Text(curf.format(
-                                                  data['totalPurchase']
-                                                      .abs()
-                                                      .toDouble()));
-                                            } else {
-                                              return Text(curf.format(0));
-                                            }
-                                          }),
-                                    ]),
-                              ),
-                            ),
-                            SizedBox(width: 15 * SizeConfig.heightMultiplier),
-                            Container(
-                              height: 70 * SizeConfig.heightMultiplier,
-                              width: 160 * SizeConfig.widthMultiplier,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all()),
-                              child: Column(children: [
-                                SizedBox(
-                                    height: 15 * SizeConfig.heightMultiplier),
-                                Text("Total Sales"),
-                                SizedBox(
-                                    height: 5 * SizeConfig.heightMultiplier),
-                                FutureBuilder(
-                                    future:
-                                        Future.wait([purchaseList, sellList]),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      if (snapshot.hasData) {
-                                        Map<String, double> data =
-                                            getPurchaseSellDetails(
-                                                snapshot.data[0],
-                                                snapshot.data[1]);
-                                        return Text(curf.format(
-                                            data['totalSell']
-                                                .abs()
-                                                .toDouble()));
-                                      } else {
-                                        return Text(curf.format(0));
-                                      }
-                                    }),
-                              ]),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20 * SizeConfig.heightMultiplier),
-                        Row(
-                          children: [
-                            Container(
-                              height: 70 * SizeConfig.heightMultiplier,
-                              width: 160 * SizeConfig.widthMultiplier,
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 212, 31),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Column(children: [
-                                SizedBox(
-                                    height: 15 * SizeConfig.heightMultiplier),
-                                Text("Total Profit"),
-                                SizedBox(
-                                    height: 5 * SizeConfig.heightMultiplier),
-                                FutureBuilder(
-                                    future:
-                                        Future.wait([purchaseList, sellList]),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      if (snapshot.hasData) {
-                                        Map<String, double> data =
-                                            getPurchaseSellDetails(
-                                                snapshot.data[0],
-                                                snapshot.data[1]);
-                                        print(data);
-                                        double profit =
-                                            data['netProfit'].abs().toDouble();
-                                        if (data['netProfit'].isNaN) {
-                                          profit = 0;
-                                        }
-                                        return Text(curf.format(profit));
-                                      } else {
-                                        return Text(curf.format(0));
-                                      }
-                                    }),
-                              ]),
-                            ),
-                            Container(
-                              height: 70 * SizeConfig.heightMultiplier,
-                              width: 160 * SizeConfig.widthMultiplier,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 30 * SizeConfig.heightMultiplier,
-                        left: 22 * SizeConfig.widthMultiplier),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            "Transaction",
-                            style: TextStyle(
-                              color: Color(0xff151515),
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 21 * SizeConfig.widthMultiplier),
-                          child: Container(
-                            height: 30 * SizeConfig.heightMultiplier,
-                            width: 107 * SizeConfig.widthMultiplier,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: Color(0xff151515),
-                                width: 0.50,
-                              ),
-                              color: Colors.white,
-                            ),
-                            child: DropdownButton(
-                              underline: Container(color: Colors.transparent),
-                              hint: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "   Last 7 days",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Color(0xff151515),
-                                    fontSize: 12,
-                                    fontFamily: "Roboto",
-                                    fontWeight: FontWeight.w300,
-                                  ),
+              child: SmartRefresher(
+                enablePullDown: true,
+                controller: _refreshController2,
+                onRefresh: _onRefresh2,
+                onLoading: _onLoading,
+                child: ListView(
+                  children: <Widget>[
+                    SizedBox(height: 20 * SizeConfig.heightMultiplier),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 22 * SizeConfig.widthMultiplier,
+                          right: 22 * SizeConfig.widthMultiplier),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 70 * SizeConfig.heightMultiplier,
+                                width: 160 * SizeConfig.widthMultiplier,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all()),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 15 * SizeConfig.widthMultiplier),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                            height: 20 *
+                                                SizeConfig.heightMultiplier),
+                                        Text("Total Purchase"),
+                                        SizedBox(
+                                            height: 5 *
+                                                SizeConfig.heightMultiplier),
+                                        FutureBuilder(
+                                            future: Future.wait(
+                                                [purchaseList, sellList]),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snapshot) {
+                                              if (snapshot.hasData) {
+                                                Map<String, double> data =
+                                                    getPurchaseSellDetails(
+                                                        snapshot.data[0],
+                                                        snapshot.data[1]);
+                                                return Text(curf.format(
+                                                    data['totalPurchase']
+                                                        .abs()
+                                                        .toDouble()));
+                                              } else {
+                                                return Text(curf.format(0));
+                                              }
+                                            }),
+                                      ]),
                                 ),
                               ),
-                              value: _selectedData,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  _selectedData = newValue;
-                                });
-                              },
-                              items: _data.map((data) {
-                                return DropdownMenuItem(
-                                  child: new Text(
-                                    data,
+                              SizedBox(width: 15 * SizeConfig.heightMultiplier),
+                              Container(
+                                height: 70 * SizeConfig.heightMultiplier,
+                                width: 160 * SizeConfig.widthMultiplier,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all()),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 15 * SizeConfig.widthMultiplier),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                            height: 15 *
+                                                SizeConfig.heightMultiplier),
+                                        Text("Total Sales"),
+                                        SizedBox(
+                                            height: 5 *
+                                                SizeConfig.heightMultiplier),
+                                        FutureBuilder(
+                                            future: Future.wait(
+                                                [purchaseList, sellList]),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snapshot) {
+                                              if (snapshot.hasData) {
+                                                Map<String, double> data =
+                                                    getPurchaseSellDetails(
+                                                        snapshot.data[0],
+                                                        snapshot.data[1]);
+                                                return Text(curf.format(
+                                                    data['totalSell']
+                                                        .abs()
+                                                        .toDouble()));
+                                              } else {
+                                                return Text(curf.format(0));
+                                              }
+                                            }),
+                                      ]),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20 * SizeConfig.heightMultiplier),
+                          Row(
+                            children: [
+                              Container(
+                                height: 70 * SizeConfig.heightMultiplier,
+                                width: 160 * SizeConfig.widthMultiplier,
+                                decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 255, 212, 31),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 15 * SizeConfig.widthMultiplier),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                            height: 15 *
+                                                SizeConfig.heightMultiplier),
+                                        Text("Total Profit"),
+                                        SizedBox(
+                                            height: 5 *
+                                                SizeConfig.heightMultiplier),
+                                        FutureBuilder(
+                                            future: Future.wait(
+                                                [purchaseList, sellList]),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snapshot) {
+                                              if (snapshot.hasData) {
+                                                Map<String, double> data =
+                                                    getPurchaseSellDetails(
+                                                        snapshot.data[0],
+                                                        snapshot.data[1]);
+                                                print(data);
+                                                double profit =
+                                                    data['netProfit']
+                                                        .abs()
+                                                        .toDouble();
+                                                if (data['netProfit'].isNaN) {
+                                                  profit = 0;
+                                                }
+                                                return Text(
+                                                    curf.format(profit));
+                                              } else {
+                                                return Text(curf.format(0));
+                                              }
+                                            }),
+                                      ]),
+                                ),
+                              ),
+                              Container(
+                                height: 70 * SizeConfig.heightMultiplier,
+                                width: 160 * SizeConfig.widthMultiplier,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: 30 * SizeConfig.heightMultiplier,
+                          left: 22 * SizeConfig.widthMultiplier),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "Transaction",
+                              style: TextStyle(
+                                color: Color(0xff151515),
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: 21 * SizeConfig.widthMultiplier),
+                            child: Container(
+                              height: 30 * SizeConfig.heightMultiplier,
+                              width: 107 * SizeConfig.widthMultiplier,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  color: Color(0xff151515),
+                                  width: 0.50,
+                                ),
+                                color: Colors.white,
+                              ),
+                              child: DropdownButton(
+                                underline: Container(color: Colors.transparent),
+                                hint: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "   Last 7 days",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Color(0xff151515),
@@ -524,63 +551,84 @@ class _AccounttabState extends State<Accounttab> {
                                       fontWeight: FontWeight.w300,
                                     ),
                                   ),
-                                  value: data,
-                                );
-                              }).toList(),
+                                ),
+                                value: _selectedData,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _selectedData = newValue;
+                                  });
+                                },
+                                items: _data.map((data) {
+                                  return DropdownMenuItem(
+                                    child: new Text(
+                                      data,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0xff151515),
+                                        fontSize: 12,
+                                        fontFamily: "Roboto",
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                    value: data,
+                                  );
+                                }).toList(),
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    //height: 400 * SizeConfig.heightMultiplier,
-                    child: FutureBuilder(
-                      future: TransactionDb().getTransactions(id: userModel.id),
-                      builder: (context, AsyncSnapshot snapshot) {
-                        if (snapshot.hasData) {
-                          List<Transaction> transactionList = snapshot.data;
-                          transactionList =
-                              new List.from(transactionList.reversed);
-                          transactionList = transactionList.where((element) {
-                            DateTime trasactionDate =
-                                DateTime.parse(element.date);
-                            // print(trasactionDate);
-                            int difference = DateTime.now()
-                                .difference(trasactionDate)
-                                .inDays;
-                            // int difference = 5;
-                            // print(difference);
-                            // print(_selectedData);
-                            if (_selectedData == '\t\tAll') {
-                              return true;
-                            }
-                            if (difference <= days[_selectedData]) {
-                              return true;
-                            }
-                            return false;
-                          }).toList();
-                          return SingleChildScrollView(
-                            physics: ScrollPhysics(),
-                            child: Column(
-                              children: [
-                                ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: transactionList.length,
-                                    itemBuilder: (context, index) {
-                                      return getList(transactionList[index]);
-                                    }),
-                              ],
-                            ),
-                          );
-                        } else {
-                          return Center(child: Text("Loading..."));
-                        }
-                      },
+                    Container(
+                      //height: 400 * SizeConfig.heightMultiplier,
+                      child: FutureBuilder(
+                        future:
+                            TransactionDb().getTransactions(id: userModel.id),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            List<Transaction> transactionList = snapshot.data;
+                            // transactionList =
+                            //     new List.from(transactionList.reversed);
+                            transactionList = transactionList.where((element) {
+                              DateTime trasactionDate =
+                                  DateTime.parse(element.date);
+                              // print(trasactionDate);
+                              int difference = DateTime.now()
+                                  .difference(trasactionDate)
+                                  .inDays;
+                              // int difference = 5;
+                              // print(difference);
+                              // print(_selectedData);
+                              if (_selectedData == '\t\tAll') {
+                                return true;
+                              }
+                              if (difference <= days[_selectedData]) {
+                                return true;
+                              }
+                              return false;
+                            }).toList();
+                            return SingleChildScrollView(
+                              physics: ScrollPhysics(),
+                              child: Column(
+                                children: [
+                                  ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: transactionList.length,
+                                      itemBuilder: (context, index) {
+                                        return getList(transactionList[index]);
+                                      }),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Center(child: Text("Loading..."));
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -625,7 +673,8 @@ class _AccounttabState extends State<Accounttab> {
                               left: 23 * SizeConfig.widthMultiplier),
                           child: Text(
                             "Date: " +
-                                transaction.date.toString().substring(0, 10),
+                                DateFormatter()
+                                    .format(DateTime.parse(transaction.date)),
                             style: TextStyle(
                               color: Color(0xff151515),
                               fontSize: 14,
@@ -655,7 +704,9 @@ class _AccounttabState extends State<Accounttab> {
   String getSign(type) {
     if (type == 'Deposit' || type == 'Token Sell') {
       return '+ ';
-    } else if (type == 'Token Buy' || type == 'Withdraw') {
+    } else if (type == 'Token Buy' ||
+        type == 'Fund Withdraw' ||
+        type == 'Fund Withdraw (In process)') {
       return '- ';
     } else {
       return '';
@@ -668,14 +719,14 @@ class _AccounttabState extends State<Accounttab> {
         color: Color(0xff3c8f7c),
         fontSize: 15,
       );
-    } else if (type == 'Token Buy' || type == 'Withdraw') {
+    } else if (type == 'Token Buy' || type == 'Fund Withdraw') {
       return TextStyle(
         color: Colors.red,
         fontSize: 15,
       );
     } else {
       return TextStyle(
-        color: Color(0xff3c8f7c),
+        color: Colors.black,
         fontSize: 15,
       );
     }

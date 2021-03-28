@@ -93,7 +93,7 @@ class _ChartState extends State<Chart> {
           minX: 0,
           maxX: 20,
           minY: 0,
-          maxY: widget.tokenList[n - 1].tokenPrice,
+          maxY: widget.tokenList[0].tokenPrice,
           lineBarsData: [
             LineChartBarData(
               spots: [
@@ -109,6 +109,7 @@ class _ChartState extends State<Chart> {
                 FlSpot(18, widget.tokenList[1 * n ~/ 10].tokenPrice),
                 FlSpot(20, widget.tokenList[0].tokenPrice),
               ],
+              // spots: getSpots(new List.from(widget.tokenList.reversed)),
               isCurved: false,
               colors: gradientColors,
               barWidth: 5,
@@ -125,5 +126,11 @@ class _ChartState extends State<Chart> {
             ),
           ],
         )));
+  }
+
+  List<FlSpot> getSpots(List<Token> tokenList) {
+    return List.generate(tokenList.length, (index) {
+      return FlSpot(index.toDouble(), tokenList[index].tokenPrice);
+    });
   }
 }

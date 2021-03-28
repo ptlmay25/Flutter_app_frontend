@@ -3,7 +3,9 @@ import 'package:ibiz/models/WithdrawHistory.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/database/witdhrawhistorydb.dart';
 import 'package:ibiz/size_config.dart';
+import 'package:ibiz/view/dateformatter.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 // ignore: camel_case_types
 class Withdraw_History extends StatefulWidget {
@@ -18,8 +20,43 @@ class Withdraw_History extends StatefulWidget {
 class _Withdraw_HistoryState extends State<Withdraw_History> {
   var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
   var datef = new DateFormat('yyyy-MM-dd');
+  String searchText = '';
+  List<WithdrawHistory> data;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    data = filter(widget.data);
+  }
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+
+    List<WithdrawHistory> newdData =
+        await WithdrawHistoryDb().getWithdrawList(id: widget.data[0].user_id);
+    // if failed,use refreshFailed()
+    setState(() {
+      data = newdData;
+      searchText = '';
+    });
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+
+    setState(() {});
+    _refreshController.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<WithdrawHistory> list = filter(data);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 66, 71, 112),
@@ -34,6 +71,11 @@ class _Withdraw_HistoryState extends State<Withdraw_History> {
                     left: 28 * SizeConfig.widthMultiplier),
                 child: TextField(
                     cursorHeight: 5,
+                    onChanged: (val) {
+                      setState(() {
+                        searchText = val;
+                      });
+                    },
                     decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(15),
@@ -61,19 +103,40 @@ class _Withdraw_HistoryState extends State<Withdraw_History> {
               ),
             ),
             Expanded(
-                child: ListView.builder(
-              itemCount: widget.data.length,
-              itemBuilder: (context, index) {
-                return getList(widget.data[index]);
-              },
+                child: SmartRefresher(
+              enablePullDown: true,
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+              onLoading: _onLoading,
+              child: ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  return getList(list[index]);
+                },
+              ),
             )),
           ],
         ));
   }
 
+  List<WithdrawHistory> filter(List<WithdrawHistory> list) {
+    return list.where((element) {
+      if (element.id.contains(searchText) ||
+          DateFormatter()
+              .format(DateTime.parse(element.date))
+              .contains(searchText) ||
+          element.total_amount.toStringAsFixed(2).contains(searchText)) {
+        return true;
+      } else {
+        return false;
+      }
+    }).toList();
+  }
+
   Widget getList(WithdrawHistory data) {
     print('getList');
-    if (data.user_id == widget.userModel.id) {
+    print(data.user_id);
+    if (data.user_id == widget.userModel.id && data.status == 'true') {
       return Padding(
         padding: EdgeInsets.only(
           top: 25 * SizeConfig.heightMultiplier,
@@ -95,14 +158,16 @@ class _Withdraw_HistoryState extends State<Withdraw_History> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Withdrawal No: ${data.request_number}",
+                              "Withdrawal No: ${data.id}",
                               style: TextStyle(
                                 color: Color(0xff151515),
                                 fontSize: 13,
                               ),
                             ),
                             Text(
-                              "Date: " + data.date.substring(0, 10),
+                              "Date: " +
+                                  DateFormatter()
+                                      .format(DateTime.parse(data.date)),
                               style: TextStyle(
                                 color: Color(0xff151515),
                                 fontSize: 14,
@@ -121,7 +186,7 @@ class _Withdraw_HistoryState extends State<Withdraw_History> {
             Padding(
               padding: EdgeInsets.only(right: 17 * SizeConfig.widthMultiplier),
               child: Text(
-                curf.format(data.total_amount) + ' INR',
+                '- ' + curf.format(data.total_amount) + ' INR',
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   color: Color(0xff8c2f0f),

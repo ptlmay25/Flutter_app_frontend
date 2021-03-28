@@ -166,13 +166,18 @@ class _SearchtabState extends State<Searchtab> {
                                   flag = !flag;
                                 });
                               },
-                              child: Text(
-                                'Top Brands',
-                                style: TextStyle(
-                                    color:
-                                        (!flag) ? Colors.white : Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 13 * SizeConfig.heightMultiplier),
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: 40 * SizeConfig.heightMultiplier,
+                                child: Text(
+                                  'Top Brands',
+                                  style: TextStyle(
+                                      color:
+                                          (!flag) ? Colors.white : Colors.black,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize:
+                                          13 * SizeConfig.heightMultiplier),
+                                ),
                               ),
                             ),
                           ),
@@ -200,12 +205,16 @@ class _SearchtabState extends State<Searchtab> {
                                 flag = !flag;
                               });
                             },
-                            child: Text(
-                              'Retail stores',
-                              style: TextStyle(
-                                  color: (flag) ? Colors.white : Colors.black,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 13 * SizeConfig.heightMultiplier),
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 40 * SizeConfig.heightMultiplier,
+                              child: Text(
+                                'Retail stores',
+                                style: TextStyle(
+                                    color: (flag) ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13 * SizeConfig.heightMultiplier),
+                              ),
                             ),
                           ),
                         ),
