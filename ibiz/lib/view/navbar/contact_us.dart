@@ -87,7 +87,7 @@ class _Contact_UsState extends State<Contact_Us> {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Account Number",
+                              "Account Id",
                               style: TextStyle(
                                 color: Color(0xff838587),
                                 fontSize: 14,
@@ -102,7 +102,7 @@ class _Contact_UsState extends State<Contact_Us> {
                           child: SizedBox(
                             child: TextFormField(
                               enabled: false,
-                              initialValue: userModel.bankAccountNo,
+                              initialValue: userModel.id,
                               onSaved: (value) {
                                 setState(() {
                                   this.accNo = value;
@@ -168,6 +168,7 @@ class _Contact_UsState extends State<Contact_Us> {
                             alignment: Alignment.centerLeft,
                             child: TextFormField(
                               maxLines: null,
+                              minLines: 5,
                               decoration: new InputDecoration(
                                 border: new OutlineInputBorder(
                                   borderRadius: const BorderRadius.all(
@@ -206,7 +207,7 @@ class _Contact_UsState extends State<Contact_Us> {
                                         userId: userModel.id,
                                         name: fullName,
                                         message: message,
-                                        accNo: accNo,
+                                        accNo: userModel.id,
                                         email: email);
                                     if (res == true) {
                                       Fluttertoast.showToast(
@@ -232,7 +233,8 @@ class _Contact_UsState extends State<Contact_Us> {
                               ),
                             ),
                           ),
-                        )
+                        ),
+                        SizedBox(height: 50 * SizeConfig.heightMultiplier)
                       ],
                     ),
                   ),

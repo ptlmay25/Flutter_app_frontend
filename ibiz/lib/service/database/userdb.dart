@@ -48,11 +48,12 @@ class Userdb {
     }
   }
 
-  Future<bool> updateUserProfile(String id, String email, String homeAddress,
+  Future<bool> updateUserProfile(String id, String username,String email, String homeAddress,
       String city, String zipcode, String state) async {
     print(id);
     Map data = {
       'email': email,
+      'username':username,
       'homeAddress': homeAddress,
       'city': city,
       'zipcode': zipcode,

@@ -56,12 +56,13 @@ class UserModel with ChangeNotifier {
   }
 
   void updateUserProfile(
-      {newEmail, newAddress, newCity, newZipcode, newState}) {
+      {newEmail, newAddress, newCity, newZipcode, newState, newname}) {
     this.email = newEmail;
     this.homeAddress = newAddress;
     this.city = newCity;
     this.zipcode = newZipcode;
     this.state = newState;
+    this.username = newname;
     notifyListeners();
     print('Profile Updated');
   }
@@ -76,6 +77,6 @@ class UserModel with ChangeNotifier {
   void updateImage(String url) {
     this.imageUrl = url;
     notifyListeners();
-    print('profile Updated to: '+url);
+    print('profile Updated to: ' + url);
   }
 }

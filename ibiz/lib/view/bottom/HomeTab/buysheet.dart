@@ -150,7 +150,7 @@ class _BuySheetState extends State<BuySheet> {
             ),
           ),
           SizedBox(height: 25 * SizeConfig.heightMultiplier),
-          Text('Total: ₹ ${_n * widget.tokenPrice}'),
+          Text('Total: ' + curf.format(_n * widget.tokenPrice)),
         ]),
       ),
     );

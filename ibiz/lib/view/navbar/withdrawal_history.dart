@@ -34,15 +34,16 @@ class _Withdraw_HistoryState extends State<Withdraw_History> {
 
   void _onRefresh() async {
     // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
 
     List<WithdrawHistory> newdData =
-        await WithdrawHistoryDb().getWithdrawList(id: widget.data[0].user_id);
+        await WithdrawHistoryDb().getWithdrawList(id: widget.userModel.id);
     // if failed,use refreshFailed()
     setState(() {
       data = newdData;
       searchText = '';
+      _refreshController.refreshCompleted();
     });
-    _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {

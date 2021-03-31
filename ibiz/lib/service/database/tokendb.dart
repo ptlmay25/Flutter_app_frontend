@@ -18,7 +18,7 @@ class TokenDb {
     if (tokenList.length > 0) {
       return List.generate(tokenList.length, (index) {
         return Token(
-            tokenDate: tokenList[index]['upload_date'].toString() ??
+            tokenDate: tokenList[index]['token_date'].toString() ??
                 DateTime.now().toString(),
             totalRevenue:
                 double.parse(tokenList[index]['total_revenue'].toString()) ?? 0,

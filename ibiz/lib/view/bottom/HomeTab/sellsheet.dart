@@ -165,14 +165,14 @@ class _SellSheetState extends State<SellSheet> {
           ),
           SizedBox(height: 25 * SizeConfig.heightMultiplier),
           Text(
-            'Price per token: ₹ ${widget.tokenPrice}',
+            'Price per token: ' + curf.format(widget.tokenPrice),
             style: TextStyle(
                 fontSize: 13 * SizeConfig.heightMultiplier,
                 fontWeight: FontWeight.normal),
           ),
           SizedBox(height: 25 * SizeConfig.heightMultiplier),
           Text(
-            'Total sell:  ( ₹ ${_n * widget.tokenPrice} )',
+            'Total sell:  ' + '( ' + curf.format(_n * widget.tokenPrice) + ')',
             style: TextStyle(
                 fontSize: 15 * SizeConfig.heightMultiplier,
                 fontWeight: FontWeight.normal),

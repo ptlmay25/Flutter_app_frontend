@@ -163,7 +163,16 @@ class _ProfileState extends State<Profile> {
                             child: SizedBox(
                               child: TextFormField(
                                 initialValue: userModel.username,
-                                enabled: false,
+                                onSaved: (value) {
+                                  setState(() {
+                                    this.username = value;
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == null) {
+                                    return "Field is empty";
+                                  }
+                                },
                               ),
                             ),
                           ),
@@ -405,6 +414,7 @@ class _ProfileState extends State<Profile> {
                                       bool res = await Userdb()
                                           .updateUserProfile(
                                               userModel.id,
+                                              username,
                                               email,
                                               homeAddress,
                                               city,
@@ -417,6 +427,7 @@ class _ProfileState extends State<Profile> {
                                         print("User Updated");
                                         userModel.updateUserProfile(
                                             newEmail: email,
+                                            newname: username,
                                             newAddress: homeAddress,
                                             newCity: city,
                                             newState: newState,
