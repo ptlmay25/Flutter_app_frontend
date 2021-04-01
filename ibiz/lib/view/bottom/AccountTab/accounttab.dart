@@ -378,7 +378,7 @@ class _AccounttabState extends State<Accounttab> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                            height: 20 *
+                                            height: 15 *
                                                 SizeConfig.heightMultiplier),
                                         Text("Total Purchase"),
                                         SizedBox(
