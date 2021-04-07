@@ -6,7 +6,6 @@ import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class PaymentMethod extends StatefulWidget {
@@ -38,7 +37,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
   }
 
   var curf = new NumberFormat.currency(locale: "en_IN", symbol: "₹ ");
-  int b = 0;
+  int b = 1;
   String paymentMethodUsed;
 
   void f1(int a) {
@@ -147,7 +146,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                         left: 14 * SizeConfig.widthMultiplier, top: 15),
                     child: Text(
                       "Use account balance.\n" +
-                          "Available balance  " +
+                          "Available balance  ( " +
                           curf.format(userModel.acc_bal) +
                           " ) ",
                       style: TextStyle(

@@ -27,7 +27,7 @@ class _SignUpState extends State<SignUp> {
   int flag = 1;
   String fname, lname, gender;
   DateTime birthday;
-  int b = 0;
+  int b = 1;
 
   void f1(int a) {
     setState(() {
