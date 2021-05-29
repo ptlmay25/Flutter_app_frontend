@@ -3,7 +3,6 @@ import 'package:ibiz/main.dart';
 import 'package:ibiz/models/WithdrawHistory.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/service/auth.dart';
-import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/service/database/witdhrawhistorydb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/navbar/BankInfo.dart';

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/usermodel.dart';
-import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/HomeTab/payment_method.dart';
 import 'package:intl/intl.dart';

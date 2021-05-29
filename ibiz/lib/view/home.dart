@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/size_config.dart';
 import 'package:ibiz/view/bottom/AccountTab/accounttab.dart';
 import 'package:ibiz/view/bottom/HomeTab/hometab.dart';
@@ -8,7 +7,7 @@ import 'package:ibiz/view/bottom/SearchTab/searchtab.dart';
 import 'package:ibiz/view/bottom/ShareTab/sharetab.dart';
 import 'package:ibiz/view/drawer.dart';
 import 'package:ibiz/view/navbar/notification.dart';
-import 'package:provider/provider.dart';
+
 
 class Home extends StatefulWidget {
   Home();

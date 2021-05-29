@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ibiz/authScreen/signup.dart';
-import 'package:ibiz/models/token.dart';
 import 'package:ibiz/models/usermodel.dart';
-import 'package:ibiz/service/database/tokendb.dart';
 import 'package:ibiz/service/database/userdb.dart';
 import 'package:ibiz/view/home.dart';
 import 'package:provider/provider.dart';

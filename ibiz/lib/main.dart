@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/service/auth.dart';
 import 'package:ibiz/size_config.dart';
-import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
-import 'package:ibiz/view/view.dart';
 import 'package:ibiz/view/wrapper.dart';
 import 'package:provider/provider.dart';
 

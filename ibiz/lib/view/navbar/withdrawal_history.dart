@@ -24,7 +24,6 @@ class _Withdraw_HistoryState extends State<Withdraw_History> {
   List<WithdrawHistory> data;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     data = filter(widget.data);
   }

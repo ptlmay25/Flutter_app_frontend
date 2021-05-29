@@ -6,7 +6,6 @@ import 'package:ibiz/service/database/selltoken.dart';
 import 'package:ibiz/models/usermodel.dart';
 import 'package:ibiz/view/bottom/HomeTab/complete_order.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class SellSheet extends StatefulWidget {

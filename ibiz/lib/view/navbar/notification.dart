@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ibiz/models/usermodel.dart';
-import 'package:ibiz/size_config.dart';
 
 // ignore: camel_case_types
 class Notification_Page extends StatefulWidget {

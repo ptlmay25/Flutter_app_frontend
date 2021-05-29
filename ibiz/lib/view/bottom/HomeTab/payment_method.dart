@@ -160,38 +160,38 @@ class _PaymentMethodState extends State<PaymentMethod> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 15),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 10 * SizeConfig.widthMultiplier),
-                    child: Radio(
-                      value: 2,
-                      groupValue: b,
-                      onChanged: (v) {
-                        f1(v);
-                      },
-                      activeColor: Color.fromRGBO(255, 212, 31, 1),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 14 * SizeConfig.widthMultiplier),
-                    child: Text(
-                      "Online Payment",
-                      style: TextStyle(
-                        color: Color.fromRGBO(21, 21, 21, 1),
-                        fontSize: (15) * SizeConfig.heightMultiplier,
-                        fontFamily: "Roboto",
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(top: 15),
+            //   child: Row(
+            //     children: <Widget>[
+            //       Padding(
+            //         padding:
+            //             EdgeInsets.only(left: 10 * SizeConfig.widthMultiplier),
+            //         child: Radio(
+            //           value: 2,
+            //           groupValue: b,
+            //           onChanged: (v) {
+            //             f1(v);
+            //           },
+            //           activeColor: Color.fromRGBO(255, 212, 31, 1),
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding:
+            //             EdgeInsets.only(left: 14 * SizeConfig.widthMultiplier),
+            //         child: Text(
+            //           "Online Payment",
+            //           style: TextStyle(
+            //             color: Color.fromRGBO(21, 21, 21, 1),
+            //             fontSize: (15) * SizeConfig.heightMultiplier,
+            //             fontFamily: "Roboto",
+            //             fontWeight: FontWeight.w300,
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: EdgeInsets.only(
                   top: (40) * SizeConfig.heightMultiplier,

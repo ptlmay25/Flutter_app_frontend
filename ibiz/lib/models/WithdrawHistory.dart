@@ -1,5 +1,3 @@
-import 'package:ibiz/view/bottom/AccountTab/withdraw.dart';
-
 class WithdrawHistory {
   String id,
       user_id,
