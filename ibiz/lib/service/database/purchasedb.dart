@@ -11,9 +11,9 @@ class PurchaseDb {
     // final String url = "http://192.168.43.24:5000/api/";
 
     http.Response response = await http.get(url + "purchase/view/user/" + id);
-
+    // http.Response response = await http.get(url + "purchase/");
     List purchaseList = json.decode(response.body)['data'];
-    //print("length" + purchaseList.toString());
+    // print("length" + purchaseList.toString());
     return List.generate(purchaseList.length, (index) {
       return Purchase(
           id: purchaseList[index]['_id'],

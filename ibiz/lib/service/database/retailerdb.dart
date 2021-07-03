@@ -15,6 +15,7 @@ class RetailerDb {
       return Retailer(
           //id: retailerList[index]['_id'],
           name: retailerList[index]['storeName'] ?? '',
+          city: retailerList[index]['city'] ?? '',
           no_of_stores: retailerList[index]["numberOfStores"] ?? 0,
           imageUrl: retailerList[index]['storeImg'] ?? '');
     });

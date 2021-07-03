@@ -44,7 +44,7 @@ class CategoryCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         fontSize: 11 * SizeConfig.heightMultiplier),
                   )),
-                  Text('No of Products',
+                  Text('No of Stores',
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 11 * SizeConfig.heightMultiplier)),

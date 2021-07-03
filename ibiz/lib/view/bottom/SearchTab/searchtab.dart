@@ -137,13 +137,20 @@ class _SearchtabState extends State<Searchtab> {
                           },
                         ),
                         FutureBuilder(
-                            future: retailers,
+                            // future: retailers,
+                            future: categories,
                             builder: (context, snapshot) {
                               double n = 0;
+                              // if (snapshot.hasData) {
+                              //   List<Retailer> retailers = snapshot.data;
+                              //   for (Retailer r in retailers) {
+                              //     n += r.no_of_stores;
+                              //   }
+                              // }
                               if (snapshot.hasData) {
-                                List<Retailer> retailers = snapshot.data;
-                                for (Retailer r in retailers) {
-                                  n += r.no_of_stores;
+                                List<MyCategory> categories = snapshot.data;
+                                for (MyCategory r in categories) {
+                                  n += r.no_of_products;
                                 }
                               }
                               return Text(
@@ -196,7 +203,7 @@ class _SearchtabState extends State<Searchtab> {
                                   alignment: Alignment.center,
                                   height: 40 * SizeConfig.heightMultiplier,
                                   child: Text(
-                                    'Top Brands',
+                                    'Our Brands',
                                     style: TextStyle(
                                         color: (!flag)
                                             ? Colors.white

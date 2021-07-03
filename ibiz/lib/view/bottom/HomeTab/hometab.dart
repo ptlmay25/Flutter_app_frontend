@@ -457,19 +457,21 @@ class _HometabState extends State<Hometab> {
                                                           getPurchaseSellDetails(
                                                               snapshot.data[0],
                                                               snapshot.data[1]);
-                                                      double estPurchase =
-                                                          data['estPurchase'];
+                                                      double totalPurchase =
+                                                          data['totalPurchase'];
                                                       double estProfit = (token
                                                                   .tokenPrice -
-                                                              estPurchase /
+                                                              totalPurchase /
                                                                   userModel
                                                                       .tokens) *
                                                           userModel.tokens;
+
                                                       double ret = (estProfit
                                                               .isNaN)
                                                           ? 0
                                                           : (estProfit.abs() /
-                                                              100);
+                                                                  totalPurchase) *
+                                                              100;
                                                       // print("ret:" +
                                                       //     ret.toString());
 

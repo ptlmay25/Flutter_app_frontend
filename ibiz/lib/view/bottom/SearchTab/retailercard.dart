@@ -41,7 +41,8 @@ class RetailerCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         fontSize: 11 * SizeConfig.heightMultiplier),
                   )),
-                  Text('No of Srores',
+                  // Text('No of Srores',
+                  Text('Location',
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 11 * SizeConfig.heightMultiplier)),
@@ -61,7 +62,8 @@ class RetailerCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontSize: 11 * SizeConfig.heightMultiplier)),
                   ),
-                  Text('   ' + retailer.no_of_stores.toString(),
+                  // Text('   ' + retailer.no_of_stores.toString(),
+                  Text('   ' + retailer.city,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 11 * SizeConfig.heightMultiplier)),
