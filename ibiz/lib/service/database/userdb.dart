@@ -93,11 +93,11 @@ class Userdb {
   }
 
   Future<dynamic> getUserByMobileNo(String mobileNo) async {
-    print(url);
-    print("Inside getUserByMobileNo" + mobileNo);
+    // print(url);
+    // print("Inside getUserByMobileNo" + mobileNo);
     http.Response response =
         await http.get(url + "user/viewMobile/" + mobileNo);
-    print("Inside getUserByMobileNo" + response.statusCode.toString());
+    // print("Inside getUserByMobileNo" + response.statusCode.toString());
     if (response.statusCode == 200) {
       List userList = json.decode(response.body)['data'];
       //Map<String, dynamic> data = json.decode(response.body)['data'][0];

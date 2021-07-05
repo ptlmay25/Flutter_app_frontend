@@ -259,7 +259,7 @@ class _SearchtabState extends State<Searchtab> {
                     ),
                     SizedBox(height: 25 * SizeConfig.heightMultiplier),
                     Container(
-                        height: 450,
+                        height: 430*SizeConfig.heightMultiplier,
                         child: (!flag)
                             ? FutureBuilder(
                                 future: categories,

@@ -8,70 +8,60 @@ class RetailerCard extends StatelessWidget {
   RetailerCard({this.retailer});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(),
-      child: Card(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  left: 3 * SizeConfig.widthMultiplier,
-                  right: 3 * SizeConfig.widthMultiplier,
-                  top: 3 * SizeConfig.heightMultiplier,
-                  bottom: 3 * SizeConfig.heightMultiplier),
-              child: SizedBox(
-                height: 114 * SizeConfig.heightMultiplier,
-                child: FadeInImage(
-                  placeholder: AssetImage('assets/images/default.png'),
-                  image: NetworkImage(retailer.imageUrl),
-                ),
-              ),
+    return Card(
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 114 * SizeConfig.heightMultiplier,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/default.png'),
+              image: NetworkImage(retailer.imageUrl),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 10 * SizeConfig.heightMultiplier,
-                  left: 10 * SizeConfig.widthMultiplier,
-                  right: 9 * SizeConfig.heightMultiplier),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Text(
-                    "Name",
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 10 * SizeConfig.heightMultiplier,
+                left: 10 * SizeConfig.widthMultiplier,
+                right: 9 * SizeConfig.heightMultiplier),
+            child: Row(
+              children: [
+                Expanded(
+                    child: Text(
+                  "Name",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11 * SizeConfig.heightMultiplier),
+                )),
+                // Text('No of Srores',
+                Text('Location',
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 11 * SizeConfig.heightMultiplier),
-                  )),
-                  // Text('No of Srores',
-                  Text('Location',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11 * SizeConfig.heightMultiplier)),
-                ],
-              ),
+                        fontSize: 11 * SizeConfig.heightMultiplier)),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 10 * SizeConfig.heightMultiplier,
-                  left: 10 * SizeConfig.widthMultiplier,
-                  right: 9 * SizeConfig.heightMultiplier),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(retailer.name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 11 * SizeConfig.heightMultiplier)),
-                  ),
-                  // Text('   ' + retailer.no_of_stores.toString(),
-                  Text('   ' + retailer.city,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 10 * SizeConfig.heightMultiplier,
+                left: 10 * SizeConfig.widthMultiplier,
+                right: 9 * SizeConfig.heightMultiplier),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(retailer.name,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 11 * SizeConfig.heightMultiplier)),
-                ],
-              ),
+                ),
+                // Text('   ' + retailer.no_of_stores.toString(),
+                Text('   ' + retailer.city,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 11 * SizeConfig.heightMultiplier)),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -27,9 +27,9 @@ class _ViewState extends State<View> {
     return FutureBuilder(
       future: Userdb().getUserByMobileNo(widget.mobileNo),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        print("Inside view" + snapshot.data.toString());
+        // print("Inside view" + snapshot.data.toString());
         if (snapshot.hasData) {
-          print("Inside View.dart "+snapshot.data.toString());
+          // print("Inside View.dart "+snapshot.data.toString());
           if (snapshot.data != 0) {
             return ChangeNotifierProvider<UserModel>.value(
                 value: snapshot.data, child: Home());

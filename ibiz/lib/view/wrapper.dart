@@ -12,7 +12,7 @@ class Wrapper extends StatelessWidget {
       print('Null User');
       return GetStarted();
     } else {
-      print("UID: " + user.uid);
+      // print("UID: " + user.uid);
       return View(mobileNo: user.contact);
     }
   }
